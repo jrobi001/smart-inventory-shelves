@@ -8,7 +8,26 @@
 </head>
 
 <body>
-
+    <main>
+        <form action="/test/add-item" method="POST">
+            <div class="form-element">
+                <input type="text" name="name" id="itemName" value="Product Name">
+            </div>
+            <div class="form-element">
+                <input type="text" name="tags" id="tags" value="Please enter tags">
+            </div>
+            <div class="form-element">
+                <textarea name="notes" id="notes" rows="10">description</textarea>
+            </div>
+            <div class="form-element">
+                <input type="number" step="0.01" name="price" id="price" value="Product Name">
+            </div>
+            <div class="form-element">
+                <input type="number" step="0.01" name="weight" id="weight" value="Product Name">
+            </div>
+            <button class="btn" type="submit">Add Item</button>
+        </form>
+    </main>
 </body>
 
 </html>
