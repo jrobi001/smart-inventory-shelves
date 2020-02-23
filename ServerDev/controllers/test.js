@@ -29,6 +29,18 @@ exports.getShelfOverview = (req, res, next) => {
     });
 }
 
+exports.getShefSelector = (req, res, next) => {
+    res.render('test/shelf-selector.ejs', {
+        pageTitle: 'Shelf selector'
+    })
+}
+
+exports.postShelfSelector = (req, res, next) => {
+    const shelfPosition = req.body.shelfPos;
+    console.log(shelfPosition)
+    res.redirect('/');
+}
+
 exports.getSetUpShelf = (req, res, next) => {
 
 }
