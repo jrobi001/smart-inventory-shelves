@@ -19,18 +19,23 @@ module.exports = class Shelf {
 
     }
 
+    static fetchAll() {
+        return db.execute('SELECT * FROM shelves');
+    }
+
+
     static fetchItemIdFromPos(pos) {
         return db.execute(
             'SELECT items_id FROM shelves WHERE shelves.shelfPosition = ?', [pos]
         );
     }
 
-    static fetchShelfPropertiesbyID(id) {
+    static fetchByID(id) {
         return db.execute(
             'SELECT * FROM shelves WHERE shelves.id = ?', [id]
         );
     }
-    static fetchShelfPropertiesbyPos(pos) {
+    static fetchByPos(pos) {
         return db.execute(
             'SELECT * FROM shelves WHERE shelves.shelfPosition = ?', [pos]
         );

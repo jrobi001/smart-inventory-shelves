@@ -7,7 +7,7 @@ const testController = require('../controllers/test');
 const router = express.Router();
 
 
-router.get('/overview', testController.getShelfOverview);
+router.get('/overview-list', testController.getShelfOverviewList);
 
 router.get('/shelf-selector', testController.getShefSelector);
 
