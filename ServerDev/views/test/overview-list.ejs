@@ -5,15 +5,21 @@
 <body>
     <main>
         <p>this is a shelf overview page</p>
+
+        <% for (var i = 0; i < weights.length; i ++) { %>
+
         <div class="productGrid">
             <div class="imagebox">
-                image
+                <img src="<%= shelves[i].imageLink %>" alt="">
             </div>
             <div class="detailsbox">
-                details
+                <h2><%= shelves[i].name %></h2>
+                <p><%= shelves[i].tags %></p>
             </div>
             <div class="numberbox">
-                number
+                <h1><%= 
+                    weights[i] / shelves[i].weight
+                %></h1>
             </div>
             <div class="statusbar-full">
                 full
@@ -22,7 +28,9 @@
                 empty
             </div>
         </div>
+        <br>
 
+        <% } %>
     </main>
 </body>
 
