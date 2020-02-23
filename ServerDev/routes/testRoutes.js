@@ -12,4 +12,8 @@ router.post('/add-item', testController.postAddItem);
 
 router.get('/overview', testController.getShelfOverview);
 
+router.get('/shelf-selector', testController.getShefSelector);
+
+router.post('/shelf-selector', testController.postShelfSelector)
+
 module.exports = router;
