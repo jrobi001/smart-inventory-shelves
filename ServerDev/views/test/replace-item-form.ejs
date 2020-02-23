@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= pageTitle %></title>
+<%- include('../includes/head.ejs') %>
 </head>
 
 <body>
@@ -12,15 +6,15 @@
         <form action="/test/add-item" method="POST">
             <div class="form-element">
                 <p>Name:</p>
-                <input type="text" name="name" id="itemName" value="Product Name">
+                <input type="text" name="name" id="itemName" value="">
             </div>
             <div class="form-element">
                 <p>Tags:</p>
-                <input type="text" name="tags" id="tags" value="Please enter tags">
+                <input type="text" name="tags" id="tags" value="">
             </div>
             <div class="form-element">
                 <p>Description:</p>
-                <textarea name="notes" id="notes" rows="10">description</textarea>
+                <textarea name="notes" id="notes" rows="10"></textarea>
             </div>
             <div class="form-element">
                 <p>Price:</p>
