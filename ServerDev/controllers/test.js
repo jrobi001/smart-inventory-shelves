@@ -40,7 +40,7 @@ exports.getShelfOverviewList = (req, res, next) => {
                 shelfOverview.weightId3,
                 shelfOverview.weightId4,
                 shelfOverview.weightId5,
-                shelfOverview.weightId5
+                shelfOverview.weightId6
             ];
             // console.log(weightArr);
             res.render('test/overview-list', {
