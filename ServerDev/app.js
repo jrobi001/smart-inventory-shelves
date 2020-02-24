@@ -19,8 +19,26 @@ const pool = mysql.createPool({
     database: 'shelfdatav2',
     password: 'cake123'
 });
-const db = pool.promise();
-//global variable db to be called where needed.
+const dbPromise = pool.promise();
+//global variable dbPromise to be called where needed.
+global.dbPromise = dbPromise;
+
+
+//setting up database the way it was in web dev, for those that prefer callbacks
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'shelfdatav2',
+    password: 'cake123'
+});
+
+db.connect((err) => {
+    if (err) {
+        throw err;
+    }
+    console.log('Connected to database');
+});
+//global variable db to be called where needed
 global.db = db;
 
 app.set('view engine', 'ejs');

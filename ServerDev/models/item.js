@@ -11,13 +11,13 @@ module.exports = class Item {
     }
 
     addItem() {
-        return db.execute(
+        return dbPromise.execute(
             'INSERT INTO items (name, tags, weight, notes, price, imageLink) VALUES (?, ?, ?, ?, ?, ?)',
             [this.name, this.tags, this.weight, this.notes, this.price, this.imageLink]
         );
     }
 
     static findById(id) {
-        return db.execute('SELECT * FROM items WHERE items.id = ?', [id]);
+        return dbPromise.execute('SELECT * FROM items WHERE items.id = ?', [id]);
     }
 }
