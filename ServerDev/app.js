@@ -4,9 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 
-
-const errorController = require('./controllers/error');
-
 const app = express();
 
 //setting up database as a pool - exported as promises globally to avoid callbacks
@@ -54,7 +51,9 @@ app.use('/test', testRoutes);
 app.use(routes);
 
 
-app.use(errorController.get404);
+app.use((req, res, next) => {
+    res.status(404).render('404', { pageTitle: 'Page Not Found' });
+});
 
 // http://localhost:3000/
 app.listen(3000);
