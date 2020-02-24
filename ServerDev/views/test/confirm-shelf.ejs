@@ -12,7 +12,7 @@
 
         <p>Are you sure you would like to replace <%= item.name %> on shelf <%= shelfPos %>?</p>
 
-        <form action="/test/replace-item/<%= shelfPos %>" method="GET">
+        <form action="/test/replace-item/<%= shelfPos %>" method="POST">
             <!-- <input type="hidden" name="shelfPos" value="<%= shelfPos %> "> -->
             <button class="btn" type="submit">Yes!</button>
         </form>

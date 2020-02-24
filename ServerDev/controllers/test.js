@@ -58,7 +58,7 @@ exports.getShefSelector = (req, res, next) => {
     })
 }
 
-exports.postShelfSelector = (req, res, next) => {
+exports.postConfirmShelf = (req, res, next) => {
     const shelfPosition = req.body.shelfPos;
     console.log(shelfPosition)
     Shelf.fetchItemIdFromPos(shelfPosition)

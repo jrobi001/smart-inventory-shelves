@@ -11,9 +11,11 @@ router.get('/overview-list', testController.getShelfOverviewList);
 
 router.get('/shelf-selector', testController.getShefSelector);
 
-router.post('/shelf-selector', testController.postShelfSelector);
+router.post('/confirm-shelf', testController.postConfirmShelf);
 
-router.get('/replace-item/:shelfPos', testController.getReplaceItem);
+// router.get('/replace-item/:shelfPos', testController.getReplaceItem);
+
+router.post('/replace-item/:shelfPos', testController.getReplaceItem);
 
 router.post('/replace-item', testController.postReplaceItem);
 //need to delete old item data and stuff
