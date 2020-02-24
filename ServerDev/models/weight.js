@@ -1,5 +1,3 @@
-const db = require('../util/database');
-
 module.exports = class Weight {
 
     constructor(id, dateTime, weight, shelves_id) {
