@@ -1,5 +1,3 @@
-const db = require('../util/database');
-
 module.exports = class Item {
 
     constructor(id, name, tags, weight, notes, price, imageLink) {

@@ -1,5 +1,3 @@
-const db = require('../util/database');
-
 module.exports = class Overview {
 
     constructor(shelfItemsJoinArr, weightId1, weightId2, weightId3, weightId4,

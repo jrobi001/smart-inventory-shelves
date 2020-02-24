@@ -2,11 +2,26 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const mysql = require('mysql2');
 
-const db = require('./util/database');
+
 const errorController = require('./controllers/error');
 
 const app = express();
+
+
+//setting up database as a pool - exported as promises globally to avoid callbacks
+//https://www.npmjs.com/package/mysql2
+//https://evertpot.com/executing-a-mysql-query-in-nodejs/
+//https://github.com/sidorares/node-mysql2/issues/809
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    database: 'shelfdatav2',
+    password: 'cake123'
+});
+const db = pool.promise();
+global.db = db;
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
