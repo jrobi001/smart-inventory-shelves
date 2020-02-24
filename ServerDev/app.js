@@ -9,7 +9,6 @@ const errorController = require('./controllers/error');
 
 const app = express();
 
-
 //setting up database as a pool - exported as promises globally to avoid callbacks
 //https://www.npmjs.com/package/mysql2
 //https://evertpot.com/executing-a-mysql-query-in-nodejs/
@@ -21,6 +20,7 @@ const pool = mysql.createPool({
     password: 'cake123'
 });
 const db = pool.promise();
+//global variable db to be called where needed.
 global.db = db;
 
 app.set('view engine', 'ejs');
