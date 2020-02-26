@@ -3,57 +3,10 @@ const Shelf = require('../models/shelf')
 const Weight = require('../models/weight')
 const Overview = require('../models/overview')
 
-exports.getShelfOverviewList = (req, res, next) => {
-    const shelfOverview = new Overview([], null, null, null, null, null, null)
-    Overview.fetchAllShevesJoinItems()
-        .then(([data, meta]) => {
-            shelfOverview.shelfItemsJoin = data;
-            // const shelves = data;
-            return Overview.fetchWeightId1();
-        })
-        .then(([data, meta]) => {
-            shelfOverview.weightId1 = data[0].weight;
-            // const weightId1 = data[0].weight;
-            return Overview.fetchWeightId2();
-        })
-        .then(([data, meta]) => {
-            shelfOverview.weightId2 = data[0].weight;
-            return Overview.fetchWeightId3();
-        })
-        .then(([data, meta]) => {
-            shelfOverview.weightId3 = data[0].weight;
-            return Overview.fetchWeightId4();
-        })
-        .then(([data, meta]) => {
-            shelfOverview.weightId4 = data[0].weight;
-            return Overview.fetchWeightId5();
-        })
-        .then(([data, meta]) => {
-            shelfOverview.weightId5 = data[0].weight;
-            return Overview.fetchWeightId6();
-        })
-        .then(([data, meta]) => {
-            shelfOverview.weightId6 = data[0].weight;
-            const weightArr = [
-                shelfOverview.weightId1,
-                shelfOverview.weightId2,
-                shelfOverview.weightId3,
-                shelfOverview.weightId4,
-                shelfOverview.weightId5,
-                shelfOverview.weightId6
-            ];
-            // console.log(weightArr);
-            res.render('test/overview-list', {
-                pageTitle: 'Shelf Overview List',
-                shelves: shelfOverview.shelfItemsJoin,
-                weights: weightArr
-            });
-        })
-        .catch(err => console.log(err));
-}
+
 
 exports.getShefSelector = (req, res, next) => {
-    res.render('test/shelf-selector.ejs', {
+    res.render('item-setup/shelf-selector.ejs', {
         pageTitle: 'Shelf selector'
     })
 }
@@ -69,7 +22,7 @@ exports.postConfirmShelf = (req, res, next) => {
         }).then(([data, meta]) => {
             const itemData = data[0];
             console.log(itemData.name);
-            res.render('test/confirm-shelf', {
+            res.render('item-setup/confirm-shelf', {
                 pageTitle: 'Confirm shelf',
                 shelfPos: shelfPosition,
                 item: itemData
@@ -78,15 +31,15 @@ exports.postConfirmShelf = (req, res, next) => {
         .catch(err => console.log(err));
 }
 
-exports.getReplaceItem = (req, res, next) => {
+exports.postItemForm = (req, res, next) => {
     const shelfPos = req.params.shelfPos;
-    res.render('test/replace-item-form', {
+    res.render('item-setup/item-form', {
         pageTitle: 'Replace Item',
         shelfPos: shelfPos
     });
 }
 
-exports.postReplaceItem = (req, res, next) => {
+exports.postShelfSettings = (req, res, next) => {
     const itemName = req.body.name;
     const tags = req.body.tags;
     const weight = req.body.weight;
@@ -97,13 +50,9 @@ exports.postReplaceItem = (req, res, next) => {
     const newItem = new Item(null, itemName, tags, weight, notes, price, imageLink);
     newItem.addItem()
         .then(() => {
-            console.log('success new item ' + itemName + ' has been added')
-            res.redirect('/');
+            console.log()
+            res.send('<p>success new item'
+                + itemName + ' has been added</p>')
         })
         .catch(err => console.log(err));
-}
-
-
-exports.getSetUpShelf = (req, res, next) => {
-
 }
