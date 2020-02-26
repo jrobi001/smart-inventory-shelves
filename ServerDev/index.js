@@ -45,7 +45,6 @@ app.set('view engine', 'ejs');
 //allows html files to be rendered by ejs
 app.engine('html', require('ejs').renderFile);
 
-const testRoutes = require('./routes/testRoutes')
 const itemSetupRoutes = require('./routes/itemSetup')
 const mainRoutes = require('./routes/main')
 
@@ -55,7 +54,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //routing files
 app.use(mainRoutes);
 app.use('/item-setup', itemSetupRoutes);
-app.use('/test', testRoutes);
 
 
 app.use((req, res, next) => {
