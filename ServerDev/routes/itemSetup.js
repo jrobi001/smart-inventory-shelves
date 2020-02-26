@@ -1,18 +1,18 @@
 const express = require('express');
 
 //files containing routing logic in /controllers
-const testController = require('../controllers/test');
+const itemSetupController = require('../controllers/itemSetupController');
 
 const router = express.Router();
 
-router.get('/', testController.getShefSelector);
+router.get('/', itemSetupController.getShefSelector);
 
-router.post('/confirm-shelf', testController.postConfirmShelf);
+router.post('/confirm-shelf', itemSetupController.postConfirmShelf);
 
-router.post('/item-form/:shelfPos', testController.postItemForm);
+router.post('/item-form/:shelfPos', itemSetupController.postItemForm);
 
 //need to delete old item data and stuff in the conttroller
-router.post('/shelf-settings', testController.postShelfSettings);
+router.post('/shelf-settings', itemSetupController.postShelfSettings);
 
 //after add item need to set shelf settings - will need the item id of the newly created item
 // ideally then import stock settings

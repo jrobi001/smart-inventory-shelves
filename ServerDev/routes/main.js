@@ -1,9 +1,7 @@
 const express = require('express');
 
-const testController = require('../controllers/test');
+const itemSetupController = require('../controllers/itemSetupController');
 const mainController = require('../controllers/mainController');
-
-
 
 const router = express.Router();
 
