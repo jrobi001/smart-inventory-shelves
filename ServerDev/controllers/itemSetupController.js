@@ -4,7 +4,6 @@ const Weight = require('../models/weight')
 const Overview = require('../models/overview')
 
 
-
 exports.getShefSelector = (req, res, next) => {
     res.render('item-setup/shelf-selector.ejs', {
         pageTitle: 'Shelf selector'
