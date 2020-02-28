@@ -1,5 +1,8 @@
 const express = require('express');
 
+const itemSetupController = require('../controllers/itemSetupController');
+const mainController = require('../controllers/mainController');
+
 const router = express.Router();
 
 //routes can be placed here as in data web if wanted
@@ -10,9 +13,17 @@ router.get('/', (req, res, next) => {
             res.redirect('./');
         }
         console.log(result);
-        res.render('main');
+        res.render('dev-home');
     });
 
 });
+
+router.get('/template-example', (req, res, next) => {
+    res.render('template-example', {
+        pageTitle: 'template example'
+    });
+});
+
+router.get('/overview-list', mainController.getShelfOverviewList);
 
 module.exports = router
