@@ -15,19 +15,23 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav2',
-    password: 'cake123'
+    password: 'sqlpass1'
 });
 const dbPromise = pool.promise();
 //global variable dbPromise to be called where needed.
 global.dbPromise = dbPromise;
 
+//pool.query('SELECT * FROM shelves', function (error, results){
+//    if(error)throw error;
+//    console.log(results);
+//})
 
 //setting up database the way it was in web dev, for those that prefer callbacks
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav2',
-    password: 'cake123'
+    password: 'sqlpass1'
 });
 
 db.connect((err) => {
@@ -38,6 +42,8 @@ db.connect((err) => {
 });
 //global variable db to be called where needed
 global.db = db;
+
+
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
