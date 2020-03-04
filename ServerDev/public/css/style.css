@@ -49,8 +49,10 @@ div a{
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
+  justify-content:center;
   background-color: #FF7F50;
   color: white;
+  height:310px;
 
 }
 .main-images{
@@ -77,3 +79,15 @@ div a{
    height: 50px;
  }
  p{margin:0;}
+
+input[type = "text"] {
+margin:10px;
+}
+
+input[type= "radio"]{
+margin:10px;
+}
+
+input[type = "submit"]{
+margin-top:10px;
+}

@@ -15,7 +15,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav2',
-    password: 'sqlpass1'
+    password: 'Igniciouse1@'
 });
 const dbPromise = pool.promise();
 //global variable dbPromise to be called where needed.
@@ -31,7 +31,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav2',
-    password: 'sqlpass1'
+    password: 'Igniciouse1@'
 });
 
 db.connect((err) => {
