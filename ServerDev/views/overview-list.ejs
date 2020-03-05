@@ -6,7 +6,8 @@
     <main>
         <p>this is a shelf overview page</p>
 
-        <% for (var i = 0; i < weights.length; i ++) { %>
+        <% for (var i = 0; i < shelves.length; i ++) { %>
+        <% if (shelves[i].items_id === null) { continue } else { %>
 
         <div class="productGrid">
             <div class="imagebox">
@@ -18,8 +19,8 @@
             </div>
             <div class="numberbox">
                 <h1><%= 
-                    weights[i] / shelves[i].weight
-                %></h1>
+                        weights[i] / shelves[i].weight
+                    %></h1>
             </div>
             <div class="statusbar-full">
                 full
@@ -29,7 +30,7 @@
             </div>
         </div>
         <br>
-
+        <% } %>
         <% } %>
     </main>
 </body>
