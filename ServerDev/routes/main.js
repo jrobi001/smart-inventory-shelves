@@ -2,7 +2,7 @@ const http = require("http");
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-
+var session = require('express-session');
 const itemSetupController = require('../controllers/itemSetupController');
 const mainController = require('../controllers/mainController');
 
@@ -106,7 +106,7 @@ router.post('/change-name' ,(req, res) =>{
             if (err){
               throw (err)
             }
-        console.log(result.affectedRows);
+        
         if(result.affectedRows > 0){
        res.render('changes-saved.ejs');
 	 }else{
@@ -122,7 +122,7 @@ router.post('/change-tags' ,(req, res) =>{
             if (err){
               throw (err)
             }
-        console.log(result.affectedRows);
+        
         if(result.affectedRows > 0){
        res.render('changes-saved.ejs');
         }else{
@@ -139,7 +139,7 @@ router.post('/change-weight' ,(req, res) =>{
             if (err){
               throw (err)
             }
-        console.log(result.affectedRows);
+        
         if(result.affectedRows > 0){
       res.render('changes-saved.ejs');
         }else{
@@ -155,8 +155,7 @@ router.post('/change-imageLink' ,(req, res) =>{
         db.query(sqlStatement, record, (err, result) => {
             if (err){
               throw (err)
-            }
-        console.log(result.affectedRows);
+	    }         
         if(result.affectedRows > 0){
       res.render('changes-saved.ejs');
         }else{
@@ -164,6 +163,69 @@ router.post('/change-imageLink' ,(req, res) =>{
             }
    });
 });
+
+
+router.get('/swap-items' ,(req, res)=>{
+	res.render('swap-item.ejs');
+});
+
+
+router.post('/swap-shelf-position' ,(req,res)=>{
+	
+	let shelfpos1 = req.body.name;
+	let shelfpos2 = req.body.swap;
+	if(shelfpos1 != shelfpos2){
+	let sqlStatement = "UPDATE shelves SET shelfPosition = ? WHERE shelfPosition = ?";
+	let record1 = [8,shelfpos1];
+	let record2 = [shelfpos1, shelfpos2];
+	let record3 = [shelfpos2, 8];
+	db.query(sqlStatement, record1, (err, result)=>{
+	
+	if(err){
+	throw (err)
+	}
+	
+	if(result.affectedRows == 0){
+		res.render('item-swap-fail.ejs');
+	}
+		
+
+		else{
+		db.query(sqlStatement, record2, (err, result1)=>{
+		
+		if(err){
+		throw (err)
+		}
+
+		if(result1.affectedRows == 0){
+		res.render('item-swap-fail.ejs');
+		}else{
+		db.query(sqlStatement, record3, (err, result2)=>{ 
+		if (err)
+		{
+		   throw (err)
+		}
+		 else
+		{
+			res.render('item-swapped.ejs');
+		}
+		});
+		}
+		});
+		
+		}
+	
+	});
+	}else{
+	res.redirect('/swap-items');
+	}
+});
+
+
+
+
+
+
 
 
 router.get('/overview-list', mainController.getShelfOverviewList);
