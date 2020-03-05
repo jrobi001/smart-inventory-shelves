@@ -16,6 +16,7 @@ const pool = mysql.createPool({
     user: 'root',
     database: 'shelfdatav2',
     password: 'cake123'
+
 });
 const dbPromise = pool.promise();
 //global variable dbPromise to be called where needed.

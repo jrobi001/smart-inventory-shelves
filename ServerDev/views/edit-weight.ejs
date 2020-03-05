@@ -1,0 +1,28 @@
+<%- include('includes/head.ejs') %>
+<%- include('includes/navigation.ejs') %>
+
+<main>
+<form action ="/change-weight" method="post">
+<h1>Use the form below to edit the items weight</h1>
+
+
+<div id="name-text-div" class="item-editor">
+Enter name of item you would like to edit
+<input type="text" id="item-name" name="name">
+</div>
+
+
+<div id="weight-text-div" class="item-editor">
+Enter the new Item Weight
+<input type="text" id="item-weight" name="weight">
+</div>
+
+
+
+
+
+<input type="submit" id="postchange" value="submit">
+</form>
+</main>
+<%- include('includes/footer.ejs')%>
+
