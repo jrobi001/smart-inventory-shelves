@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 
 const app = express();
-const port = 3000;
+const port = 3002;
 
 //setting up database as a pool - exported as promises globally to avoid callbacks
 //https://www.npmjs.com/package/mysql2
