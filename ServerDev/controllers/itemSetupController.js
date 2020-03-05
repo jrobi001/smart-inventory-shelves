@@ -5,19 +5,29 @@ const Overview = require('../models/overview')
 
 
 exports.getShefSelector = (req, res, next) => {
+    console.log('shelf selector');
     res.render('item-setup/shelf-selector.ejs', {
         pageTitle: 'Shelf selector'
     })
 }
 
 exports.postConfirmShelf = (req, res, next) => {
+    console.log('hello');
     const shelfPosition = req.body.shelfPos;
     console.log(shelfPosition)
     Shelf.fetchItemIdFromPos(shelfPosition)
         .then(([data, meta]) => {
+            console.log('still working');
             const itemId = data[0].items_id
+            if (itemId == null) {
+                return res.render('item-setup/item-form', {
+                    pageTitle: 'Replace Item',
+                    shelfPos: shelfPosition
+                })
+            } else {
+                return Item.findById(itemId)
+            }
             //if (itemId == null), skip confirm shelf => add-item
-            return Item.findById(itemId)
         }).then(([data, meta]) => {
             const itemData = data[0];
             console.log(itemData.name);
@@ -45,13 +55,21 @@ exports.postShelfSettings = (req, res, next) => {
     const notes = req.body.notes;
     const price = req.body.price;
     const imageLink = req.body.imageLink;
+    const shelfPos = req.body.shelfPos;
 
     const newItem = new Item(null, itemName, tags, weight, notes, price, imageLink);
     newItem.addItem()
         .then(() => {
-            console.log()
-            res.send('<p>success new item'
-                + itemName + ' has been added</p>')
+            return Item.findByName(itemName);
+        })
+        .then(([data, meta]) => {
+            itemId = data[0].id;
+            res.render('item-setup/shelf-settings', {
+                pageTitle: 'Shelf settings',
+                shelfPos: shelfPos,
+                itemId: itemId,
+                itemName: itemName
+            });
         })
         .catch(err => console.log(err));
 }
