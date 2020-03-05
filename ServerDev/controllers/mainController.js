@@ -42,7 +42,7 @@ exports.getShelfOverviewList = (req, res, next) => {
                 shelfOverview.weightId5,
                 shelfOverview.weightId6
             ];
-            // console.log(weightArr);
+            console.log(shelfOverview.shelfItemsJoin);
             res.render('overview-list', {
                 pageTitle: 'Shelf Overview List',
                 shelves: shelfOverview.shelfItemsJoin,
