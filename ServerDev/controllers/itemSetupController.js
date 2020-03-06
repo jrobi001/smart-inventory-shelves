@@ -80,12 +80,25 @@ exports.getEditItem = (req, res, next) => {
         .then(([data, meta]) => {
             const itemId = data[0].items_id;
             console.log(itemId)
+            if (itemId == null) {
+                res.send('that shelf is empty, maybe we will redirect to the add item page ehre!')
+            }
             return Item.findById(itemId);
         })
         .then(([data, meta]) => {
             item = data[0];
             console.log(item);
-            res.send('this is working');
+            res.render('item-setup/edit-item', {
+                pageTitle: 'edit item',
+                shelfPos: shelfPos,
+                itemId: item.id,
+                itemName: item.name,
+                itemTags: item.tags,
+                itemWeight: item.weight,
+                itemNotes: item.notes,
+                itemPrice: item.price,
+                itemImageLink: item.imageLink
+            });
 
         })
 
