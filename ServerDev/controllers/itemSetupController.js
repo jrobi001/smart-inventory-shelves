@@ -73,3 +73,21 @@ exports.postShelfSettings = (req, res, next) => {
         })
         .catch(err => console.log(err));
 }
+
+exports.getEditItem = (req, res, next) => {
+    const shelfPos = req.params.shelfPos;
+    Shelf.fetchItemIdFromPos(shelfPos)
+        .then(([data, meta]) => {
+            const itemId = data[0].items_id;
+            console.log(itemId)
+            return Item.findById(itemId);
+        })
+        .then(([data, meta]) => {
+            item = data[0];
+            console.log(item);
+            res.send('this is working');
+
+        })
+
+        .catch(err => console.log(err));
+}
