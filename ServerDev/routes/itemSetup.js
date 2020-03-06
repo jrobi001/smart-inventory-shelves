@@ -21,6 +21,8 @@ router.post('/shelf-settings', itemSetupController.postShelfSettings);
 //confirmation screen
 router.get('confirmation')
 
+router.get('/edit-item/:shelfPos', itemSetupController.getEditItem)
+
 
 
 module.exports = router
