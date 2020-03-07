@@ -58,10 +58,12 @@ app.engine('html', require('ejs').renderFile);
 const itemSetupRoutes = require('./routes/itemSetup')
 const mainRoutes = require('./routes/main')
 
-app.use(session({ cookie: { maxAge: 60000 }, 
-                  secret: 'woot',
-                  resave: false, 
-                  saveUninitialized: false}));
+app.use(session({
+    cookie: { maxAge: 60000 },
+    secret: 'woot',
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));

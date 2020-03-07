@@ -17,7 +17,18 @@ module.exports = class Item {
         );
     }
 
+    updateItem() {
+        return dbPromise.execute(
+            'UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE id = ?',
+            [this.name, this.tags, this.weight, this.notes, this.price, this.imageLink, this.id]
+        )
+    }
+
     static findById(id) {
         return dbPromise.execute('SELECT * FROM items WHERE items.id = ?', [id]);
+    }
+
+    static findByName(name) {
+        return dbPromise.execute('SELECT id FROM items WHERE name = ?', [name]);
     }
 }
