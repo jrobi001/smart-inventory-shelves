@@ -8,7 +8,7 @@ var flash = require('connect-flash');
 
 
 const app = express();
-const port = 3002;
+const port = 3000;
 
 //setting up database as a pool - exported as promises globally to avoid callbacks
 //https://www.npmjs.com/package/mysql2
@@ -58,10 +58,12 @@ app.engine('html', require('ejs').renderFile);
 const itemSetupRoutes = require('./routes/itemSetup')
 const mainRoutes = require('./routes/main')
 
-app.use(session({ cookie: { maxAge: 60000 }, 
-                  secret: 'woot',
-                  resave: false, 
-                  saveUninitialized: false}));
+app.use(session({
+    cookie: { maxAge: 60000 },
+    secret: 'woot',
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));
