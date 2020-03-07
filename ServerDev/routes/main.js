@@ -2,7 +2,7 @@ const http = require("http");
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-var session = require('express-session');
+
 const itemSetupController = require('../controllers/itemSetupController');
 const mainController = require('../controllers/mainController');
 
@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
         if (err) {
             res.redirect('./');
         }
-        console.log(result);
+        
         res.render('dev-home');
     });
 
@@ -66,28 +66,30 @@ router.get('/item-select', function(req,res){
 
 
 router.post('/view-details', function(req, res) {
-        let sqlquery = "SELECT name,tags,weight,notes,price,imageLink FROM items WHERE name = ?";
+        
+	
+	let sqlquery = "SELECT name,tags,weight,notes,price,imageLink FROM items WHERE name = ?";
 	let record = [req.body.name];       
-	req.flash('name', req.body.name);
+	
 	        
 	db.query(sqlquery, record,(err, result) => {
             if (err) {
                 res.redirect('/404');
             }
-	console.log(result);   
+	   
 	if(result[0] == undefined){
 	res.render('item-not-found.ejs',{ pageTitle: 'Item Not Found' });
 	}
 	else{
-            res.render('edit-item-form.ejs',{pageTitle:'Edit Item Details', updateitem:result});
+            res.render('edit-item-form.ejs',{pageTitle:'Edit Item Details', itemName:req.body.name, updateitem:result});
 	    }
 	});
   });
 
 router.post('/save-changes', function(req,res){
 let sqlquery="UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE name = ?";
-let identifyer = req.flash('name')
-let record = [req.body.name,req.body.tags,req.body.weight,req.body.notes,req.body.price,req.body.imageLink,identifyer];
+
+let record = [req.body.name,req.body.tags,req.body.weight,req.body.notes,req.body.price,req.body.imageLink,req.body.originalName];
 
 db.query(sqlquery, record,(err, result) => {
             if (err) {

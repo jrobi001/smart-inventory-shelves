@@ -1,39 +1,43 @@
 <%- include('includes/head.ejs') %>
 <%- include('includes/navigation.ejs') %>
 <main>
+	
 	<form action="/save-changes" method="post">     
 	<% updateitem.forEach(function(iteminfo){ %>
               
                
 	    <div class="form-element">
                 <p>Name:</p>
-                <input type="text" name="name" id="itemName" value="<%= iteminfo.name %>">
+                <input type="text" name="name" id="itemName" value="<%=iteminfo.name%>">
             </div>
             <div class="form-element">
                 <p>Tags:</p>
-                <input type="text" name="tags" id="tags" value="<%= iteminfo.tags %>">
+                <input type="text" name="tags" id="tags" value="<%=iteminfo.tags%>">
             </div>
             <div class="form-element">
                 <p>Description:</p>
-                <textarea name="notes" id="notes" rows="10"><%= iteminfo.notes %></textarea>
+                <textarea name="notes" id="notes" rows="10"><%=iteminfo.notes%></textarea>
             </div>
             <div class="form-element">
                 <p>Price:</p>
-                <input type="number" step="0.01" name="price" id="price" value="<%= iteminfo.price %>">
+                <input type="number" step="0.01" name="price" id="price" value="<%=iteminfo.price%>">
             </div>
             <div class="form-element">
                 <p>Weight:</p>
-                <input type="number" step="0.01" name="weight" id="weight" value="<%= iteminfo.weight %>">
+                <input type="number" step="0.01" name="weight" id="weight" value="<%=iteminfo.weight%>">
             </div>
             <div class="form-element">
                 <p>ImageLink:</p>
-                <input type="text" name="imageLink" id="imageLink" value="<%= iteminfo.imageLink %>">
+                <input type="text" name="imageLink" id="imageLink" value="<%=iteminfo.imageLink%>">
             </div>
+	
             <button class="btn" type="submit">Edit Item</button>
 	    <a href="/item-select" class="button">Abort Changes</a>
 	
 	<% }) %> 
-        </form>
+	<input type="hidden" name="originalName" id="originalName" value="<%=itemName%>">
+                    
+	</form>
 
 		    
 	
