@@ -49,7 +49,14 @@ module.exports = class Overview {
     }
 
     static fetchAllWeights() {
-
+        return dbPromise.execute(
+            'SELECT weight FROM id1weights ORDER BY id DESC LIMIT 0, 1',
+            'SELECT weight FROM id2weights ORDER BY id DESC LIMIT 0, 1',
+            'SELECT weight FROM id3weights ORDER BY id DESC LIMIT 0, 1',
+            'SELECT weight FROM id4weights ORDER BY id DESC LIMIT 0, 1',
+            'SELECT weight FROM id5weights ORDER BY id DESC LIMIT 0, 1',
+            'SELECT weight FROM id6weights ORDER BY id DESC LIMIT 0, 1'
+        );
     }
 
 }
