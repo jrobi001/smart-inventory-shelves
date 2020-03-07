@@ -52,7 +52,7 @@ div a{
   justify-content:center;
   background-color: #FF7F50;
   color: white;
-  height:310px;
+  height:500px;
 
 }
 .main-images{
@@ -81,13 +81,21 @@ div a{
  p{margin:0;}
 
 input[type = "text"] {
-margin:10px;
+margin:10px 0px;
+
 }
 
-input[type= "radio"]{
-margin:10px;
-}
+
 
 input[type = "submit"]{
 margin-top:10px;
+}
+
+.button {
+  
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 4px 2px 4px;
+  
 }

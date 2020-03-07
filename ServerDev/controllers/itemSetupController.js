@@ -27,7 +27,6 @@ exports.postConfirmShelf = (req, res, next) => {
             } else {
                 return Item.findById(itemId)
             }
-            //if (itemId == null), skip confirm shelf => add-item
         }).then(([data, meta]) => {
             const itemData = data[0];
             console.log(itemData.name);
