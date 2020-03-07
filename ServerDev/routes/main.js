@@ -168,6 +168,4 @@ router.post('/change-imageLink', (req, res) => {
 
 router.get('/overview-list', mainController.getShelfOverviewList);
 
-router.get('/overview-test', mainController.getOverviewTest);
-
 module.exports = router
