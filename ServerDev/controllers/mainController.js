@@ -51,3 +51,8 @@ exports.getShelfOverviewList = (req, res, next) => {
         })
         .catch(err => console.log(err));
 }
+
+exports.getOverviewTest = (req, res, next) => {
+    const shelfOverview = new Overview([], null, null, null, null, null, null)
+
+}
