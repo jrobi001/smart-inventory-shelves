@@ -1,0 +1,69 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <main>
+
+        <p>later update this page to only show relevant form fields(without a long route)</p>
+        <a
+            href="https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml">https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml</a>
+        <br>
+        <h3>What Settings would you like for <%= itemName %> on shelf <%= shelfPos %> </h3>
+        <form action="/item-setup/confirm-settings" method="POST">
+            <div class="form-element">
+                <p>Threshold Type</p>
+                <select id="ThrType">
+                    <option value="NUMBER">NUMBER</option>
+                    <option value="ABSOLUTE">ABSOLUTE</option>
+                    <option value="PERCENT">PERCENT</option>
+                </select>
+            </div>
+
+            <div class="form-element">
+                <p>Threshold Number</p>
+                <input type="number" step="1" name="ThrNum" id="ThrNum">
+            </div>
+            <div class="form-element">
+                <p>Threshold Absolute</p>
+                <input type="number" step="1" name="ThrAbs" id="ThrAbs">
+            </div>
+            <div class="form-element">
+                <p>Threshold Percent</p>
+                <input type="number" step="1" name="ThrPer" id="ThrPer">
+            </div>
+
+
+            <div class="form-element">
+                <p>Auto Calculate 100 percent weight?</p>
+                <select id="AutoCalc">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+
+            <div class="form-element">
+                <p>Manually Set 100 Percent weight:</p>
+                <input type="number" step="0.01" name="HundredPercent" id="HundredPercent">
+            </div>
+
+
+
+            <div class="form-element">
+                <p>Send a warning when Item falls below threshold?</p>
+                <select id="warning">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+
+
+
+            <button class="btn" type="submit">Save settings</button>
+        </form>
+        <form action="/item-setup" method="GET">
+            <button class="btn" type="submit">No, take me back!</button>
+        </form>
+    </main>
+</body>
+
+</html>

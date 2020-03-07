@@ -7,30 +7,58 @@
         <p>this is a shelf overview page</p>
 
         <% for (var i = 0; i < shelves.length; i ++) { %>
-        <% if (shelves[i].items_id === null) { continue } else { %>
+
+
 
         <div class="productGrid">
+
+
             <div class="imagebox">
+                <% if (shelves[i].imageLink != null) { %>
                 <img src="<%= shelves[i].imageLink %>" alt="">
+                <% } else { %>
+                <p>no image</p>
+                <% } %>
             </div>
+
+
             <div class="detailsbox">
+                <% if (shelves[i].name != null) { %>
                 <h2><%= shelves[i].name %></h2>
+                <% } else { %>
+                <h2>---Shelf Empty---</h2>
+                <% } %>
+
                 <p><%= shelves[i].tags %></p>
             </div>
+
+
             <div class="numberbox">
+                <% if (weights[i] != null && shelves[i].weight != null) { %>
                 <h1><%= 
-                        weights[i] / shelves[i].weight
+                        Math.floor(weights[i] / shelves[i].weight)
                     %></h1>
+                <% } else if (shelves[i].weight == null) { %>
+                <h2>shelf empty</h2>
+                <% } else { %>
+                <h2>no weight records</h2>
+                <% } %>
             </div>
+
+
             <div class="statusbar-full">
                 full
             </div>
+
+
             <div class="statusbar-current">
                 empty
             </div>
+
+
         </div>
         <br>
-        <% } %>
+
         <% } %>
     </main>
 </body>

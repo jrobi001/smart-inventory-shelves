@@ -3,6 +3,7 @@
 
 <body>
     <main>
+        <h3>What Item would you like to set up on shelf <%= shelfPos %> </h3>
         <form action="/item-setup/shelf-settings" method="POST">
             <div class="form-element">
                 <p>Name:</p>
@@ -28,7 +29,11 @@
                 <p>ImageLink:</p>
                 <input type="text" name="imageLink" id="imageLink">
             </div>
+            <input type="hidden" name="shelfPos" value="<%= shelfPos %> ">
             <button class="btn" type="submit">Add Item</button>
+        </form>
+        <form action="/item-setup" method="GET">
+            <button class="btn" type="submit">No, take me back!</button>
         </form>
     </main>
 </body>
