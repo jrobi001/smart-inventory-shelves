@@ -2,7 +2,7 @@ const http = require("http");
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-
+var session = require('express-session');
 const itemSetupController = require('../controllers/itemSetupController');
 const mainController = require('../controllers/mainController');
 
@@ -25,7 +25,10 @@ router.get('/', (req, res, next) => {
     });
 
 });
+router.get('/404', function (req, res) {
+    res.render('404.ejs', { pageTitle: '404 ERROR' });
 
+})
 
 router.get('/delete', function (req, res) {
     res.render('shelf-selector-delete.ejs');
@@ -54,116 +57,112 @@ router.get('/template-example', (req, res, next) => {
     });
 });
 
-
-router.get('/edit-items', (req, res) => {
-    res.render('edit-items.ejs');
-});
-router.post('/edit-selector', (req, res) => {
-
-    if (req.body.name == "description") {
-
-        res.render('edit-description.ejs');
-    }
-
-    if (req.body.name == "name") {
-        res.render('edit-name.ejs');
-    }
-
-    if (req.body.name == "weight") {
-        res.render('edit-weight.ejs');
-    }
-
-    if (req.body.name == "tags") {
-        res.render('edit-tags.ejs');
-    }
-
-    if (req.body.name == "imageLink") {
-        res.render('edit-imageLink.ejs');
-    }
+router.get('/item-select', function (req, res) {
+    res.render('select-item.ejs', { pageTitle: 'Item Select' });
 
 });
 
-router.post('/change-description', (req, res) => {
-    let sqlStatement = "UPDATE items SET notes = ?  WHERE name = ?";
-    let record = [req.body.description, req.body.name];
-    db.query(sqlStatement, record, (err, result) => {
+
+
+
+router.post('/view-details', function (req, res) {
+    let sqlquery = "SELECT name,tags,weight,notes,price,imageLink FROM items WHERE name = ?";
+    let record = [req.body.name];
+    req.flash('name', req.body.name);
+
+    db.query(sqlquery, record, (err, result) => {
         if (err) {
-            throw (err)
+            res.redirect('/404');
         }
-        console.log(result.affectedRows);
-        if (result.affectedRows > 0) {
-            res.render('changes-saved.ejs');
-        } else {
-            res.redirect('/edit-items');
+        console.log(result);
+        if (result[0] == undefined) {
+            res.render('item-not-found.ejs', { pageTitle: 'Item Not Found' });
+        }
+        else {
+            res.render('edit-item-form.ejs', { pageTitle: 'Edit Item Details', updateitem: result });
         }
     });
 });
 
-router.post('/change-name', (req, res) => {
-    let sqlStatement = "UPDATE items SET name = ?  WHERE name = ?";
-    let record = [req.body.newname, req.body.name];
-    db.query(sqlStatement, record, (err, result) => {
-        if (err) {
-            throw (err)
-        }
-        console.log(result.affectedRows);
-        if (result.affectedRows > 0) {
-            res.render('changes-saved.ejs');
-        } else {
-            res.redirect('/edit-items');
-        }
-    });
-});
+router.post('/save-changes', function (req, res) {
+    let sqlquery = "UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE name = ?";
+    let identifyer = req.flash('name')
+    let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, req.body.price, req.body.imageLink, identifyer];
 
-router.post('/change-tags', (req, res) => {
-    let sqlStatement = "UPDATE items SET tags = ?  WHERE name = ?";
-    let record = [req.body.tag, req.body.name];
-    db.query(sqlStatement, record, (err, result) => {
+    db.query(sqlquery, record, (err, result) => {
         if (err) {
-            throw (err)
+            res.redirect('/404');
         }
-        console.log(result.affectedRows);
-        if (result.affectedRows > 0) {
-            res.render('changes-saved.ejs');
-        } else {
-            res.redirect('/edit-items');
+
+        else {
+            res.render('changes-saved.ejs', { pageTitle: 'Changes Saved' });
         }
     });
+
+
+
 });
 
 
-router.post('/change-weight', (req, res) => {
-    let sqlStatement = "UPDATE items SET weight = ?  WHERE name = ?";
-    let record = [req.body.weight, req.body.name];
-    db.query(sqlStatement, record, (err, result) => {
-        if (err) {
-            throw (err)
-        }
-        console.log(result.affectedRows);
-        if (result.affectedRows > 0) {
-            res.render('changes-saved.ejs');
-        } else {
-            res.redirect('/edit-items');
-        }
-    });
+router.get('/swap-items', (req, res) => {
+    res.render('swap-item.ejs', { pageTitle: 'Swap Items' });
 });
 
 
-router.post('/change-imageLink', (req, res) => {
-    let sqlStatement = "UPDATE items SET imageLink = ?  WHERE name = ?";
-    let record = [req.body.imageLink, req.body.name];
-    db.query(sqlStatement, record, (err, result) => {
-        if (err) {
-            throw (err)
-        }
-        console.log(result.affectedRows);
-        if (result.affectedRows > 0) {
-            res.render('changes-saved.ejs');
-        } else {
-            res.redirect('/edit-items');
-        }
-    });
+router.post('/swap-shelf-position', (req, res) => {
+
+    let shelfpos1 = req.body.name;
+    let shelfpos2 = req.body.swap;
+    if (shelfpos1 != shelfpos2) {
+        let sqlStatement = "UPDATE shelves SET shelfPosition = ? WHERE shelfPosition = ?";
+        let record1 = [8, shelfpos1];
+        let record2 = [shelfpos1, shelfpos2];
+        let record3 = [shelfpos2, 8];
+        db.query(sqlStatement, record1, (err, result) => {
+
+            if (err) {
+                throw (err)
+            }
+
+            if (result.affectedRows == 0) {
+                res.render('item-swap-fail.ejs', { pageTitle: 'Item Swap Failed' });
+            }
+
+
+            else {
+                db.query(sqlStatement, record2, (err, result1) => {
+
+                    if (err) {
+                        throw (err)
+                    }
+
+                    if (result1.affectedRows == 0) {
+                        res.render('item-swap-fail.ejs', { pageTitle: 'Item Swap Failed' });
+                    } else {
+                        db.query(sqlStatement, record3, (err, result2) => {
+                            if (err) {
+                                throw (err)
+                            }
+                            else {
+                                res.render('item-swapped.ejs', { pageTitle: 'Item Swapped Successfully' });
+                            }
+                        });
+                    }
+                });
+
+            }
+
+        });
+    } else {
+        res.redirect('/swap-items');
+    }
 });
+
+
+
+
+
+
 
 
 router.get('/overview-list', mainController.getShelfOverviewList);
