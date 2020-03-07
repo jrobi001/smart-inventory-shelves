@@ -11,12 +11,16 @@ module.exports = class Overview {
         this.weightId6 = weightId6;
     }
 
+    // join right statement will always output an array 6 items even if shelf is emptu
+    // accessed as a promise using .then(([data, meta]) => { / access array here as data[0] / })
     static fetchAllShevesJoinItems() {
         return dbPromise.execute(
-            'SELECT * FROM items JOIN shelves ON items.id = shelves.items_id ORDER BY shelves.id ASC'
+            'SELECT * FROM items RIGHT JOIN shelves ON items.id = shelves.items_id ORDER BY shelves.id ASC'
         );
     }
 
+    // outputs the most recent weight from id1weights table
+    // must be accessed as a promise using .then(([data, meta]) => { / access as data[0].weight / })
     static fetchWeightId1() {
         return dbPromise.execute(
             'SELECT weight FROM id1weights ORDER BY id DESC LIMIT 0, 1'
@@ -50,7 +54,8 @@ module.exports = class Overview {
 
     // this function returns an array of the most recent item weights
     // in an array orderer of id 1-6
-    // must be accessed as a promise using .then(() => { / code here / })
+    // takes an empty array as input
+    // must be accessed as a promise using .then(() => { / access array here / })
     static fetchAllWeights(weightArr) {
         return this.fetchWeightId1()
             .then(([data, meta]) => {
@@ -92,17 +97,17 @@ module.exports = class Overview {
                 if (data[0] != null) {
                     weightArr.push(data[0].weight);
                 } else {
-                    arr.push(null);
+                    weightArr.push(null);
                 }
                 return Overview.fetchWeightId6();
             })
             .then(([data, meta]) => {
                 if (data[0] != null) {
-                    arr.push(data[0].weight);
+                    weightArr.push(data[0].weight);
                 } else {
-                    arr.push(null);
+                    weightArr.push(null);
                 }
-                return arr
+                return weightArr
             })
             .catch(err => console.log(err));
 
