@@ -3,6 +3,8 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
+var session = require('express-session')
+var flash = require('connect-flash');
 
 
 const app = express();
@@ -16,7 +18,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav2',
-    password: 'cake123'
+    password: 'Igniciouse1@'
 
 });
 const dbPromise = pool.promise();
@@ -33,7 +35,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav2',
-    password: 'cake123'
+    password: 'Igniciouse1@'
 });
 
 db.connect((err) => {
@@ -56,6 +58,12 @@ app.engine('html', require('ejs').renderFile);
 const itemSetupRoutes = require('./routes/itemSetup')
 const mainRoutes = require('./routes/main')
 
+app.use(session({ cookie: { maxAge: 60000 }, 
+                  secret: 'woot',
+                  resave: false, 
+                  saveUninitialized: false}));
+
+app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
