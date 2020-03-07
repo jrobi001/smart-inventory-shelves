@@ -81,13 +81,13 @@ exports.getEditItem = (req, res, next) => {
             const itemId = data[0].items_id;
             console.log(itemId)
             if (itemId == null) {
-                res.send('that shelf is empty, maybe we will redirect to the add item page ehre!')
+                res.send('that shelf is empty, maybe we will redirect to the add item page hehre!')
             }
             return Item.findById(itemId);
         })
         .then(([data, meta]) => {
             item = data[0];
-            console.log(item);
+            // console.log(item);
             res.render('item-setup/edit-item', {
                 pageTitle: 'edit item',
                 shelfPos: shelfPos,
@@ -99,8 +99,26 @@ exports.getEditItem = (req, res, next) => {
                 itemPrice: item.price,
                 itemImageLink: item.imageLink
             });
-
         })
+        .catch(err => console.log(err));
+}
 
+exports.postEditConfirmed = (req, res, next) => {
+    const itemName = req.body.name;
+    const tags = req.body.tags;
+    const weight = req.body.weight;
+    const notes = req.body.notes;
+    const price = req.body.price;
+    const imageLink = req.body.imageLink;
+    const itemId = parseInt(req.body.itemId);
+    const shelfPos = req.body.shelfPos;
+
+
+    const editedItem = new Item(itemId, itemName, tags, weight, notes, price, imageLink);
+    // console.log(editedItem);
+    editedItem.updateItem()
+        .then(
+            res.send('congrats the item ' + itemName + ' on shelf ' + itemId + 'has been updated')
+        )
         .catch(err => console.log(err));
 }

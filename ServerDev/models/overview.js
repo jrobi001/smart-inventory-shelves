@@ -48,4 +48,8 @@ module.exports = class Overview {
         );
     }
 
+    static fetchAllWeights() {
+
+    }
+
 }
