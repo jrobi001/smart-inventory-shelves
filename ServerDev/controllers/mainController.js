@@ -22,3 +22,9 @@ exports.getShelfOverviewList = (req, res, next) => {
         })
         .catch(err => console.log(err));
 }
+
+exports.getShelfDetails = (req, res, next) => {
+    res.render('test/shelf-details', {
+        pageTitle: 'Shelf Details'
+    });
+}
