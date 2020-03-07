@@ -54,9 +54,12 @@ exports.getShelfOverviewList = (req, res, next) => {
 
 exports.getOverviewTest = (req, res, next) => {
     const shelfOverview = new Overview([], null, null, null, null, null, null)
-    Overview.fetchAllWeights()
-        .then(([data, meta]) => {
-            console.log(data);
-            res.send('at least this page loads')
-        })
+    const weights = [];
+    Overview.fetchAllWeights(weights).then(() => {
+        console.log(weights);
+        res.send('at least this page loads')
+    })
+        .catch(err => console.log(err));
+
+
 }

@@ -48,15 +48,64 @@ module.exports = class Overview {
         );
     }
 
-    static fetchAllWeights() {
-        return dbPromise.execute(
-            'SELECT weight FROM id1weights ORDER BY id DESC LIMIT 0, 1',
-            'SELECT weight FROM id2weights ORDER BY id DESC LIMIT 0, 1',
-            'SELECT weight FROM id3weights ORDER BY id DESC LIMIT 0, 1',
-            'SELECT weight FROM id4weights ORDER BY id DESC LIMIT 0, 1',
-            'SELECT weight FROM id5weights ORDER BY id DESC LIMIT 0, 1',
-            'SELECT weight FROM id6weights ORDER BY id DESC LIMIT 0, 1'
-        );
+    // this function returns an array of the most recent item weights
+    // in an array orderer of id 1-6
+    // must be accessed as a promise using .then(() => { / code here / })
+    static fetchAllWeights(weightArr) {
+        return this.fetchWeightId1()
+            .then(([data, meta]) => {
+                //checking the table is not empty
+                if (data[0] != null) {
+                    //pushing a weight to the array
+                    weightArr.push(data[0].weight);
+                } else {
+                    //if table empty push null - showing no weights
+                    weightArr.push(null);
+                }
+                return Overview.fetchWeightId2();
+            })
+            .then(([data, meta]) => {
+                if (data[0] != null) {
+                    weightArr.push(data[0].weight);
+                } else {
+                    weightArr.push(null);
+                }
+                return Overview.fetchWeightId3();
+            })
+            .then(([data, meta]) => {
+                if (data[0] != null) {
+                    weightArr.push(data[0].weight);
+                } else {
+                    weightArr.push(null);
+                }
+                return Overview.fetchWeightId4();
+            })
+            .then(([data, meta]) => {
+                if (data[0] != null) {
+                    weightArr.push(data[0].weight);
+                } else {
+                    weightArr.push(null);
+                }
+                return Overview.fetchWeightId5();
+            })
+            .then(([data, meta]) => {
+                if (data[0] != null) {
+                    weightArr.push(data[0].weight);
+                } else {
+                    arr.push(null);
+                }
+                return Overview.fetchWeightId6();
+            })
+            .then(([data, meta]) => {
+                if (data[0] != null) {
+                    arr.push(data[0].weight);
+                } else {
+                    arr.push(null);
+                }
+                return arr
+            })
+            .catch(err => console.log(err));
+
     }
 
 }
