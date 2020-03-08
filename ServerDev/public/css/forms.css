@@ -1,0 +1,16 @@
+.form-element {
+    width: 80%;
+}
+input {
+    width: 80%;
+    height: 1.5em;
+}
+
+textarea {
+    width: 80%;
+}
+
+select {
+    width: 40%;
+    height: 1.5em;
+}

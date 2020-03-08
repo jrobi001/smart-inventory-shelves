@@ -1,66 +1,63 @@
 <%- include('includes/head.ejs') %>
 <link rel="stylesheet" href="/css/shelfview.css">
 </head>
+<%- include('includes/navigation.ejs') %>
+<main>
+    <p>this is a shelf overview page</p>
 
-<body>
-    <main>
-        <p>this is a shelf overview page</p>
-
-        <% for (var i = 0; i < shelves.length; i ++) { %>
-
+    <% for (var i = 0; i < shelves.length; i ++) { %>
 
 
-        <div class="productGrid">
+
+    <div class="productGrid">
 
 
-            <div class="imagebox">
-                <% if (shelves[i].imageLink != null) { %>
-                <img src="<%= shelves[i].imageLink %>" alt="">
-                <% } else { %>
-                <p>no image</p>
-                <% } %>
-            </div>
+        <div class="imagebox">
+            <% if (shelves[i].imageLink != null) { %>
+            <img src="<%= shelves[i].imageLink %>" alt="">
+            <% } else { %>
+            <p>no image</p>
+            <% } %>
+        </div>
 
 
-            <div class="detailsbox">
-                <% if (shelves[i].name != null) { %>
-                <h2><%= shelves[i].name %></h2>
-                <% } else { %>
-                <h2>---Shelf Empty---</h2>
-                <% } %>
+        <div class="detailsbox">
+            <% if (shelves[i].name != null) { %>
+            <h2><%= shelves[i].name %></h2>
+            <% } else { %>
+            <h2>---Shelf Empty---</h2>
+            <% } %>
 
-                <p><%= shelves[i].tags %></p>
-            </div>
+            <p><%= shelves[i].tags %></p>
+        </div>
 
 
-            <div class="numberbox">
-                <% if (weights[i] != null && shelves[i].weight != null) { %>
-                <h1><%= 
+        <div class="numberbox">
+            <% if (weights[i] != null && shelves[i].weight != null) { %>
+            <h1><%= 
                         Math.floor(weights[i] / shelves[i].weight)
                     %></h1>
-                <% } else if (shelves[i].weight == null) { %>
-                <h2>shelf empty</h2>
-                <% } else { %>
-                <h2>no weight records</h2>
-                <% } %>
-            </div>
-
-
-            <div class="statusbar-full">
-                full
-            </div>
-
-
-            <div class="statusbar-current">
-                empty
-            </div>
-
-
+            <% } else if (shelves[i].weight == null) { %>
+            <h2>shelf empty</h2>
+            <% } else { %>
+            <h2>no weight records</h2>
+            <% } %>
         </div>
-        <br>
 
-        <% } %>
-    </main>
-</body>
 
-</html>
+        <div class="statusbar-full">
+            full
+        </div>
+
+
+        <div class="statusbar-current">
+            empty
+        </div>
+
+
+    </div>
+    <br>
+
+    <% } %>
+</main>
+<%- include('includes/footer.ejs')%>

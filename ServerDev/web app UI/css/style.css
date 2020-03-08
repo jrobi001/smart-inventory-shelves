@@ -18,7 +18,7 @@
   margin: auto;
   display: flex;
   width: 100%;
-  background-color: #800020;
+  background-color: #4d4d4d;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
@@ -49,7 +49,7 @@ div a{
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
-  background-color: #FF7F50;
+  background-color: #4d4d4d;
   color: white;
 
 }
@@ -67,7 +67,7 @@ div a{
   flex-direction:row;
   justify-content: space-around;
   height:92px;
-  background-color: #800020;
+  background-color: #4d4d4d;
   align-items:center ;
   color: white;
  }

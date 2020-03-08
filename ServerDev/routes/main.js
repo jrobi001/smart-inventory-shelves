@@ -20,20 +20,25 @@ router.get('/', (req, res, next) => {
         if (err) {
             res.redirect('./');
         }
-        
         res.render('dev-home');
     });
-
 });
 router.get('/404', function (req, res) {
     res.render('404.ejs', { pageTitle: '404 ERROR' });
 
 })
 
+
+// Logic for delete-----------------------------------------------------------------------
+
+//update this to use a selector/be automatic
 router.get('/delete', function (req, res) {
-    res.render('shelf-selector-delete.ejs');
+    res.render('shelf-selector-delete.ejs', {
+        pageTitle: 'delete selector'
+    });
 })
 
+//confirm screen before deletion
 router.post('/delete-result', function (req, res) {
     let sqlquery = "UPDATE shelves SET items_id = NULL, updateFrequency = '0', thresholdType = 'NUMBER', thresholdAbsolute = '0', thresholdNumber = '0', thresholdPercent = '0', 100percentWeight = NULL, autocalc100Percent = '0', warning = '1' WHERE shelfPosition = ?";
     let newrecord = [req.body.name];
@@ -51,65 +56,52 @@ router.post('/delete-result', function (req, res) {
 })
 
 
-router.get('/template-example', (req, res, next) => {
-    res.render('template-example', {
-        pageTitle: 'template example'
-    });
-});
+// Logic for edit item-----------------------------------------------------------------------
 
+//remove selector by typing name, use shelfpos instead
 router.get('/item-select', function (req, res) {
     res.render('select-item.ejs', { pageTitle: 'Item Select' });
 
 });
 
 
-
-
 router.post('/view-details', function (req, res) {
     let sqlquery = "SELECT name,tags,weight,notes,price,imageLink FROM items WHERE name = ?";
     let record = [req.body.name];
-    
 
     db.query(sqlquery, record, (err, result) => {
         if (err) {
-            throw(err)
+            throw (err)
         }
         console.log(result);
         if (result[0] == undefined) {
             res.render('item-not-found.ejs', { pageTitle: 'Item Not Found' });
         }
         else {
-            res.render('edit-item-form.ejs', { pageTitle: 'Edit Item Details',itemName:req.body.name, updateitem: result });
+            res.render('edit-item-form.ejs', { pageTitle: 'Edit Item Details', itemName: req.body.name, updateitem: result });
         }
     });
 });
 
 router.post('/save-changes', function (req, res) {
     let sqlquery = "UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE name = ?";
-    
     let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, req.body.price, req.body.imageLink, req.body.originalName];
 
     db.query(sqlquery, record, (err, result) => {
         if (err) {
             throw (err)
         }
-
         else {
             res.render('changes-saved.ejs', { pageTitle: 'Changes Saved' });
         }
     });
-
-
-
 });
 
+// Logic for swap shelves-----------------------------------------------------------------------
 
-router.get('/swap-items', (req, res) => {
+router.get('/swap-shelves', (req, res) => {
     res.render('swap-item.ejs', { pageTitle: 'Swap Items' });
 });
-
-
-
 
 
 router.post('/swap-shelf-position', (req, res) => {
@@ -118,27 +110,21 @@ router.post('/swap-shelf-position', (req, res) => {
     let shelfpos2 = req.body.swap;
     if (shelfpos1 != shelfpos2) {
         let sqlStatement = "UPDATE shelves SET shelfPosition = ? WHERE shelfPosition = ?";
-        let record1 = [8, shelfpos1];
+        let record1 = [99, shelfpos1];
         let record2 = [shelfpos1, shelfpos2];
-        let record3 = [shelfpos2, 8];
+        let record3 = [shelfpos2, 99];
         db.query(sqlStatement, record1, (err, result) => {
-
             if (err) {
                 throw (err)
             }
-
-	   if (result.affectedRows == 0) {
+            if (result.affectedRows == 0) {
                 res.render('item-swap-fail.ejs', { pageTitle: 'Item Swap Failed' });
             }
-
-
-		else{
+            else {
                 db.query(sqlStatement, record2, (err, result) => {
-
                     if (err) {
                         throw (err)
                     }
-
                     if (result.affectedRows == 0) {
                         res.render('item-swap-fail.ejs', { pageTitle: 'Item Swap Failed' });
                     } else {
@@ -152,25 +138,24 @@ router.post('/swap-shelf-position', (req, res) => {
                         });
                     }
                 });
-		}
-            
-
-        
-    });
-	} else {
+            }
+        });
+    } else {
         res.redirect('/swap-items');
     }
 });
 
+// -----------------------------------------------------------------------
 
 
-
-
-
-
-
-router.get('/overview-list', mainController.getShelfOverviewList);
+router.get('/home', mainController.getShelfOverviewList);
 
 router.get('/shelf-details', mainController.getShelfDetails);
+
+router.get('/template-example', (req, res, next) => {
+    res.render('template-example', {
+        pageTitle: 'template example'
+    });
+});
 
 module.exports = router
