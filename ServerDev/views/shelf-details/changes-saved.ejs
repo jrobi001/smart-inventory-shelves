@@ -1,5 +1,6 @@
-<%- include('includes/head.ejs') %>
-<%- include('includes/navigation.ejs') %>
+<%- include('../includes/head.ejs') %>
+</head>
+<%- include('../includes/navigation.ejs') %>
 <script>
     var timer = setTimeout(function () {
         window.location = '/shelf-details/<%= shelfPos %>'
@@ -9,4 +10,4 @@
     <h1> Your Changes Have Been Saved Successfully </h1>
     </p> You are being Redirected...</p>
 
-    <%- include('includes/footer.ejs')%>
+    <%- include('../includes/footer.ejs')%>

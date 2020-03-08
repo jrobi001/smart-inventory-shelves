@@ -28,6 +28,12 @@ module.exports = class Shelf {
         );
     }
 
+    static fetchIdFromPos(pos) {
+        return dbPromise.execute(
+            'SELECT id FROM shelves WHERE shelves.shelfPosition = ?', [pos]
+        );
+    }
+
     static fetchByID(id) {
         return dbPromise.execute(
             'SELECT * FROM shelves WHERE shelves.id = ?', [id]

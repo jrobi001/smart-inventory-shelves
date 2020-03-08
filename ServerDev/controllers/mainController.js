@@ -9,7 +9,7 @@ exports.getShelfOverviewList = (req, res, next) => {
     Overview.fetchAllShevesJoinItems(weights)
         .then(([data, meta]) => {
             shelfOverview.shelfItemsJoin = data;
-            console.log(shelfOverview.shelfItemsJoin);
+            // console.log(shelfOverview.shelfItemsJoin);
             // const shelves = data;
             return Overview.fetchAllWeights(weights)
         }).then(() => {
