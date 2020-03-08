@@ -68,30 +68,30 @@ router.get('/item-select', function (req, res) {
 router.post('/view-details', function (req, res) {
     let sqlquery = "SELECT name,tags,weight,notes,price,imageLink FROM items WHERE name = ?";
     let record = [req.body.name];
-    req.flash('name', req.body.name);
+    
 
     db.query(sqlquery, record, (err, result) => {
         if (err) {
-            res.redirect('/404');
+            throw(err)
         }
         console.log(result);
         if (result[0] == undefined) {
             res.render('item-not-found.ejs', { pageTitle: 'Item Not Found' });
         }
         else {
-            res.render('edit-item-form.ejs', { pageTitle: 'Edit Item Details', updateitem: result });
+            res.render('edit-item-form.ejs', { pageTitle: 'Edit Item Details',itemName:req.body.name, updateitem: result });
         }
     });
 });
 
 router.post('/save-changes', function (req, res) {
     let sqlquery = "UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE name = ?";
-    let identifyer = req.flash('name')
-    let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, req.body.price, req.body.imageLink, identifyer];
+    
+    let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, req.body.price, req.body.imageLink, req.body.originalName];
 
     db.query(sqlquery, record, (err, result) => {
         if (err) {
-            res.redirect('/404');
+            throw (err)
         }
 
         else {
@@ -109,16 +109,9 @@ router.get('/swap-items', (req, res) => {
 });
 
 
-<<<<<<< HEAD
-router.post('/view-details', function(req, res) {
-        
-	
-	let sqlquery = "SELECT name,tags,weight,notes,price,imageLink FROM items WHERE name = ?";
-	let record = [req.body.name];       
-	
-	        
-	db.query(sqlquery, record,(err, result) => {
-=======
+
+
+
 router.post('/swap-shelf-position', (req, res) => {
 
     let shelfpos1 = req.body.name;
@@ -130,48 +123,26 @@ router.post('/swap-shelf-position', (req, res) => {
         let record3 = [shelfpos2, 8];
         db.query(sqlStatement, record1, (err, result) => {
 
->>>>>>> 3e7845f782db817aea3e7c08a103f67845f9a3a2
             if (err) {
                 throw (err)
             }
-<<<<<<< HEAD
-	   
-	if(result[0] == undefined){
-	res.render('item-not-found.ejs',{ pageTitle: 'Item Not Found' });
-	}
-	else{
-            res.render('edit-item-form.ejs',{pageTitle:'Edit Item Details', itemName:req.body.name, updateitem:result});
-	    }
-	});
-  });
 
-router.post('/save-changes', function(req,res){
-let sqlquery="UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE name = ?";
-
-let record = [req.body.name,req.body.tags,req.body.weight,req.body.notes,req.body.price,req.body.imageLink,req.body.originalName];
-
-db.query(sqlquery, record,(err, result) => {
-            if (err) {
-                res.redirect('/404');
-=======
-
-            if (result.affectedRows == 0) {
+	   if (result.affectedRows == 0) {
                 res.render('item-swap-fail.ejs', { pageTitle: 'Item Swap Failed' });
->>>>>>> 3e7845f782db817aea3e7c08a103f67845f9a3a2
             }
 
 
-            else {
-                db.query(sqlStatement, record2, (err, result1) => {
+		else{
+                db.query(sqlStatement, record2, (err, result) => {
 
                     if (err) {
                         throw (err)
                     }
 
-                    if (result1.affectedRows == 0) {
+                    if (result.affectedRows == 0) {
                         res.render('item-swap-fail.ejs', { pageTitle: 'Item Swap Failed' });
                     } else {
-                        db.query(sqlStatement, record3, (err, result2) => {
+                        db.query(sqlStatement, record3, (err, result) => {
                             if (err) {
                                 throw (err)
                             }
@@ -181,11 +152,12 @@ db.query(sqlquery, record,(err, result) => {
                         });
                     }
                 });
+		}
+            
 
-            }
-
-        });
-    } else {
+        
+    });
+	} else {
         res.redirect('/swap-items');
     }
 });
