@@ -71,9 +71,12 @@
         <a href="" class="new-item">
             <h1>Set up a new item on this shelf</h1>
         </a>
-        <a href="" class="delete-item">
-            <h1>Delete Item and reset settings</h1>
-        </a>
+        <form class="delete-item" action="/delete/confirm" method="POST">
+            <input type="hidden" name="shelfPos" value="<%= shelfPos %> ">
+            <button class="btn" type="submit">
+                <h1>Delete Item and reset settings</h1>
+            </button>
+        </form>
 
     </div>
 

@@ -12,12 +12,12 @@ exports.getShefSelector = (req, res, next) => {
 }
 
 exports.postConfirmShelf = (req, res, next) => {
-    console.log('hello');
+    // console.log('hello');
     const shelfPosition = req.body.shelfPos;
-    console.log(shelfPosition)
+    // console.log(shelfPosition)
     Shelf.fetchItemIdFromPos(shelfPosition)
         .then(([data, meta]) => {
-            console.log('still working');
+            // console.log('still working');
             const itemId = data[0].items_id
             if (itemId == null) {
                 return res.render('item-setup/item-form', {

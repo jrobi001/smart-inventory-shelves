@@ -20,6 +20,34 @@ router.get('/', function (req, res) {
 })
 
 //confirm screen before deletion
+router.post('/confirm', (req, res, next) => {
+    const shelfPosition = req.body.shelfPos;
+    // console.log(shelfPosition)
+    Shelf.fetchItemIdFromPos(shelfPosition)
+        .then(([data, meta]) => {
+            // console.log('still working');
+            const itemId = data[0].items_id
+            if (itemId == null) {
+                //should really display a message here that the shelf is already empty
+                console.log('that shelf is already empty')
+                return res.render('delete/shelf-selector-delete', {
+                    pageTitle: 'delete selector'
+                })
+            } else {
+                return Item.findById(itemId)
+            }
+        }).then(([data, meta]) => {
+            const itemData = data[0];
+            console.log(itemData.name);
+            res.render('delete/confirm-delete', {
+                pageTitle: 'Confirm shelf',
+                shelfPos: shelfPosition,
+                item: itemData
+            })
+        })
+        .catch(err => console.log(err));
+})
+
 
 // updated to also clear relevant weights table of all data
 router.post('/result', function (req, res) {
