@@ -15,23 +15,30 @@
 }
 
 .title-container{
+  
+  padding-left: 10%;
+  
   margin: auto;
   display: flex;
-  width: 100%;
-  background-color: #800020;
+  
+  background-color: #4d4d4d;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
+  /* padding-left: 6em; */
   color: white;
 
 
 }
 
 .navigation-container{
+  width: 90%;
+  padding-left: 5%;
+  padding-right: 5%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   background-color: #4ddbff;
   height: 50px;
   align-items: center;
@@ -40,19 +47,35 @@ div a{
   color: white;
 }
 
+.nav-item {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  background-color: rgb(75, 126, 160);
+  border-radius: 3px;
+  height: 2em;
+  width: 18%;
+  margin-left: 2%;
+}
+
 /*these are the settings for the main div container*/
 /*look at everything that is under the main-content div container*/
 
 .main-content{
-  width: 100%;
+  width: 90%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 5%;
+  
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
   justify-content:center;
-  background-color: #FF7F50;
-  color: white;
-  height:500px;
+  background-color: rgb(221, 221, 221);
+  color: black;
+  height:auto;
 
 }
 .main-images{
@@ -69,7 +92,7 @@ div a{
   flex-direction:row;
   justify-content: space-around;
   height:92px;
-  background-color: #800020;
+  background-color: #4d4d4d;
   align-items:center ;
   color: white;
  }
@@ -83,6 +106,10 @@ div a{
 input[type = "text"] {
 margin:10px 0px;
 
+}
+
+main {
+  width: 100%;
 }
 
 

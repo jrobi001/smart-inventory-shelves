@@ -1,13 +1,12 @@
-<!doctype html>
-<html>
-        <head>
-                <title>Delete Shelf</title>
-        </head>
-        <body>
-                <p>Enter the number of a shelf to delete</p>
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+<%- include('includes/navigation.ejs') %>
+<main>
+        <p>Enter the number of a shelf to delete</p>
         <form method="POST" action="/delete-result">
-                <p>Shelf number: <input id="name" type="text" name="name" value="Shelf Number"/></p>
-                <input type = "submit" value="submit" />
+                <p>Shelf number: <input id="name" type="text" name="name" value="Shelf Number" /></p>
+                <input type="submit" value="submit" />
         </form>
-        </body>
-</html>
+</main>
+<%- include('includes/footer.ejs')%>

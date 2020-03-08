@@ -1,26 +1,23 @@
 <%- include('../includes/head.ejs') %>
 </head>
+<%- include('../includes/navigation.ejs') %>
+<main>
+    <h3>Which shelf position would you like to set an item up on?</h3>
+    <form action="/item-setup/confirm-shelf" method="POST">
+        <input type="radio" id="one" name="shelfPos" value="1">
+        <label for="one">one</label><br>
+        <input type="radio" id="two" name="shelfPos" value="2">
+        <label for="two">two</label><br>
+        <input type="radio" id="three" name="shelfPos" value="3">
+        <label for="three">three</label><br>
+        <input type="radio" id="four" name="shelfPos" value="4">
+        <label for="four">four</label><br>
+        <input type="radio" id="five" name="shelfPos" value="5">
+        <label for="five">five</label><br>
+        <input type="radio" id="six" name="shelfPos" value="6">
+        <label for="six">six</label><br>
 
-<body>
-    <main>
-        <h3>Which shelf position would you like to set an item up on?</h3>
-        <form action="/item-setup/confirm-shelf" method="POST">
-            <input type="radio" id="one" name="shelfPos" value="1">
-            <label for="one">one</label><br>
-            <input type="radio" id="two" name="shelfPos" value="2">
-            <label for="two">two</label><br>
-            <input type="radio" id="three" name="shelfPos" value="3">
-            <label for="three">three</label><br>
-            <input type="radio" id="four" name="shelfPos" value="4">
-            <label for="four">four</label><br>
-            <input type="radio" id="five" name="shelfPos" value="5">
-            <label for="five">five</label><br>
-            <input type="radio" id="six" name="shelfPos" value="6">
-            <label for="six">six</label><br>
-
-            <button class="btn" type="submit">submit</button>
-        </form>
-    </main>
-</body>
-
-</html>
+        <button class="btn" type="submit">submit</button>
+    </form>
+</main>
+<%- include('../includes/footer.ejs')%>

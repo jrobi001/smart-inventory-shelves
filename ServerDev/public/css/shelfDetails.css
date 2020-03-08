@@ -1,9 +1,27 @@
+/* 
+font built using 
+https://www.fontsquirrel.com/tools/webfont-generator 
+from
+https://github.com/microsoft/cascadia-code/releases
+open-source: uses SIL Open Font License v1.10
+free to use modify distribute etc
+*/
+
+@font-face {
+    font-family: 'cascadia_code';
+    src: url('../font/cascadiapl-webfont.woff2') format('woff2'),
+         url('../font/cascadiapl-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 p {
     color: blue;
 }
 h2 {
     margin: 0em;
     margin-bottom: 0.2em;
+    
 }
 
 h1 {
@@ -37,24 +55,28 @@ img {
     grid-column: 2;
     grid-row: 1;
     background-color: rgb(255, 178, 201);
+    font-family: 'cascadia_code';
 }
 
 .position-box {
     grid-column: 4;
     grid-row: 1;
     background-color: rgb(186, 255, 186);
+    font-family: 'cascadia_code';
 }
 
 .item-weight {
     grid-column: 3;
     grid-row: 1;
     background-color: rgb(226, 152, 255);
+    font-family: 'cascadia_code';
 }
 
 .settings-header {
     grid-column: 5;
     grid-row: 1;
     background-color: rgb(255, 233, 161);
+    font-family: 'cascadia_code';
 }
 
 .shelf-weight {
