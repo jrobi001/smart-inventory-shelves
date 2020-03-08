@@ -1,49 +1,47 @@
 <%- include('includes/head.ejs') %>
 <%- include('includes/navigation.ejs') %>
 <main>
-	
-	<form action="/save-changes" method="post">     
-	<% updateitem.forEach(function(iteminfo){ %>
-              
-               
-	    <div class="form-element">
-                <p>Name:</p>
-                <input type="text" name="name" id="itemName" value="<%=iteminfo.name%>">
-            </div>
-            <div class="form-element">
-                <p>Tags:</p>
-                <input type="text" name="tags" id="tags" value="<%=iteminfo.tags%>">
-            </div>
-            <div class="form-element">
-                <p>Description:</p>
-                <textarea name="notes" id="notes" rows="10"><%=iteminfo.notes%></textarea>
-            </div>
-            <div class="form-element">
-                <p>Price:</p>
-                <input type="number" step="0.01" name="price" id="price" value="<%=iteminfo.price%>">
-            </div>
-            <div class="form-element">
-                <p>Weight:</p>
-                <input type="number" step="0.01" name="weight" id="weight" value="<%=iteminfo.weight%>">
-            </div>
-            <div class="form-element">
-                <p>ImageLink:</p>
-                <input type="text" name="imageLink" id="imageLink" value="<%=iteminfo.imageLink%>">
-            </div>
-	
-            <button class="btn" type="submit">Edit Item</button>
-	    <a href="/item-select" class="button">Abort Changes</a>
-	
-	<% }) %> 
-	<input type="hidden" name="originalName" id="originalName" value="<%=itemName%>">
-                    
-	</form>
 
-		    
-	
-		
+    <form action="/shelf-details/edit-item/changes-saved" method="post">
 
-    </main>
+        <div class="form-element">
+            <p>Name:</p>
+            <input type="text" name="name" id="itemName" value="<%=itemInfo.name%>">
+        </div>
+        <div class="form-element">
+            <p>Tags:</p>
+            <input type="text" name="tags" id="tags" value="<%=itemInfo.tags%>">
+        </div>
+        <div class="form-element">
+            <p>Description:</p>
+            <textarea name="notes" id="notes" rows="10"><%=itemInfo.notes%></textarea>
+        </div>
+        <div class="form-element">
+            <p>Price:</p>
+            <input type="number" step="0.01" name="price" id="price" value="<%=itemInfo.price%>">
+        </div>
+        <div class="form-element">
+            <p>Weight:</p>
+            <input type="number" step="0.01" name="weight" id="weight" value="<%=itemInfo.weight%>">
+        </div>
+        <div class="form-element">
+            <p>ImageLink:</p>
+            <input type="text" name="imageLink" id="imageLink" value="<%=itemInfo.imageLink%>">
+
+        </div>
+
+        <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">
+        <input type="hidden" name="itemId" id="itemId" value="<%= itemInfo.id %>">
+
+
+        <button class="btn" type="submit">Edit Item</button>
+        <a href="/shelf-details/<%= shelfPos %> " class="button">Abort Changes</a>
+
+    </form>
+
+
+
+
+
+</main>
 <%- include('includes/footer.ejs')%>
-
-

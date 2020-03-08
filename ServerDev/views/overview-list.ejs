@@ -6,11 +6,8 @@
     <p>this is a shelf overview page</p>
 
     <% for (var i = 0; i < shelves.length; i ++) { %>
-
-
-
+    <a href="/shelf-details/<%= shelves[i].shelfPosition %>">click</a>
     <div class="productGrid">
-
 
         <div class="imagebox">
             <% if (shelves[i].imageLink != null) { %>
@@ -19,7 +16,6 @@
             <p>no image</p>
             <% } %>
         </div>
-
 
         <div class="detailsbox">
             <% if (shelves[i].name != null) { %>
@@ -30,7 +26,6 @@
 
             <p><%= shelves[i].tags %></p>
         </div>
-
 
         <div class="numberbox">
             <% if (weights[i] != null && shelves[i].weight != null) { %>
@@ -44,16 +39,13 @@
             <% } %>
         </div>
 
-
         <div class="statusbar-full">
             full
         </div>
 
-
         <div class="statusbar-current">
             empty
         </div>
-
 
     </div>
     <br>

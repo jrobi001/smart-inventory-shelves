@@ -57,45 +57,49 @@ router.post('/delete-result', function (req, res) {
 
 
 // Logic for edit item-----------------------------------------------------------------------
+// moved to shelfDetails.js
+//removed selector by typing name, used shelfpos instead
 
-//remove selector by typing name, use shelfpos instead
-router.get('/item-select', function (req, res) {
-    res.render('select-item.ejs', { pageTitle: 'Item Select' });
+// router.get('/item-select', function (req, res) {
+//     res.render('select-item.ejs', { pageTitle: 'Item Select' });
 
-});
+// });
 
 
-router.post('/view-details', function (req, res) {
-    let sqlquery = "SELECT name,tags,weight,notes,price,imageLink FROM items WHERE name = ?";
-    let record = [req.body.name];
+// router.post('/view-details', function (req, res) {
+//     //select id from shelves where
+//     let sqlquery = "SELECT name,tags,weight,notes,price,imageLink FROM items WHERE name = ?";
+//     let record = [req.body.name];
 
-    db.query(sqlquery, record, (err, result) => {
-        if (err) {
-            throw (err)
-        }
-        console.log(result);
-        if (result[0] == undefined) {
-            res.render('item-not-found.ejs', { pageTitle: 'Item Not Found' });
-        }
-        else {
-            res.render('edit-item-form.ejs', { pageTitle: 'Edit Item Details', itemName: req.body.name, updateitem: result });
-        }
-    });
-});
+//     db.query(sqlquery, record, (err, result) => {
+//         if (err) {
+//             throw (err)
+//         }
+//         console.log(result);
+//         if (result[0] == undefined) {
+//             res.render('item-not-found.ejs', { pageTitle: 'Item Not Found' });
+//         }
+//         else {
+//             res.render('edit-item-form.ejs', { pageTitle: 'Edit Item Details', itemName: req.body.name, updateitem: result });
+//         }
+//     });
+// });
 
-router.post('/save-changes', function (req, res) {
-    let sqlquery = "UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE name = ?";
-    let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, req.body.price, req.body.imageLink, req.body.originalName];
+// router.post('/save-changes', function (req, res) {
+//     const shelfPos = req.body.shelfPos;
+//     // console.log(shelfPos)
+//     let sqlquery = "UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE name = ?";
+//     let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, req.body.price, req.body.imageLink, req.body.originalName];
 
-    db.query(sqlquery, record, (err, result) => {
-        if (err) {
-            throw (err)
-        }
-        else {
-            res.render('changes-saved.ejs', { pageTitle: 'Changes Saved' });
-        }
-    });
-});
+//     db.query(sqlquery, record, (err, result) => {
+//         if (err) {
+//             throw (err)
+//         }
+//         else {
+//             res.render('changes-saved.ejs', { pageTitle: 'Changes Saved', shelfPos: shelfPos });
+//         }
+//     });
+// });
 
 // Logic for swap shelves-----------------------------------------------------------------------
 
@@ -150,7 +154,7 @@ router.post('/swap-shelf-position', (req, res) => {
 
 router.get('/home', mainController.getShelfOverviewList);
 
-router.get('/shelf-details', mainController.getShelfDetails);
+router.get('/shelf-details-layout', mainController.getShelfDetails);
 
 router.get('/template-example', (req, res, next) => {
     res.render('template-example', {

@@ -23,8 +23,17 @@ exports.getShelfOverviewList = (req, res, next) => {
         .catch(err => console.log(err));
 }
 
-exports.getShelfDetails = (req, res, next) => {
-    res.render('test/shelf-details', {
+exports.getShelfDetailsLayout = (req, res, next) => {
+    res.render('test/shelf-details-layout', {
         pageTitle: 'Shelf Details'
+    });
+}
+
+exports.getShelfDetails = (req, res, next) => {
+    const shelfPos = req.params.shelfPos;
+
+    res.render('shelf-details/shelf-details', {
+        pageTitle: 'Shelf Details',
+        shelfPos: shelfPos
     });
 }

@@ -6,7 +6,6 @@ https://github.com/microsoft/cascadia-code/releases
 open-source: uses SIL Open Font License v1.10
 free to use modify distribute etc
 */
-
 @font-face {
     font-family: 'cascadia_code';
     src: url('../font/cascadiapl-webfont.woff2') format('woff2'),
@@ -14,6 +13,23 @@ free to use modify distribute etc
     font-weight: normal;
     font-style: normal;
 }
+
+.main-content{
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    background-color: rgb(221, 221, 221);
+    color: black;
+    height:auto;
+  
+  }
 
 p {
     color: blue;
@@ -33,6 +49,10 @@ h1 {
 img {
     height: 100px;
     width: 100px;
+}
+
+main {
+    width: auto;
 }
 
 .shelf-details {
@@ -116,4 +136,5 @@ img {
     grid-row: 5;
     background-color: rgb(70, 158, 48);
 }
+
 

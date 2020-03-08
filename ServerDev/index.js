@@ -57,6 +57,7 @@ app.engine('html', require('ejs').renderFile);
 
 const itemSetupRoutes = require('./routes/itemSetup')
 const mainRoutes = require('./routes/main')
+const shelfDetailsRoutes = require('./routes/shelfDetails')
 
 app.use(session({
     cookie: { maxAge: 60000 },
@@ -72,6 +73,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //routing files
 app.use(mainRoutes);
 app.use('/item-setup', itemSetupRoutes);
+app.use('/shelf-details', shelfDetailsRoutes)
 
 
 app.use((req, res, next) => {

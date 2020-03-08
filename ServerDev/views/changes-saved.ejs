@@ -1,17 +1,12 @@
 <%- include('includes/head.ejs') %>
 <%- include('includes/navigation.ejs') %>
 <script>
-var timer = setTimeout(function() {
-            window.location='/item-select'
-        }, 3000);
+    var timer = setTimeout(function () {
+        window.location = '/shelf-details/<%= shelfPos %>'
+    }, 2000);
 </script>
 <main>
-<h1> Your Changes Have Been Saved Successfully </h1>
-</p> You are being Redirected...</p>
+    <h1> Your Changes Have Been Saved Successfully </h1>
+    </p> You are being Redirected...</p>
 
-
-
-
-
-
-<%- include('includes/footer.ejs')%>
+    <%- include('includes/footer.ejs')%>

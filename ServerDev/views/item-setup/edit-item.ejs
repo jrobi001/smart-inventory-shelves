@@ -29,8 +29,8 @@
                 <p>ImageLink:</p>
                 <input type="text" name="imageLink" id="imageLink" value="<%= itemImageLink %>">
             </div>
-            <input type="hidden" name="shelfPos" value="<%= shelfPos %> ">
-            <input type="hidden" name="itemId" value="<%= itemId %>">
+            <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %> ">
+            <input type="hidden" name="itemId" id="itemId" value="<%= itemId %>">
             <button class="btn" type="submit">Update Item</button>
         </form>
         <form action="/item-setup" method="GET">
