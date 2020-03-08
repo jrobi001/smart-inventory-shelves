@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get('/:shelfPos', mainController.getShelfDetails);
 
-
 //edit item route modified to take shelf Position as a parameter eliminating need for name to be entered
+// Logic for edit item-----------------------------------------------------------------------
 router.get('/edit-item/:shelfPos', function (req, res) {
     const shelfPos = req.params.shelfPos;
     let itemId = -1;
@@ -23,7 +23,7 @@ router.get('/edit-item/:shelfPos', function (req, res) {
         if (err) { throw (err) };
         itemId = result[0].items_id;
         if (itemId == null || itemId == -1) {
-            res.send('no item here this path should skip to add set up item')
+            res.send('no item here this path should skip to add item')
         } else {
             let sqlquery = "SELECT id,name,tags,weight,notes,price,imageLink FROM items WHERE id = ?";
             let record = [itemId];
@@ -31,10 +31,10 @@ router.get('/edit-item/:shelfPos', function (req, res) {
                 if (err) { throw (err) };
                 console.log(result[0]);
                 if (result[0] == undefined) {
-                    res.render('item-not-found.ejs', { pageTitle: 'Item Not Found', shelfPos: shelfPos });
+                    res.render('shelf-details/item-not-found.ejs', { pageTitle: 'Item Not Found', shelfPos: shelfPos });
                 }
                 else {
-                    res.render('edit-item-form.ejs', { pageTitle: 'Edit Item Details', itemName: req.body.name, itemInfo: result[0], shelfPos: shelfPos });
+                    res.render('shelf-details/edit-item-form.ejs', { pageTitle: 'Edit Item Details', itemName: req.body.name, itemInfo: result[0], shelfPos: shelfPos });
                 }
             });
         }
@@ -53,9 +53,10 @@ router.post('/edit-item/changes-saved', function (req, res) {
             throw (err)
         }
         else {
-            res.render('changes-saved.ejs', { pageTitle: 'Changes Saved', shelfPos: shelfPos });
+            res.render('shelf-details/changes-saved.ejs', { pageTitle: 'Changes Saved', shelfPos: shelfPos });
         }
     });
 });
+// -----------------------------------------------------------------------
 
 module.exports = router;
