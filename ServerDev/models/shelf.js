@@ -45,4 +45,13 @@ module.exports = class Shelf {
         );
     }
 
+    static overwriteShelf(Shelf) {
+        return dbPromise.execute(
+            "UPDATE shelves SET items_id = ?, updateFrequency = '0', thresholdType = ?, thresholdAbsolute = ?, thresholdNumber = ?, thresholdPercent = ?, 100percentWeight = ?, autocalc100Percent = ?, warning = ? WHERE shelfPosition = ?",
+            [Shelf.items_id, Shelf.thresholdType, Shelf.thresholdAbsolute,
+            Shelf.thresholdNumber, Shelf.thresholdPercent, Shelf.hundredPercentWeight,
+            Shelf.autocalc100percent, Shelf.warning, Shelf.shelfPosition]
+        )
+    }
+
 }

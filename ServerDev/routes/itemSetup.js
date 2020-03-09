@@ -11,12 +11,10 @@ router.post('/confirm-shelf', itemSetupController.postConfirmShelf);
 
 router.post('/item-form/:shelfPos', itemSetupController.postItemForm);
 
-//need to delete old item data and stuff in the conttroller
+// currently display every option - ideally later split up conditionall
 router.post('/shelf-settings', itemSetupController.postShelfSettings);
 
-//after add item need to set shelf settings - will need the item id of the newly created item
-// ideally then import stock settings
-// currently display every option - ideally later split up conditionally
+router.post('/setup-complete', itemSetupController.postSetupComplete)
 
 //confirmation screen
 router.get('confirmation')

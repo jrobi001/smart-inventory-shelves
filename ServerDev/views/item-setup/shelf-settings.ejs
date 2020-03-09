@@ -9,10 +9,10 @@
         href="https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml">https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml</a>
     <br>
     <h3>What Settings would you like for <%= itemName %> on shelf <%= shelfPos %> </h3>
-    <form action="/item-setup/confirm-settings" method="POST">
+    <form action="/item-setup/setup-complete" method="POST">
         <div class="form-element">
             <p>Threshold Type</p>
-            <select id="ThrType">
+            <select name="thrType" id="thrType">
                 <option value="NUMBER">NUMBER</option>
                 <option value="ABSOLUTE">ABSOLUTE</option>
                 <option value="PERCENT">PERCENT</option>
@@ -21,21 +21,21 @@
 
         <div class="form-element">
             <p>Threshold Number</p>
-            <input type="number" step="1" name="ThrNum" id="ThrNum">
+            <input type="number" step="1" name="thrNum" id="thrNum">
         </div>
         <div class="form-element">
             <p>Threshold Absolute</p>
-            <input type="number" step="1" name="ThrAbs" id="ThrAbs">
+            <input type="number" step="1" name="thrAbs" id="thrAbs">
         </div>
         <div class="form-element">
             <p>Threshold Percent</p>
-            <input type="number" step="1" name="ThrPer" id="ThrPer">
+            <input type="number" step="1" name="thrPer" id="thrPer">
         </div>
 
         <br>
         <div class="form-element">
             <p>Auto Calculate 100 percent weight?</p>
-            <select id="AutoCalc">
+            <select name="autoCalc" id="autoCalc">
                 <option value="1">YES</option>
                 <option value="0">NO</option>
             </select>
@@ -44,20 +44,24 @@
         <br>
         <div class="form-element">
             <p>Manually Set 100 Percent weight:</p>
-            <input type="number" step="0.01" name="HundredPercent" id="HundredPercent">
+            <input type="number" step="0.01" name="hundredPercent" id="hundredPercent">
         </div>
 
 
         <br>
         <div class="form-element">
             <p>Send a warning when Item falls below threshold?</p>
-            <select id="warning">
+            <select name="warning" id="warning">
                 <option value="1">YES</option>
                 <option value="0">NO</option>
             </select>
         </div>
 
         <br>
+        <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">
+        <input type="hidden" name="itemId" id="itemId" value="<%= itemId %>">
+        <input type="hidden" name="itemName" id="itemName" value="<%= itemName %>">
+
 
         <button class="btn" type="submit">Save settings</button>
     </form>
