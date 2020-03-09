@@ -59,6 +59,7 @@ exports.postShelfSettings = (req, res, next) => {
     const newItem = new Item(null, itemName, tags, weight, notes, price, imageLink);
     newItem.addItem()
         .then(() => {
+            // getting the id of the newly swt up item
             return Item.findByName(itemName);
         })
         .then(([data, meta]) => {
@@ -73,51 +74,57 @@ exports.postShelfSettings = (req, res, next) => {
         .catch(err => console.log(err));
 }
 
-exports.getEditItem = (req, res, next) => {
-    const shelfPos = req.params.shelfPos;
-    Shelf.fetchItemIdFromPos(shelfPos)
-        .then(([data, meta]) => {
-            const itemId = data[0].items_id;
-            console.log(itemId)
-            if (itemId == null) {
-                res.send('that shelf is empty, maybe we will redirect to the add item page hehre!')
-            }
-            return Item.findById(itemId);
-        })
-        .then(([data, meta]) => {
-            item = data[0];
-            // console.log(item);
-            res.render('item-setup/edit-item', {
-                pageTitle: 'edit item',
-                shelfPos: shelfPos,
-                itemId: item.id,
-                itemName: item.name,
-                itemTags: item.tags,
-                itemWeight: item.weight,
-                itemNotes: item.notes,
-                itemPrice: item.price,
-                itemImageLink: item.imageLink
-            });
-        })
-        .catch(err => console.log(err));
+//I think a new route confirming settings before clearing the current shelf....
+exports.postConfirmSetup = (req, res, next) => {
+
 }
 
-exports.postEditConfirmed = (req, res, next) => {
-    const itemName = req.body.name;
-    const tags = req.body.tags;
-    const weight = req.body.weight;
-    const notes = req.body.notes;
-    const price = req.body.price;
-    const imageLink = req.body.imageLink;
-    const itemId = parseInt(req.body.itemId);
-    const shelfPos = req.body.shelfPos;
+// alt edit function not needed-----------------------------------------------------------------------
+// exports.getEditItem = (req, res, next) => {
+//     const shelfPos = req.params.shelfPos;
+//     Shelf.fetchItemIdFromPos(shelfPos)
+//         .then(([data, meta]) => {
+//             const itemId = data[0].items_id;
+//             console.log(itemId)
+//             if (itemId == null) {
+//                 res.send('that shelf is empty, maybe we will redirect to the add item page hehre!')
+//             }
+//             return Item.findById(itemId);
+//         })
+//         .then(([data, meta]) => {
+//             item = data[0];
+//             // console.log(item);
+//             res.render('item-setup/edit-item', {
+//                 pageTitle: 'edit item',
+//                 shelfPos: shelfPos,
+//                 itemId: item.id,
+//                 itemName: item.name,
+//                 itemTags: item.tags,
+//                 itemWeight: item.weight,
+//                 itemNotes: item.notes,
+//                 itemPrice: item.price,
+//                 itemImageLink: item.imageLink
+//             });
+//         })
+//         .catch(err => console.log(err));
+// }
+
+// exports.postEditConfirmed = (req, res, next) => {
+//     const itemName = req.body.name;
+//     const tags = req.body.tags;
+//     const weight = req.body.weight;
+//     const notes = req.body.notes;
+//     const price = req.body.price;
+//     const imageLink = req.body.imageLink;
+//     const itemId = parseInt(req.body.itemId);
+//     const shelfPos = req.body.shelfPos;
 
 
-    const editedItem = new Item(itemId, itemName, tags, weight, notes, price, imageLink);
-    // console.log(editedItem);
-    editedItem.updateItem()
-        .then(
-            res.send('congrats the item ' + itemName + ' on shelf ' + itemId + 'has been updated')
-        )
-        .catch(err => console.log(err));
-}
+//     const editedItem = new Item(itemId, itemName, tags, weight, notes, price, imageLink);
+//     // console.log(editedItem);
+//     editedItem.updateItem()
+//         .then(
+//             res.send('congrats the item ' + itemName + ' on shelf ' + itemId + 'has been updated')
+//         )
+//         .catch(err => console.log(err));
+// }

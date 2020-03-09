@@ -21,9 +21,11 @@ router.post('/shelf-settings', itemSetupController.postShelfSettings);
 //confirmation screen
 router.get('confirmation')
 
-router.get('/edit-item/:shelfPos', itemSetupController.getEditItem);
 
-router.post('/edit-confirmed', itemSetupController.postEditConfirmed);
+//alt edit item not needed
+// router.get('/edit-item/:shelfPos', itemSetupController.getEditItem);
+
+// router.post('/edit-confirmed', itemSetupController.postEditConfirmed);
 
 
 
