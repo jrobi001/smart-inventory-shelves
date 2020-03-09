@@ -7,23 +7,23 @@
     <div class="shelf-details">
 
         <div class="imagebox">
-            image
+            <img src="<%= details.imageLink %>" alt="">
         </div>
 
         <div class="detailsbox">
-            <h2>Item name</h2>
-            <p>#Tags</p>
-            <p>Item Price</p>
+            <h2><%= details.name %></h2>
+            <p><%= details.tags %></p>
+            <p>Price: £<%= details.price %></p>
         </div>
 
         <div class="position-box">
             <h2>shelf</h2>
-            <h1><%= shelfPos %> </h1>
+            <h1><%= details.shelfPosition %></h1>
         </div>
 
         <div class="item-weight">
             <h2>weight</h1>
-                <h1>23g</h1>
+                <h1><%= details.weight %></h1>
         </div>
 
         <div class="settings-header">
@@ -31,38 +31,51 @@
         </div>
 
         <div class="shelf-weight">
-            <h2>Current shelf weight = 234g</h2>
-            <h2>Number of items left = 10</h2>
-            <h2>Percent full = 40%</h2>
+
+            <% if (weight == null) { %>
+            <h2>No weight records available</h2>
+            <% } else { %>
+            <h2>Current shelf weight = <%= weight %></h2>
+            <h2>Number of items left = <%= Math.round(weight / details.weight) %></h2>
+            <h2>Percent full = xxx%</h2>
+            <% } %>
+
             <br>
+            <% if (details.thresholdType == 'NUMBER') { %>
             <h2>Warning type = number of items</h2>
-            <h2>Warning limit = 8 items</h2>
-            <h2>100% weight = 600g</h2>
+            <h2>Warning limit = <%= details.thresholdNumber %> items</h2>
+            <% } else if(details.thresholdType == 'ABSOLUTE') { %>
+            <h2>Warning type = absolute weight</h2>
+            <h2>Warning limit = <%= details.thresholdAbsolute %> g</h2>
+            <% } else if(details.thresholdType == 'PERCENT') { %>
+            <h2>Warning type = Percentage weight</h2>
+            <h2>Warning limit = <%= details.thresholdPercent %> g</h2>
+            <% } %>
+
+            <h2>100% weight = xxx %</h2>
             <br>
-            <h2>Auto calculate 100% = off</h2>
-            <h2>Send warning = true</h2>
+            <% if (details.autocalc100Percent == 0) { %>
+            <h2>Auto calculate 100% = Off</h2>
+            <% } else { %>
+            <h2>Auto calculate 100% = On</h2>
+            <% } %>
+            <% if (details.warning == 0) { %>
+            <h2>Send warning = Off</h2>
+            <% } else { %>
+            <h2>Send warning = On</h2>
+            <% } %>
+
+
 
         </div>
 
         <div class="item-notes">
             <h2>Item notes/ re-order information:</h2>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nunc magna, maximus eu felis nec,
-                gravida mollis dui. In vitae elit ut neque euismod viverra id nec ex. Quisque suscipit nibh vel
-                neque gravida, efficitur malesuada magna bibendum. Fusce vel suscipit nulla, sed dignissim sem.
-                Vestibulum porttitor sapien eu venenatis condimentum. Cras ac nibh non tellus iaculis vehicula et
-                nec lacus. Etiam vel rutrum sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae
-                sapien justo.
-
-                Pellentesque nibh erat, rutrum id tincidunt nec, consequat in magna. Sed sit amet libero commodo,
-                suscipit mi a, ultricies est. Duis condimentum nisl vitae tellus pretium consectetur. Fusce
-                sollicitudin justo libero, quis venenatis nunc interdum nec. Integer in ex eu lorem feugiat finibus
-                sed eget enim. Aenean id elit nec purus porta egestas finibus sed nunc. In feugiat nibh libero, at
-                rutrum orci tincidunt a. Fusce et erat ac turpis efficitur maximus eu in neque. Nulla ut volutpat
-                ligula. Sed ullamcorper convallis scelerisque.</p>
+            <p><%= details.notes %></p>
 
         </div>
-        <a href="/shelf-details/edit-item/<%= shelfPos %>" class="edit-item">
+        <a href="/shelf-details/edit-item/<%= details.shelfPosition %>" class="edit-item">
             <h1>edit item details</h1>
         </a>
         <a href="" class="shelf-settings">
@@ -72,7 +85,7 @@
             <h1>Set up a new item on this shelf</h1>
         </a>
         <form class="delete-item" action="/delete/confirm" method="POST">
-            <input type="hidden" name="shelfPos" value="<%= shelfPos %> ">
+            <input type="hidden" name="shelfPos" value="<%= details.shelfPosition %> ">
             <button class="btn" type="submit">
                 <h1>Delete Item and reset settings</h1>
             </button>

@@ -6,7 +6,7 @@ const Overview = require('../models/overview')
 exports.getShelfOverviewList = (req, res, next) => {
     const shelfOverview = new Overview([], null, null, null, null, null, null)
     const weights = [];
-    Overview.fetchAllShevesJoinItems(weights)
+    Overview.fetchAllShevesJoinItems()
         .then(([data, meta]) => {
             shelfOverview.shelfItemsJoin = data;
             // console.log(shelfOverview.shelfItemsJoin);
@@ -31,9 +31,38 @@ exports.getShelfDetailsLayout = (req, res, next) => {
 
 exports.getShelfDetails = (req, res, next) => {
     const shelfPos = req.params.shelfPos;
+    //making sure nobody tries to access shelves that don't exist
+    if (shelfPos < 1 || shelfPos > 6) {
+        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    }
+    //initialising shelfDetails
+    let shelfDetails = 0;
+    Overview.fetchShelvesJoinByPos(shelfPos)
+        .then(([data, meta]) => {
+            shelfDetails = data[0];
+            console.log(shelfDetails)
+            // making sure an item is set up on the shelf
+            if (shelfDetails.items_id == null) {
+                res.send('That shelf is empty, a different page will go here')
+            }
+            return Overview.fetchWeightById(shelfDetails.id)
+        })
+        .then(([data, meta]) => {
+            //checking if there are any weight records
+            let shelfWeight = data[0];
+            if (shelfWeight == null) {
+                shelfWeight = null;
+            } else {
+                shelfWeight = shelfWeight.weight
+            }
+            console.log(shelfWeight);
+            res.render('shelf-details/shelf-details', {
+                pageTitle: 'Shelf Details',
+                details: shelfDetails,
+                weight: shelfWeight
+            });
+        })
+        .catch(err => console.log(err));
 
-    res.render('shelf-details/shelf-details', {
-        pageTitle: 'Shelf Details',
-        shelfPos: shelfPos
-    });
+
 }
