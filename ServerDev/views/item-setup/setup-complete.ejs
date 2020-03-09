@@ -1,0 +1,13 @@
+<%- include('../includes/head.ejs') %>
+</head>
+<%- include('../includes/navigation.ejs') %>
+<script>
+    var timer = setTimeout(function () {
+        window.location = '/home'
+    }, 2000);
+</script>
+<main>
+    <h1> Congratulations <%= itemName %> has been successfully set up on shelf <%= shelfPos %> </h1>
+    </p> You will be redirected to the homepage shortly.</p>
+
+    <%- include('../includes/footer.ejs')%>
