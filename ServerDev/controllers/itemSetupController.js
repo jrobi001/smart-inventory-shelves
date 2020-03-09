@@ -22,7 +22,7 @@ exports.postConfirmShelf = (req, res, next) => {
             if (itemId == null) {
                 return res.render('item-setup/item-form', {
                     pageTitle: 'Replace Item',
-                    shelfPos: shelfPosition
+                    shelfPos: shelfPosition,
                 })
             } else {
                 return Item.findById(itemId)
@@ -75,7 +75,32 @@ exports.postShelfSettings = (req, res, next) => {
 }
 
 //I think a new route confirming settings before clearing the current shelf....
-exports.postConfirmSetup = (req, res, next) => {
+exports.postSetupComplete = (req, res, next) => {
+    const itemName = req.body.itemName;
+
+    const itemId = req.body.itemId;
+    const shelfPos = req.body.shelfPos;
+    const thrType = req.body.thrType;
+    const thrAbs = req.body.thrAbs
+    const thrNum = req.body.thrNum;
+    const thrPer = req.body.thrPer;
+    const hundredPercent = req.body.hundredPercent;
+    const autoCalc = req.body.autoCalc;
+    const warning = req.body.warning;
+
+    const newShelf = new Shelf(null, itemId, shelfPos, '0', thrType, thrAbs, thrNum,
+        thrPer, hundredPercent, autoCalc, warning);
+
+    console.log(newShelf);
+    Shelf.overwriteShelf(newShelf)
+        .then(() => {
+            res.render('item-setup/setup-complete', {
+                pageTitle: 'Setup Complete',
+                shelfPos: shelfPos,
+                itemName: itemName
+            });
+        })
+        .catch(err => console.log(err));
 
 }
 

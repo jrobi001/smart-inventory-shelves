@@ -11,6 +11,14 @@ module.exports = class Overview {
         this.weightId6 = weightId6;
     }
 
+    static fetchShelvesJoinByPos(pos) {
+        return dbPromise.execute(
+            'SELECT * FROM items RIGHT JOIN shelves ON items.id = shelves.items_id WHERE shelves.shelfPosition = ?',
+            [pos]
+        )
+    }
+
+
     // join right statement will always output an array 6 items even if shelf is emptu
     // accessed as a promise using .then(([data, meta]) => { / access array here as data[0] / })
     static fetchAllShevesJoinItems() {
@@ -50,6 +58,32 @@ module.exports = class Overview {
         return dbPromise.execute(
             'SELECT weight FROM id6weights ORDER BY id DESC LIMIT 0, 1'
         );
+    }
+
+    static fetchWeightById(id) {
+        switch (id) {
+            case 1:
+                return this.fetchWeightId1()
+                break;
+            case 2:
+                return this.fetchWeightId2()
+                break;
+            case 3:
+                return this.fetchWeightId3()
+                break;
+            case 4:
+                return this.fetchWeightId4()
+                break;
+            case 5:
+                return this.fetchWeightId5()
+                break;
+            case 6:
+                return this.fetchWeightId6()
+                break;
+            default:
+                return console.log('error, no such table')
+
+        }
     }
 
     // this function returns an array of the most recent item weights
