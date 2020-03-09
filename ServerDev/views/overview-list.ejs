@@ -30,7 +30,7 @@
         <div class="numberbox">
             <% if (weights[i] != null && shelves[i].weight != null) { %>
             <h1><%= 
-                        Math.floor(weights[i] / shelves[i].weight)
+                        Math.round(weights[i] / shelves[i].weight)
                     %></h1>
             <% } else if (shelves[i].weight == null) { %>
             <h2>shelf empty</h2>
