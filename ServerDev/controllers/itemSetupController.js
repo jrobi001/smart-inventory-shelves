@@ -81,15 +81,12 @@ exports.postSetupComplete = (req, res, next) => {
     const itemId = req.body.itemId;
     const shelfPos = req.body.shelfPos;
     const thrType = req.body.thrType;
-    const thrAbs = req.body.thrAbs
-    const thrNum = req.body.thrNum;
-    const thrPer = req.body.thrPer;
+    const thrVal = req.body.thrVal
     const hundredPercent = req.body.hundredPercent;
     const autoCalc = req.body.autoCalc;
     const warning = req.body.warning;
 
-    const newShelf = new Shelf(null, itemId, shelfPos, '0', thrType, thrAbs, thrNum,
-        thrPer, hundredPercent, autoCalc, warning);
+    const newShelf = new Shelf(null, itemId, shelfPos, '0', thrType, thrVal, hundredPercent, autoCalc, warning);
 
     console.log(newShelf);
     Shelf.overwriteShelf(newShelf)
