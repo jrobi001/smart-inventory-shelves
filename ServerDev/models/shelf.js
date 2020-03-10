@@ -1,16 +1,14 @@
 module.exports = class Shelf {
 
     constructor(id, items_id, shelfPosition, updateFrequency,
-        thresholdType, thresholdAbsolute, thresholdNumber, thresholdPercent,
+        thresholdType, thresholdValue,
         hundredPercentWeight, autocalc100percent, warning) {
         this.id = id;
         this.items_id = items_id;
         this.shelfPosition = shelfPosition;
         this.updateFrequency = updateFrequency;
         this.thresholdType = thresholdType;
-        this.thresholdAbsolute = thresholdAbsolute;
-        this.thresholdNumber = thresholdNumber
-        this.thresholdPercent = thresholdPercent;
+        this.thresholdValue = thresholdValue;
         this.hundredPercentWeight = hundredPercentWeight;
         this.autocalc100percent = autocalc100percent;
         this.warning = warning;
@@ -47,9 +45,8 @@ module.exports = class Shelf {
 
     static overwriteShelf(Shelf) {
         return dbPromise.execute(
-            "UPDATE shelves SET items_id = ?, updateFrequency = '0', thresholdType = ?, thresholdAbsolute = ?, thresholdNumber = ?, thresholdPercent = ?, 100percentWeight = ?, autocalc100Percent = ?, warning = ? WHERE shelfPosition = ?",
-            [Shelf.items_id, Shelf.thresholdType, Shelf.thresholdAbsolute,
-            Shelf.thresholdNumber, Shelf.thresholdPercent, Shelf.hundredPercentWeight,
+            "UPDATE shelves SET items_id = ?, updateFrequency = '0', thresholdType = ?, thresholdValue = ?, hundredPercent = ?, autocalc100Percent = ?, warning = ? WHERE shelfPosition = ?",
+            [Shelf.items_id, Shelf.thresholdType, Shelf.thresholdValue, Shelf.hundredPercentWeight,
             Shelf.autocalc100percent, Shelf.warning, Shelf.shelfPosition]
         )
     }

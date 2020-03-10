@@ -23,7 +23,7 @@
 
         <div class="item-weight">
             <h2>weight</h1>
-                <h1><%= details.weight %></h1>
+                <h1><%= details.weight %>g</h1>
         </div>
 
         <div class="settings-header">
@@ -37,22 +37,32 @@
             <% } else { %>
             <h2>Current shelf weight = <%= weight %></h2>
             <h2>Number of items left = <%= Math.round(weight / details.weight) %></h2>
-            <h2>Percent full = xxx%</h2>
+            <% if (details.hundredPercent == null) { %>
+            <h2>Percent full = not set</h2>
+            <% } else { %>
+            <h2>Percent full = <%= Math.round(weight / details.hundredPercent) %>%</h2>
             <% } %>
+            <% } %>
+
+
 
             <br>
             <% if (details.thresholdType == 'NUMBER') { %>
             <h2>Warning type = number of items</h2>
-            <h2>Warning limit = <%= details.thresholdNumber %> items</h2>
+            <h2>Warning limit = <%= details.thresholdValue %> items</h2>
             <% } else if(details.thresholdType == 'ABSOLUTE') { %>
             <h2>Warning type = absolute weight</h2>
-            <h2>Warning limit = <%= details.thresholdAbsolute %> g</h2>
+            <h2>Warning limit = <%= details.thresholdValue %> g</h2>
             <% } else if(details.thresholdType == 'PERCENT') { %>
             <h2>Warning type = Percentage weight</h2>
-            <h2>Warning limit = <%= details.thresholdPercent %> g</h2>
+            <h2>Warning limit = <%= details.thresholdValue %> %</h2>
             <% } %>
 
-            <h2>100% weight = xxx %</h2>
+            <% if (details.hundredPercent == null) { %>
+            <h2>100% weight = not set</h2>
+            <% } else { %>
+            <h2>100% weight = <%= details.hundredPercent %>g</h2>
+            <% } %>
             <br>
             <% if (details.autocalc100Percent == 0) { %>
             <h2>Auto calculate 100% = Off</h2>
