@@ -36,18 +36,22 @@ router.get('/edit-shelf-details', function (req, res) {
 
 
 function autoCalcweight() {
-    console.log('autocalc 100% occuring')
-    let sqlqueryinit = "select id from shelves where items_id != 'null' and autocalc100Percent = '1'";
+    
+    let sqlqueryinit = "SELECT id from shelves WHERE items_id != 'null' AND autocalc100Percent = '1'";
     db.query(sqlqueryinit, (err, result) => {
-        if (result[0] != undefined) {
+       
+	
+	 if (result[0] != undefined) {
             var i;
             for (i = 0; i < result.length; i++) {
-                let shelfId = result[i].id;
+                let Id = result[i].id;
+		
                 let sqlquery0 = "select hundredPercent from shelves where id = ?";
-                let record0 = [shelfId];
+                let record0 = [Id];
                 db.query(sqlquery0, record0, (err1, result1) => {
                     if (err1) { throw err1 }
                     let currentcalibratedWeight = result1[0].hundredPercent;
+			
 
                     if (record0 == '1') {
                         var sqlquery1 = "select weight from id1weights order by dateTime desc limit 1";
@@ -72,10 +76,10 @@ function autoCalcweight() {
 
                         if (result2[0] != undefined) {
                             let weightval = result2[0].weight;
-
+			
                             if (weightval > currentcalibratedWeight) {
                                 let sqlquery = "update shelves set hundredPercent = ? where id = ?";
-                                let record1 = [weightval, shelfPos];
+                                let record1 = [weightval, Id];
                                 db.query(sqlquery, record1, (err3, result3) => {
                                     if (err3) { throw err3 }
 
