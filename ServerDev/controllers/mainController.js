@@ -66,3 +66,22 @@ exports.getShelfDetails = (req, res, next) => {
 
 
 }
+
+exports.postWeightAdded = (req, res, next) => {
+    const shelfPos = req.body.shelfPos;
+    const weight = req.body.weight;
+    Shelf.fetchIdFromPos(shelfPos)
+        .then(([data, meta]) => {
+            const shelfId = data[0].id;
+            console.log(shelfId);
+            Weight.addWeightbyId(shelfId, weight)
+        })
+        .then(
+            res.render('test/add-weight-complete', {
+                pageTitle: 'weight added',
+                shelfPos: shelfPos,
+                weight: weight
+            })
+        )
+        .catch(err => console.log(err));
+}

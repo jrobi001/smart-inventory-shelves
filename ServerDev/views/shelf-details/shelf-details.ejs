@@ -40,7 +40,7 @@
             <% if (details.hundredPercent == null) { %>
             <h2>Percent full = not set</h2>
             <% } else { %>
-            <h2>Percent full = <%= Math.round(weight / details.hundredPercent) %>%</h2>
+            <h2>Percent full = <%= Math.round((weight / details.hundredPercent) * 100) %>%</h2>
             <% } %>
             <% } %>
 
