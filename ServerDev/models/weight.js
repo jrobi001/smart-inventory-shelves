@@ -52,4 +52,48 @@ module.exports = class Weight {
 
         }
     }
+
+    static addWeightbyId(id, weight) {
+        switch (id) {
+            case 1:
+                return dbPromise.execute(
+                    'INSERT INTO id1weights (weight) VALUES (?)',
+                    [weight]
+                );
+                break;
+            case 2:
+                return dbPromise.execute(
+                    'INSERT INTO id2weights (weight) VALUES (?)',
+                    [weight]
+                );
+                break;
+            case 3:
+                return dbPromise.execute(
+                    'INSERT INTO id3weights (weight) VALUES (?)',
+                    [weight]
+                );
+                break;
+            case 4:
+                return dbPromise.execute(
+                    'INSERT INTO id4weights (weight) VALUES (?)',
+                    [weight]
+                );
+                break;
+            case 5:
+                return dbPromise.execute(
+                    'INSERT INTO id5weights (weight) VALUES (?)',
+                    [weight]
+                );
+                break;
+            case 6:
+                return dbPromise.execute(
+                    'INSERT INTO id6weights (weight) VALUES (?)',
+                    [weight]
+                );
+                break;
+            default:
+                return console.log('error, no such table')
+
+        }
+    }
 }

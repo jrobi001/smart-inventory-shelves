@@ -1,0 +1,13 @@
+<%- include('../includes/head.ejs') %>
+</head>
+<%- include('../includes/navigation.ejs') %>
+<script>
+    var timer = setTimeout(function () {
+        window.location = '/add-weight'
+    }, 1500);
+</script>
+<main>
+    <h1> Congratulations the weight <%= weight %>g has been added to <%= shelfPos %> </h1>
+    </p> You will be redirected back to the add-weight page shortly.</p>
+
+    <%- include('../includes/footer.ejs')%>
