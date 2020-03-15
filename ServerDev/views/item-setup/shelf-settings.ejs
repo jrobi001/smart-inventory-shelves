@@ -3,62 +3,65 @@
 </head>
 <%- include('../includes/navigation.ejs') %>
 <main>
+    <div class="form-box">
 
-    <p>later update this page to only show relevant form fields(without a long route)</p>
-    <a
-        href="https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml">https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml</a>
-    <br>
-    <h3>What Settings would you like for <%= itemName %> on shelf <%= shelfPos %> </h3>
-    <form action="/item-setup/setup-complete" method="POST">
-        <div class="form-element">
-            <p>Threshold Type</p>
-            <select name="thrType" id="thrType">
-                <option value="NUMBER">NUMBER</option>
-                <option value="ABSOLUTE">ABSOLUTE</option>
-                <option value="PERCENT">PERCENT</option>
-            </select>
-        </div>
-
-        <div class="form-element">
-            <p>Threshold Value</p>
-            <input type="number" step="1" name="thrVal" id="thrVal">
-        </div>
-
+        <h3>What Settings would you like for <%= itemName %> on shelf <%= shelfPos %> </h3>
+        <p>later update this page to only show relevant form fields(without a long route)</p>
+        <a
+            href="https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml">https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml</a>
         <br>
-        <div class="form-element">
-            <p>Auto Calculate 100 percent weight?</p>
-            <select name="autoCalc" id="autoCalc">
-                <option value="1">YES</option>
-                <option value="0">NO</option>
-            </select>
-        </div>
 
-        <br>
-        <div class="form-element">
-            <p>Manually Set 100 Percent weight:</p>
-            <input type="number" step="0.01" name="hundredPercent" id="hundredPercent">
-        </div>
+        <form action="/item-setup/setup-complete" method="POST">
+            <div class="form-element">
+                <p>Threshold Type</p>
+                <select name="thrType" id="thrType">
+                    <option value="NUMBER">NUMBER</option>
+                    <option value="ABSOLUTE">ABSOLUTE</option>
+                    <option value="PERCENT">PERCENT</option>
+                </select>
+            </div>
+
+            <div class="form-element">
+                <p>Threshold Value</p>
+                <input type="number" step="1" name="thrVal" id="thrVal">
+            </div>
+
+            <br>
+            <div class="form-element">
+                <p>Auto Calculate 100 percent weight?</p>
+                <select name="autoCalc" id="autoCalc">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+
+            <br>
+            <div class="form-element">
+                <p>Manually Set 100 Percent weight:</p>
+                <input type="number" step="0.01" name="hundredPercent" id="hundredPercent">
+            </div>
 
 
-        <br>
-        <div class="form-element">
-            <p>Send a warning when Item falls below threshold?</p>
-            <select name="warning" id="warning">
-                <option value="1">YES</option>
-                <option value="0">NO</option>
-            </select>
-        </div>
+            <br>
+            <div class="form-element">
+                <p>Send a warning when Item falls below threshold?</p>
+                <select name="warning" id="warning">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
 
-        <br>
-        <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">
-        <input type="hidden" name="itemId" id="itemId" value="<%= itemId %>">
-        <input type="hidden" name="itemName" id="itemName" value="<%= itemName %>">
+            <br>
+            <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">
+            <input type="hidden" name="itemId" id="itemId" value="<%= itemId %>">
+            <input type="hidden" name="itemName" id="itemName" value="<%= itemName %>">
 
 
-        <button class="btn" type="submit">Save settings</button>
-    </form>
-    <form action="/item-setup" method="GET">
-        <button class="btn" type="submit">No, take me back!</button>
-    </form>
+            <button class="btn" type="submit">Save settings</button>
+        </form>
+        <form action="/item-setup" method="GET">
+            <button class="btn" type="submit">No, take me back!</button>
+        </form>
+    </div>
 </main>
 <%- include('../includes/footer.ejs')%>

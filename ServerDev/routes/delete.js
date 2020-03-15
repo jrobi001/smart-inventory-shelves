@@ -14,9 +14,18 @@ const mainController = require('../controllers/mainController');
 const router = express.Router();
 
 router.get('/', function (req, res) {
-    res.render('delete/shelf-selector-delete.ejs', {
-        pageTitle: 'delete selector'
-    });
+    const names = [];
+    Item.fetchItemNames(names)
+        .then(() => {
+            // console.log(names);
+            res.render('delete/shelf-selector-delete.ejs', {
+                pageTitle: 'delete selector',
+                names: names
+            })
+        })
+        .catch(err => console.log(err));
+
+
 })
 
 //confirm screen before deletion

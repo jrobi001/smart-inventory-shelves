@@ -1,13 +1,13 @@
 .form-element {
-    width: 80%;
+    width: 35em;
 }
 input {
-    width: 80%;
+    width: 100%;
     height: 1.5em;
 }
 
 textarea {
-    width: 80%;
+    width: 100%;
 }
 
 select {
