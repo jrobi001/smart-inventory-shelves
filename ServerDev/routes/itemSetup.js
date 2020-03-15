@@ -16,15 +16,6 @@ router.post('/shelf-settings', itemSetupController.postShelfSettings);
 
 router.post('/setup-complete', itemSetupController.postSetupComplete)
 
-//confirmation screen
-router.get('confirmation')
-
-
-//alt edit item not needed
-// router.get('/edit-item/:shelfPos', itemSetupController.getEditItem);
-
-// router.post('/edit-confirmed', itemSetupController.postEditConfirmed);
-
 
 
 module.exports = router

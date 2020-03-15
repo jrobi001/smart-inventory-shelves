@@ -4,19 +4,36 @@ const Weight = require('../models/weight')
 const Overview = require('../models/overview')
 
 exports.getShelfOverviewList = (req, res, next) => {
-    const shelfOverview = new Overview([], null, null, null, null, null, null)
+    const overviewArr = [];
+    let shelfItemsDetails;
     const weights = [];
     Overview.fetchAllShevesJoinItems()
         .then(([data, meta]) => {
-            shelfOverview.shelfItemsJoin = data;
-            // console.log(shelfOverview.shelfItemsJoin);
+            shelfItemsDetails = data;
+            // console.log(shelfItemsDetails);
             // const shelves = data;
             return Overview.fetchAllWeights(weights)
         }).then(() => {
-            console.log(weights);
+
+            //[weight, data, pergentagefull, number of items]
+            //creating a 2d array for each shelf, pos 1 shelfWeight, pos2 the shelf + item details
+            for (let i = 0; i < weights.length; i++) {
+                let box = [];
+                box.push(weights[i]);
+                box.push(shelfItemsDetails[i]);
+                overviewArr.push(box);
+            }
+
+            //sorting by shelfPosition
+            overviewArr.sort((a, b) => {
+                return a[1].shelfPosition - b[1].shelfPosition;
+            })
+
+            console.log(overviewArr);
+            // console.log(weights);
             res.render('overview-list', {
                 pageTitle: 'Shelf Overview List',
-                shelves: shelfOverview.shelfItemsJoin,
+                shelves: shelfItemsDetails,
                 weights: weights
             });
         })
@@ -40,7 +57,7 @@ exports.getShelfDetails = (req, res, next) => {
     Overview.fetchShelvesJoinByPos(shelfPos)
         .then(([data, meta]) => {
             shelfDetails = data[0];
-            console.log(shelfDetails)
+            // console.log(shelfDetails)
             // making sure an item is set up on the shelf
             if (shelfDetails.items_id == null) {
                 res.send('That shelf is empty, a different page will go here')
@@ -55,7 +72,7 @@ exports.getShelfDetails = (req, res, next) => {
             } else {
                 shelfWeight = shelfWeight.weight
             }
-            console.log(shelfWeight);
+            // console.log(shelfWeight);
             res.render('shelf-details/shelf-details', {
                 pageTitle: 'Shelf Details',
                 details: shelfDetails,
@@ -73,7 +90,7 @@ exports.postWeightAdded = (req, res, next) => {
     Shelf.fetchIdFromPos(shelfPos)
         .then(([data, meta]) => {
             const shelfId = data[0].id;
-            console.log(shelfId);
+            // console.log(shelfId);
             Weight.addWeightbyId(shelfId, weight)
         })
         .then(
