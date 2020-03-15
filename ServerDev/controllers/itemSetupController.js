@@ -5,10 +5,16 @@ const Overview = require('../models/overview')
 
 
 exports.getShefSelector = (req, res, next) => {
-    console.log('shelf selector');
-    res.render('item-setup/shelf-selector.ejs', {
-        pageTitle: 'Shelf selector'
-    })
+    const names = [];
+    Item.fetchItemNames(names)
+        .then(() => {
+            // console.log(names);
+            res.render('item-setup/shelf-selector.ejs', {
+                pageTitle: 'Shelf selector',
+                names: names
+            })
+        })
+        .catch(err => console.log(err));
 }
 
 exports.postConfirmShelf = (req, res, next) => {
@@ -88,14 +94,18 @@ exports.postSetupComplete = (req, res, next) => {
 
     const newShelf = new Shelf(null, itemId, shelfPos, '0', thrType, thrVal, hundredPercent, autoCalc, warning);
 
-    console.log(newShelf);
     Shelf.overwriteShelf(newShelf)
         .then(() => {
+            return Shelf.fetchIdFromPos(shelfPos);
+        }).then(([data, meta]) => {
+            const id = data[0].id;
+            return Weight.deleteShelWeightsfById(id)
+        }).then(() => {
             res.render('item-setup/setup-complete', {
                 pageTitle: 'Setup Complete',
                 shelfPos: shelfPos,
                 itemName: itemName
-            });
+            })
         })
         .catch(err => console.log(err));
 

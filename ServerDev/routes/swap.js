@@ -14,14 +14,24 @@ const mainController = require('../controllers/mainController');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render('swap/swap-item.ejs', { pageTitle: 'Swap Items' });
+    const names = [];
+    Item.fetchItemNames(names)
+        .then(() => {
+            // console.log(names);
+            res.render('swap/swap-item.ejs', {
+                pageTitle: 'Swap Items',
+                names: names
+            });
+        })
+        .catch(err => console.log(err));
+
 });
 
 
 router.post('/swapped', (req, res) => {
 
-    let shelfpos1 = req.body.name;
-    let shelfpos2 = req.body.swap;
+    let shelfpos1 = req.body.shelfPos;
+    let shelfpos2 = req.body.swapPos;
     if (shelfpos1 != shelfpos2) {
         let sqlStatement = "UPDATE shelves SET shelfPosition = ? WHERE shelfPosition = ?";
         let record1 = [99, shelfpos1];
