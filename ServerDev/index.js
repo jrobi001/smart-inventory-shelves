@@ -8,7 +8,7 @@ var flash = require('connect-flash');
 
 
 const app = express();
-const port = 3000;
+const port = 8000;
 
 //setting up database as a pool - exported as promises globally to avoid callbacks
 //https://www.npmjs.com/package/mysql2
@@ -17,8 +17,7 @@ const port = 3000;
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    database: 'shelfdatav3',
-    password: 'Igniciouse1@'
+    database: 'shelfdatav3'
 
 });
 const dbPromise = pool.promise();
@@ -34,8 +33,7 @@ global.dbPromise = dbPromise;
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    database: 'shelfdatav3',
-    password: 'Igniciouse1@'
+    database: 'shelfdatav3'
 });
 
 db.connect((err) => {
