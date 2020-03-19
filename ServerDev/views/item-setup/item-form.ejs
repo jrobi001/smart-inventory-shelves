@@ -8,11 +8,11 @@
         <form action="/item-setup/shelf-settings" method="POST">
             <div class="form-element">
                 <p>Name:</p>
-                <input type="text" name="name" id="itemName" value="">
+                <input type="text" required name="name" id="itemName">
             </div>
             <div class="form-element">
                 <p>Tags:</p>
-                <input type="text" name="tags" id="tags" value="">
+                <input type="text" name="tags" id="tags">
             </div>
             <div class="form-element">
                 <p>Description:</p>
@@ -24,7 +24,7 @@
             </div>
             <div class="form-element">
                 <p>Weight:</p>
-                <input type="number" step="0.01" name="weight" id="weight">
+                <input type="number" required step="0.01" name="weight" id="weight">
             </div>
             <div class="form-element">
                 <p>ImageLink:</p>
