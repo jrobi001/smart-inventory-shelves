@@ -1,30 +1,30 @@
 <%- include('../includes/head.ejs') %>
 <%- include('../includes/navigation.ejs') %>
 <main>
+    <div class="form-box">
+        <form action="/swap-shelves/swapped" method="post">
+            <h3>Select the shelf you would like to swap positions</h3>
 
-    <form action="/swap-shelves/swapped" method="post">
-        <h3>Select the shelf you would like to swap positions</h3>
+            <%- include('../includes/selector.ejs') %>
 
-        <%- include('../includes/selector.ejs') %>
+            <h3>Select the shelf you would like to swap positions with</h3>
 
-        <h3>Select the shelf you would like to swap positions with</h3>
-
-        <input type="radio" required id="one" name="swapPos" value="1">
-        <label for="one">1: current item : <%= names[0] %> </label><br>
-        <input type="radio" id="two" name="swapPos" value="2">
-        <label for="two">2: current item : <%= names[1] %> </label><br>
-        <input type="radio" id="three" name="swapPos" value="3">
-        <label for="three">3: current item : <%= names[2] %> </label><br>
-        <input type="radio" id="four" name="swapPos" value="4">
-        <label for="four">4: current item : <%= names[3] %> </label><br>
-        <input type="radio" id="five" name="swapPos" value="5">
-        <label for="five">5: current item : <%= names[4] %> </label><br>
-        <input type="radio" id="six" name="swapPos" value="6">
-        <label for="six">6: current item : <%= names[5] %> </label><br>
+            <input type="radio" required id="one" name="swapPos" value="1">
+            <label for="one">1: current item : <%= names[0] %> </label><br>
+            <input type="radio" id="two" name="swapPos" value="2">
+            <label for="two">2: current item : <%= names[1] %> </label><br>
+            <input type="radio" id="three" name="swapPos" value="3">
+            <label for="three">3: current item : <%= names[2] %> </label><br>
+            <input type="radio" id="four" name="swapPos" value="4">
+            <label for="four">4: current item : <%= names[3] %> </label><br>
+            <input type="radio" id="five" name="swapPos" value="5">
+            <label for="five">5: current item : <%= names[4] %> </label><br>
+            <input type="radio" id="six" name="swapPos" value="6">
+            <label for="six">6: current item : <%= names[5] %> </label><br>
 
 
-        <input type="submit" id="postval" value="submit">
-    </form>
-
-</main>v
+            <input type="submit" id="postval" value="submit">
+        </form>
+    </div>
+</main>
 <%- include('../includes/footer.ejs')%>
