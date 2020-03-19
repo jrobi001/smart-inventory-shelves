@@ -6,8 +6,8 @@
         <h3>Please edit the item details of shelf <%= shelfPos %> </h3>
         <form action="/item-setup/edit-confirmed" method="POST">
             <div class="form-element">
-                <p>Name:</p>
-                <input type="text" name="name" id="itemName" value="<%= itemName %>">
+                <label for="itemName">Name:</label>
+                <input type="text" required name="name" id="itemName" value="<%= itemName %>">
             </div>
             <div class="form-element">
                 <p>Tags:</p>
@@ -23,7 +23,7 @@
             </div>
             <div class="form-element">
                 <p>Weight:</p>
-                <input type="number" step="0.01" name="weight" id="weight" value="<%= itemWeight %>">
+                <input type="number" required step="0.01" name="weight" id="weight" value="<%= itemWeight %>">
             </div>
             <div class="form-element">
                 <p>ImageLink:</p>

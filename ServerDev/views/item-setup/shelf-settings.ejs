@@ -5,6 +5,11 @@
 <main>
     <div class="form-box">
 
+        <script>
+            var $ = require('jQuery');
+
+        </script>
+
         <h3>What Settings would you like for <%= itemName %> on shelf <%= shelfPos %> </h3>
         <p>later update this page to only show relevant form fields(without a long route)</p>
         <a
@@ -12,21 +17,7 @@
         <br>
 
         <form action="/item-setup/setup-complete" method="POST">
-            <div class="form-element">
-                <p>Threshold Type</p>
-                <select name="thrType" id="thrType">
-                    <option value="NUMBER">NUMBER</option>
-                    <option value="ABSOLUTE">ABSOLUTE</option>
-                    <option value="PERCENT">PERCENT</option>
-                </select>
-            </div>
 
-            <div class="form-element">
-                <p>Threshold Value</p>
-                <input type="number" step="1" name="thrVal" id="thrVal">
-            </div>
-
-            <br>
             <div class="form-element">
                 <p>Auto Calculate 100 percent weight?</p>
                 <select name="autoCalc" id="autoCalc">
@@ -50,6 +41,22 @@
                     <option value="0">NO</option>
                 </select>
             </div>
+
+            <div class="form-element">
+                <p>Threshold Type</p>
+                <select name="thrType" id="thrType">
+                    <option value="NUMBER">NUMBER</option>
+                    <option value="ABSOLUTE">ABSOLUTE</option>
+                    <option value="PERCENT">PERCENT</option>
+                </select>
+            </div>
+
+            <div class="form-element">
+                <p>Threshold Value</p>
+                <input type="number" step="1" name="thrVal" id="thrVal">
+            </div>
+
+            <br>
 
             <br>
             <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">

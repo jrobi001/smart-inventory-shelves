@@ -30,15 +30,16 @@ exports.postConfirmShelf = (req, res, next) => {
                 })
             } else {
                 return Item.findById(itemId)
+                    .then(([data, meta]) => {
+                        const itemData = data[0];
+                        // console.log(itemData.name);
+                        res.render('item-setup/confirm-shelf', {
+                            pageTitle: 'Confirm shelf',
+                            shelfPos: shelfPosition,
+                            item: itemData
+                        })
+                    })
             }
-        }).then(([data, meta]) => {
-            const itemData = data[0];
-            // console.log(itemData.name);
-            res.render('item-setup/confirm-shelf', {
-                pageTitle: 'Confirm shelf',
-                shelfPos: shelfPosition,
-                item: itemData
-            })
         })
         .catch(err => console.log(err));
 }
@@ -56,7 +57,10 @@ exports.postShelfSettings = (req, res, next) => {
     const tags = req.body.tags;
     const weight = req.body.weight;
     const notes = req.body.notes;
-    const price = req.body.price;
+    let price = req.body.price;
+    if (price == "") {
+        price = null;
+    }
     const imageLink = req.body.imageLink;
     const shelfPos = req.body.shelfPos;
 
