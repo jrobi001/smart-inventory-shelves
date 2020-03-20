@@ -1,6 +1,5 @@
 
 
-
 .intro-container{
   margin: auto;
   display: flex;
@@ -24,7 +23,7 @@
   background-color: #4d4d4d;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   /* padding-left: 6em; */
   color: white;
 
