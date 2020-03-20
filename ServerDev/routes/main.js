@@ -33,6 +33,7 @@ router.get('/edit-shelf-details', function (req, res) {
 });
 
 function autoCalcweight() {
+    console.log('Autocalc Running...');
 
     let sqlqueryinit = "SELECT id from shelves WHERE items_id != 'null' AND autocalc100Percent = '1'";
     db.query(sqlqueryinit, (err, result) => {
@@ -49,30 +50,45 @@ function autoCalcweight() {
                     if (err1) { throw err1 }
                     let currentcalibratedWeight = result1[0].hundredPercent;
 
-
+                    // removed limit desc 0 1, to give an array of all weights
                     if (record0 == '1') {
-                        var sqlquery1 = "select weight from id1weights order by dateTime desc limit 1";
+                        var sqlquery1 = "select weight from id1weights order by dateTime desc";
                     }
                     if (record0 == '2') {
-                        var sqlquery1 = "select weight from id2weights order by dateTime desc limit 1";
+                        var sqlquery1 = "select weight from id2weights order by dateTime desc";
                     }
                     if (record0 == '3') {
-                        var sqlquery1 = "select weight from id3weights order by dateTime desc limit 1";
+                        var sqlquery1 = "select weight from id3weights order by dateTime desc";
                     }
                     if (record0 == '4') {
-                        var sqlquery1 = "select weight from id4weights order by dateTime desc limit 1";
+                        var sqlquery1 = "select weight from id4weights order by dateTime desc";
                     }
                     if (record0 == '5') {
-                        var sqlquery1 = "select weight from id5weights order by dateTime desc limit 1";
+                        var sqlquery1 = "select weight from id5weights order by dateTime desc";
                     }
                     if (record0 == '6') {
-                        var sqlquery1 = "select weight from id6weights order by dateTime desc limit 1";
+                        var sqlquery1 = "select weight from id6weights order by dateTime desc";
                     }
                     db.query(sqlquery1, (err2, result2) => {
                         if (err2) { throw err2 }
 
+                        // adapting code to find the most recent highest weight, rather than just most recent
                         if (result2[0] != undefined) {
-                            let weightval = result2[0].weight;
+                            // console.log(Id);
+                            // console.log(result2);
+                            let largest = 0;
+                            // iterating over weights
+                            for (const result of result2) {
+                                // the loop will stop if the next weight is not equal to or larger
+                                if (parseInt(result.weight) >= largest) {
+                                    largest = parseInt(result.weight);
+                                } else {
+                                    break;
+                                }
+                            }
+                            console.log('most recent 100% for id' + Id + ' is ' + largest);
+
+                            let weightval = largest;
 
                             if (weightval > currentcalibratedWeight) {
                                 let sqlquery = "update shelves set hundredPercent = ? where id = ?";
@@ -94,7 +110,8 @@ autoCalcweight();
 
 setInterval(function () {
     autoCalcweight()
-}, 30000)
+    //interval of 5 mins (5*60*1000 ms)
+}, 300000)
 
 router.get('/add-weight', (req, res, next) => {
     res.render('test/add-weight', {
