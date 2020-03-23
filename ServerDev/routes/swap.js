@@ -14,19 +14,33 @@ const mainController = require('../controllers/mainController');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render('swap/swap-item.ejs', { pageTitle: 'Swap Items' });
+    const names = [];
+    Item.fetchItemNames(names)
+        .then(() => {
+            // console.log(names);
+            res.render('swap/swap-item.ejs', {
+                pageTitle: 'Swap Items',
+                names: names
+            });
+        })
+        .catch(err => console.log(err));
+
 });
 
 
 router.post('/swapped', (req, res) => {
 
-    let shelfpos1 = req.body.name;
-    let shelfpos2 = req.body.swap;
-    if (shelfpos1 != shelfpos2) {
+    let shelfPos1 = req.body.shelfPos;
+    let shelfPos2 = req.body.swapPos;
+    if (shelfPos1 < 1 || shelfPos1 > 6 || shelfPos2 < 1 || shelfPos2 > 6) {
+        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    }
+
+    if (shelfPos1 != shelfPos2) {
         let sqlStatement = "UPDATE shelves SET shelfPosition = ? WHERE shelfPosition = ?";
-        let record1 = [99, shelfpos1];
-        let record2 = [shelfpos1, shelfpos2];
-        let record3 = [shelfpos2, 99];
+        let record1 = [99, shelfPos1];
+        let record2 = [shelfPos1, shelfPos2];
+        let record3 = [shelfPos2, 99];
         db.query(sqlStatement, record1, (err, result) => {
             if (err) {
                 throw (err)

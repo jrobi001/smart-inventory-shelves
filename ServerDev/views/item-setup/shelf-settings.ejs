@@ -1,64 +1,110 @@
 <%- include('../includes/head.ejs') %>
 <link rel="stylesheet" href="/css/forms.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 </head>
 <%- include('../includes/navigation.ejs') %>
+
 <main>
-
-    <p>later update this page to only show relevant form fields(without a long route)</p>
-    <a
-        href="https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml">https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml</a>
-    <br>
-    <h3>What Settings would you like for <%= itemName %> on shelf <%= shelfPos %> </h3>
-    <form action="/item-setup/setup-complete" method="POST">
-        <div class="form-element">
-            <p>Threshold Type</p>
-            <select name="thrType" id="thrType">
-                <option value="NUMBER">NUMBER</option>
-                <option value="ABSOLUTE">ABSOLUTE</option>
-                <option value="PERCENT">PERCENT</option>
-            </select>
-        </div>
-
-        <div class="form-element">
-            <p>Threshold Value</p>
-            <input type="number" step="1" name="thrVal" id="thrVal">
-        </div>
-
-        <br>
-        <div class="form-element">
-            <p>Auto Calculate 100 percent weight?</p>
-            <select name="autoCalc" id="autoCalc">
-                <option value="1">YES</option>
-                <option value="0">NO</option>
-            </select>
-        </div>
-
-        <br>
-        <div class="form-element">
-            <p>Manually Set 100 Percent weight:</p>
-            <input type="number" step="0.01" name="hundredPercent" id="hundredPercent">
-        </div>
+    <div class="form-box">
 
 
-        <br>
-        <div class="form-element">
-            <p>Send a warning when Item falls below threshold?</p>
-            <select name="warning" id="warning">
-                <option value="1">YES</option>
-                <option value="0">NO</option>
-            </select>
-        </div>
 
-        <br>
-        <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">
-        <input type="hidden" name="itemId" id="itemId" value="<%= itemId %>">
-        <input type="hidden" name="itemName" id="itemName" value="<%= itemName %>">
+        <h3>What Settings would you like for <%= itemName %> on shelf <%= shelfPos %> </h3>
+        <!-- <p>later update this page to only show relevant form fields(without a long route)</p>
+        <a
+            href="https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml">https://www.solodev.com/blog/web-design/how-to-hide-form-fields-based-upon-user-selection.stml</a>
+        <br> -->
+
+        <form action="/item-setup/setup-complete" method="POST">
+
+            <div class="form-element">
+                <p>Auto Calculate 100 percent weight?</p>
+                <select onclick="autoCalcCheck();" name="autoCalc" id="autoCalc">
+                    <option required selected value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+
+            <br>
+            <div class="form-element" id="enter100">
+                <p>Manually Set 100 Percent weight:</p>
+                <input type="number" step="0.01" name="hundredPercent" id="hundredPercent">
+            </div>
+
+            <script>
+                autoCalcCheck()
+                function autoCalcCheck() {
+                    let autoCalcVal = document.getElementById("autoCalc").value;
+                    if (autoCalcVal == "0" || autoCalcVal == null) {
+                        console.log('calc: no');
+                        document.getElementById("enter100").style.display = 'block';
+                        document.getElementById("hundredPercent").setAttribute('required', '');
+                    } else {
+                        console.log('calc: yes');
+                        document.getElementById("enter100").style.display = 'none';
+                        document.getElementById("hundredPercent").removeAttribute('required');
+                    }
+                };
+            </script>
+
+            <br>
+            <div class="form-element">
+                <p>Send a warning when Item falls below threshold?</p>
+                <select onclick="warningCheck();" name="warning" id="warning">
+                    <option selected value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+
+            <div class="form-element" id="thrType">
+                <p>Threshold Type</p>
+                <select name="thrType">
+                    <option id="thrTypeOp1" selected value="NUMBER">Number of items</option>
+                    <option value="ABSOLUTE">Absolute Weight (g)</option>
+                    <option value="PERCENT">Percentage Weight</option>
+                </select>
+            </div>
+
+            <div class="form-element" id="thrInput-box">
+                <p>Threshold Value</p>
+                <input required type="number" step="1" name="thrVal" id="thrVal">
+            </div>
+
+            <script>
+                //https://stackoverflow.com/questions/17621515/how-to-show-and-hide-input-fields-based-on-radio-button-selection
+                warningCheck()
+                function warningCheck() {
+                    let warningVal = document.getElementById("warning").value;
+                    if (warningVal == "1" || warningVal == null) {
+                        console.log('warn: yes');
+                        document.getElementById("thrType").style.display = 'block';
+                        document.getElementById("thrTypeOp1").setAttribute('required', '');
+                        document.getElementById("thrInput-box").style.display = 'block';
+                        document.getElementById("thrVal").setAttribute('required', '');
+                    } else {
+                        console.log('warn: no');
+                        document.getElementById("thrType").style.display = 'none';
+                        document.getElementById("thrTypeOp1").removeAttribute('required');
+                        document.getElementById("thrInput-box").style.display = 'none';
+                        document.getElementById("thrVal").removeAttribute('required');
+                    }
+                };
+            </script>
+
+            <br>
+
+            <br>
+            <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">
+            <input type="hidden" name="itemId" id="itemId" value="<%= itemId %>">
+            <input type="hidden" name="itemName" id="itemName" value="<%= itemName %>">
 
 
-        <button class="btn" type="submit">Save settings</button>
-    </form>
-    <form action="/item-setup" method="GET">
-        <button class="btn" type="submit">No, take me back!</button>
-    </form>
+            <button class="btn" type="submit">Save settings</button>
+        </form>
+        <form action="/item-setup" method="GET">
+            <button class="btn" type="submit">No, take me back!</button>
+        </form>
+    </div>
 </main>
 <%- include('../includes/footer.ejs')%>

@@ -5,19 +5,23 @@ const Overview = require('../models/overview')
 
 
 exports.getShefSelector = (req, res, next) => {
-    console.log('shelf selector');
-    res.render('item-setup/shelf-selector.ejs', {
-        pageTitle: 'Shelf selector'
-    })
+    const names = [];
+    Item.fetchItemNames(names)
+        .then(() => {
+            // console.log(names);
+            res.render('item-setup/shelf-selector.ejs', {
+                pageTitle: 'Shelf selector',
+                names: names
+            })
+        })
+        .catch(err => console.log(err));
 }
 
 exports.postConfirmShelf = (req, res, next) => {
-    // console.log('hello');
     const shelfPosition = req.body.shelfPos;
     // console.log(shelfPosition)
     Shelf.fetchItemIdFromPos(shelfPosition)
         .then(([data, meta]) => {
-            // console.log('still working');
             const itemId = data[0].items_id
             if (itemId == null) {
                 return res.render('item-setup/item-form', {
@@ -26,21 +30,25 @@ exports.postConfirmShelf = (req, res, next) => {
                 })
             } else {
                 return Item.findById(itemId)
+                    .then(([data, meta]) => {
+                        const itemData = data[0];
+                        // console.log(itemData.name);
+                        res.render('item-setup/confirm-shelf', {
+                            pageTitle: 'Confirm shelf',
+                            shelfPos: shelfPosition,
+                            item: itemData
+                        })
+                    })
             }
-        }).then(([data, meta]) => {
-            const itemData = data[0];
-            console.log(itemData.name);
-            res.render('item-setup/confirm-shelf', {
-                pageTitle: 'Confirm shelf',
-                shelfPos: shelfPosition,
-                item: itemData
-            })
         })
         .catch(err => console.log(err));
 }
 
 exports.postItemForm = (req, res, next) => {
     const shelfPos = req.params.shelfPos;
+    if (shelfPos > 6 || shelfpos < 1) {
+        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    }
     res.render('item-setup/item-form', {
         pageTitle: 'Replace Item',
         shelfPos: shelfPos
@@ -52,7 +60,10 @@ exports.postShelfSettings = (req, res, next) => {
     const tags = req.body.tags;
     const weight = req.body.weight;
     const notes = req.body.notes;
-    const price = req.body.price;
+    let price = req.body.price;
+    if (price == "") {
+        price = null;
+    }
     const imageLink = req.body.imageLink;
     const shelfPos = req.body.shelfPos;
 
@@ -81,72 +92,33 @@ exports.postSetupComplete = (req, res, next) => {
     const itemId = req.body.itemId;
     const shelfPos = req.body.shelfPos;
     const thrType = req.body.thrType;
-    const thrVal = req.body.thrVal
-    const hundredPercent = req.body.hundredPercent;
+    let thrVal = req.body.thrVal
+    let hundredPercent = req.body.hundredPercent;
     const autoCalc = req.body.autoCalc;
     const warning = req.body.warning;
+
+    if (thrVal == "") {
+        thrVal = "0";
+    }
+    if (hundredPercent == "") {
+        hundredPercent = null;
+    }
 
     const newShelf = new Shelf(null, itemId, shelfPos, '0', thrType, thrVal, hundredPercent, autoCalc, warning);
 
     console.log(newShelf);
     Shelf.overwriteShelf(newShelf)
         .then(() => {
+            return Shelf.fetchIdFromPos(shelfPos);
+        }).then(([data, meta]) => {
+            const id = data[0].id;
+            return Weight.deleteShelWeightsfById(id)
+        }).then(() => {
             res.render('item-setup/setup-complete', {
                 pageTitle: 'Setup Complete',
                 shelfPos: shelfPos,
                 itemName: itemName
-            });
+            })
         })
         .catch(err => console.log(err));
-
 }
-
-// alt edit function not needed-----------------------------------------------------------------------
-// exports.getEditItem = (req, res, next) => {
-//     const shelfPos = req.params.shelfPos;
-//     Shelf.fetchItemIdFromPos(shelfPos)
-//         .then(([data, meta]) => {
-//             const itemId = data[0].items_id;
-//             console.log(itemId)
-//             if (itemId == null) {
-//                 res.send('that shelf is empty, maybe we will redirect to the add item page hehre!')
-//             }
-//             return Item.findById(itemId);
-//         })
-//         .then(([data, meta]) => {
-//             item = data[0];
-//             // console.log(item);
-//             res.render('item-setup/edit-item', {
-//                 pageTitle: 'edit item',
-//                 shelfPos: shelfPos,
-//                 itemId: item.id,
-//                 itemName: item.name,
-//                 itemTags: item.tags,
-//                 itemWeight: item.weight,
-//                 itemNotes: item.notes,
-//                 itemPrice: item.price,
-//                 itemImageLink: item.imageLink
-//             });
-//         })
-//         .catch(err => console.log(err));
-// }
-
-// exports.postEditConfirmed = (req, res, next) => {
-//     const itemName = req.body.name;
-//     const tags = req.body.tags;
-//     const weight = req.body.weight;
-//     const notes = req.body.notes;
-//     const price = req.body.price;
-//     const imageLink = req.body.imageLink;
-//     const itemId = parseInt(req.body.itemId);
-//     const shelfPos = req.body.shelfPos;
-
-
-//     const editedItem = new Item(itemId, itemName, tags, weight, notes, price, imageLink);
-//     // console.log(editedItem);
-//     editedItem.updateItem()
-//         .then(
-//             res.send('congrats the item ' + itemName + ' on shelf ' + itemId + 'has been updated')
-//         )
-//         .catch(err => console.log(err));
-// }

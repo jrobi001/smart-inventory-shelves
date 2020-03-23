@@ -2,24 +2,25 @@
 </head>
 <%- include('../includes/navigation.ejs') %>
 <main>
+    <div class="form-box">
+        <br>
+        <p>The current item stored on that shelf is:</p>
 
-    <p>The current item stored on that shelf is:</p>
+        <h3><%= item.name %></h3>
 
-    <h3><%= item.name %></h3>
+        <p>Are you sure you would like to delete <%= item.name %> from shelf <%= shelfPos %>?</p>
 
-    <p>Are you sure you would like to delete <%= item.name %> from shelf <%= shelfPos %>?</p>
+        <p>This will also delete all associated weight history from shelf <%= shelfPos %></p>
+        <br>
+        <form action="/delete/result" method="POST">
+            <input type="hidden" name="shelfPos" value="<%= shelfPos %> ">
+            <button class="btn" type="submit">Yes!</button>
+        </form>
+        <form action="/delete" method="GET">
+            <button class="btn" type="submit">No, take me back!</button>
+        </form>
 
-    <p>As well as delete all associated weight history from shelf <%= shelfPos %>?</p>
-    <br>
-    <form action="/delete/result" method="POST">
-        <input type="hidden" name="shelfPos" value="<%= shelfPos %> ">
-        <button class="btn" type="submit">Yes!</button>
-    </form>
-    <form action="/delete" method="GET">
-        <button class="btn" type="submit">No, take me back!</button>
-    </form>
-
-
+    </div>
 </main>
 
 <%- include('../includes/footer.ejs')%>
