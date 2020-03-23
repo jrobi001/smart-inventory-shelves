@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 const itemSetupController = require('../controllers/itemSetupController');
 const mainController = require('../controllers/mainController');
+const shelfDetailsController = require('../controllers/shelfDetailsController');
 
 const router = express.Router();
 
@@ -14,6 +15,9 @@ router.get('/:shelfPos', mainController.getShelfDetails);
 // Logic for edit item-----------------------------------------------------------------------
 router.get('/edit-item/:shelfPos', function (req, res) {
     const shelfPos = req.params.shelfPos;
+    if (shelfPos > 6 || shelfpos < 1) {
+        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    }
     let itemId = -1;
 
     let sqlquery = "SELECT items_id FROM shelves WHERE shelves.shelfPosition = ?";
@@ -62,5 +66,6 @@ router.post('/edit-item/changes-saved', function (req, res) {
     });
 });
 // -----------------------------------------------------------------------
+
 
 module.exports = router;
