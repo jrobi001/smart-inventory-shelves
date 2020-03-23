@@ -18,6 +18,7 @@ const port = 8000;
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
+    password: 'cake123',
     database: 'shelfdatav3'
 });
 const dbPromise = pool.promise();
@@ -33,6 +34,7 @@ global.dbPromise = dbPromise;
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
+    password: 'cake123',
     database: 'shelfdatav3'
 });
 
