@@ -60,6 +60,7 @@ const mainRoutes = require('./routes/main')
 const shelfDetailsRoutes = require('./routes/shelfDetails')
 const deleteRoutes = require('./routes/delete')
 const swapRoutes = require('./routes/swap')
+const helpRoutes = require('./routes/help')
 
 //cookie for session management?
 app.use(session({
@@ -79,6 +80,7 @@ app.use('/item-setup', itemSetupRoutes);
 app.use('/shelf-details', shelfDetailsRoutes);
 app.use('/delete', deleteRoutes);
 app.use('/swap-shelves', swapRoutes);
+app.use('/help', helpRoutes);
 
 
 // calling the autocalculate 100% function from ./util/autoCalcWeight
@@ -86,7 +88,7 @@ autoCalc.autoCalcWeight()
 setInterval(function () {
     autoCalc.autoCalcWeight()
     //interval of 5 mins (5*60*1000 ms)
-}, 300000)
+}, 120000)
 
 // last route checked if none others satisfied - 404
 app.use((req, res, next) => {

@@ -4,9 +4,22 @@ const Weight = require('../models/weight')
 const Overview = require('../models/overview')
 
 exports.getShelfOverviewList = (req, res, next) => {
+    //if exists, getting the sort type from the parameters
+    let sortType = 'pos';
+    if (req.query.sort != undefined) {
+        sortType = req.query.sort;
+    }
+    // // setting back to default if improper input (should be redundant)
+    // if (sortType != 'pos' ||
+    //     sortType != 'per' ||
+    //     sortType != 'itm' ||
+    //     sortType != 'abs') {
+    //     sortType = 'pos'
+    // }
+
     const overviewArr = [];
     let shelfItemsDetails;
-    const weights = [];
+    let weights = [];
     Overview.fetchAllShevesJoinItems()
         .then(([data, meta]) => {
             shelfItemsDetails = data;
@@ -14,9 +27,10 @@ exports.getShelfOverviewList = (req, res, next) => {
             // const shelves = data;
             return Overview.fetchAllWeights(weights)
         }).then(() => {
+            console.log(sortType);
 
             //[weight, data, pergentagefull, number of items]
-            //creating a 2d array for each shelf, pos 1 shelfWeight, pos2 the shelf + item details
+            //creating a 2d array for each shelf, pos1 shelfWeight, pos2 the shelf + item details
             for (let i = 0; i < weights.length; i++) {
                 let box = [];
                 box.push(weights[i]);
@@ -24,17 +38,48 @@ exports.getShelfOverviewList = (req, res, next) => {
                 overviewArr.push(box);
             }
 
-            //sorting by shelfPosition
-            overviewArr.sort((a, b) => {
-                return a[1].shelfPosition - b[1].shelfPosition;
-            })
+            if (sortType == 'pos') {
+                //sorting by shelfPosition
+                overviewArr.sort((a, b) => {
+                    return a[1].shelfPosition - b[1].shelfPosition;
+                })
+            }
 
-            console.log(overviewArr);
+            if (sortType == 'per') {
+                // sorting by percentage
+                overviewArr.sort((a, b) => {
+                    let aPer = a[0] / a[1].hundredPercent;
+                    let bPer = b[0] / b[1].hundredPercent;
+                    return aPer - bPer;
+                })
+            }
+            if (sortType == 'itm') {
+                // sorting by Items left
+                overviewArr.sort((a, b) => {
+                    let aPer = a[0] / a[1].weight;
+                    let bPer = b[0] / b[1].weight;
+                    return aPer - bPer;
+                })
+            }
+            if (sortType == 'abs') {
+                // Absoulte Weight
+                overviewArr.sort((a, b) => {
+                    return a[0] - b[0];
+                })
+            }
+            weights = [];
+            shelfItemsDetails = [];
+            for (const el of overviewArr) {
+                weights.push(el[0]);
+                shelfItemsDetails.push(el[1]);
+
+            }
             // console.log(weights);
             res.render('overview-list', {
                 pageTitle: 'Shelf Overview List',
                 shelves: shelfItemsDetails,
-                weights: weights
+                weights: weights,
+                sort: sortType
             });
         })
         .catch(err => console.log(err));
@@ -79,26 +124,5 @@ exports.getShelfDetails = (req, res, next) => {
                 weight: shelfWeight
             });
         })
-        .catch(err => console.log(err));
-
-
-}
-
-exports.postWeightAdded = (req, res, next) => {
-    const shelfPos = req.body.shelfPos;
-    const weight = req.body.weight;
-    Shelf.fetchIdFromPos(shelfPos)
-        .then(([data, meta]) => {
-            const shelfId = data[0].id;
-            // console.log(shelfId);
-            Weight.addWeightbyId(shelfId, weight)
-        })
-        .then(
-            res.render('test/add-weight-complete', {
-                pageTitle: 'weight added',
-                shelfPos: shelfPos,
-                weight: weight
-            })
-        )
         .catch(err => console.log(err));
 }
