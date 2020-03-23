@@ -16,8 +16,8 @@ const port = 8000;
 //https://evertpot.com/executing-a-mysql-query-in-nodejs/
 //https://github.com/sidorares/node-mysql2/issues/809
 const pool = mysql.createPool({
-    // host: 'localhost',
-    // user: 'root',
+    host: 'localhost',
+    user: 'root',
     database: 'shelfdatav3',
     password: 'cake123'
 });
@@ -32,8 +32,8 @@ global.dbPromise = dbPromise;
 
 //setting up database the way it was in web dev, for those that prefer callbacks
 const db = mysql.createConnection({
-    // host: 'localhost',
-    // user: 'root',
+    host: 'localhost',
+    user: 'root',
     database: 'shelfdatav3',
     password: 'cake123'
 });
