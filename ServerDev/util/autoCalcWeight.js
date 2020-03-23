@@ -3,6 +3,7 @@ exports.autoCalcWeight = () => {
 
     let sqlqueryinit = "SELECT id from shelves WHERE items_id != 'null' AND autocalc100Percent = '1'";
     db.query(sqlqueryinit, (err, result) => {
+        console.log(result);
 
 
         if (result[0] != undefined) {
