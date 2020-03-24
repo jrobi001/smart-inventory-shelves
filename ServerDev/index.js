@@ -83,12 +83,12 @@ app.use('/swap-shelves', swapRoutes);
 app.use('/help', helpRoutes);
 
 
-// calling the autocalculate 100% function from ./util/autoCalcWeight
-// autoCalc.autoCalcWeight()
-// setInterval(function () {
-//     autoCalc.autoCalcWeight()
-//     //interval of 5 mins (5*60*1000 ms)
-// }, 120000)
+// calling the autocalculate 100 % function from ./ util / autoCalcWeight
+autoCalc.autoCalcWeight()
+setInterval(function () {
+    autoCalc.autoCalcWeight()
+    //interval of 5 mins (5*60*1000 ms)
+}, 120000)
 
 // last route checked if none others satisfied - 404
 app.use((req, res, next) => {
