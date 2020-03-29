@@ -1,16 +1,38 @@
 .form-element {
-    width: 80%;
+    width: 35em;
+    /* margin: 1rem 0; */
 }
-input {
-    width: 80%;
+
+.form-element label,
+.form-element input,
+.form-element textarea,
+.form-element label select {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.form-element input {
     height: 1.5em;
 }
 
-textarea {
-    width: 80%;
+.form-element input,
+.form-element textarea {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 4px 4px 0 0;
+    font: inherit;
 }
 
-select {
+.form-element input:focus,
+.form-element textarea:focus {
+    outline-color: darkblue;
+}
+
+.form-element textarea {
+    width: 100%;
+}
+
+.form-element select {
     width: 40%;
     height: 1.5em;
 }

@@ -6,10 +6,14 @@ const mysql = require('mysql2');
 var session = require('express-session')
 var flash = require('connect-flash');
 
+<<<<<<< HEAD
  
 
 
 
+=======
+const autoCalc = require('./util/autoCalcWeight')
+>>>>>>> ebaf82003146c815a6033f71e766fa2b8772bac8
 
 const app = express();
 const port = 3000;
@@ -22,7 +26,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav3',
-    password: 'Igniciouse1@'
+    password: 'cake123'
 
 });
 const dbPromise = pool.promise();
@@ -39,7 +43,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav3',
-    password: 'Igniciouse1@'
+    password: 'cake123'
 });
 
 db.connect((err) => {
@@ -51,8 +55,7 @@ db.connect((err) => {
 //global variable db to be called where needed
 global.db = db;
 
-
-
+// setting the default views path to /views
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -64,7 +67,9 @@ const mainRoutes = require('./routes/main')
 const shelfDetailsRoutes = require('./routes/shelfDetails')
 const deleteRoutes = require('./routes/delete')
 const swapRoutes = require('./routes/swap')
+const helpRoutes = require('./routes/help')
 
+//cookie for session management?
 app.use(session({
     cookie: { maxAge: 60000 },
     secret: 'woot',
@@ -82,8 +87,17 @@ app.use('/item-setup', itemSetupRoutes);
 app.use('/shelf-details', shelfDetailsRoutes);
 app.use('/delete', deleteRoutes);
 app.use('/swap-shelves', swapRoutes);
+app.use('/help', helpRoutes);
 
 
+// calling the autocalculate 100% function from ./util/autoCalcWeight
+autoCalc.autoCalcWeight()
+setInterval(function () {
+    autoCalc.autoCalcWeight()
+    //interval of 5 mins (5*60*1000 ms)
+}, 120000)
+
+// last route checked if none others satisfied - 404
 app.use((req, res, next) => {
     res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
 });

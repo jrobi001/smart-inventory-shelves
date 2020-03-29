@@ -3,15 +3,26 @@
 </head>
 <%- include('includes/navigation.ejs') %>
 <main>
-    <p>this is a shelf overview page</p>
+
+    <P>Select how you wuld like the shelves organised</P>
+    <form action="/home" method="GET">
+        <select name="sort" id="">
+            <option <% if(sort == 'pos') { %>selected<% } %> value="pos">By Shelf Position</option>
+            <option <% if(sort == 'per') { %>selected<% } %> value="per">By Percentage Weight</option>
+            <option <% if(sort == 'itm') { %>selected<% } %> value="itm">By No. Items Left</option>
+            <option <% if(sort == 'abs') { %>selected<% } %> value="abs">By Absoulte Weight</option>
+        </select>
+        <input type="submit" value="OK" />
+    </form>
+    <br>
 
     <% for (var i = 0; i < shelves.length; i ++) { %>
-    <a href="/shelf-details/<%= shelves[i].shelfPosition %>">click</a>
-    <div class="productGrid">
+    <!-- <a href="/shelf-details/<%= shelves[i].shelfPosition %>">click -->
+    <a href="/shelf-details/<%= shelves[i].shelfPosition %>" class="productGrid">
 
         <div class="imagebox">
             <% if (shelves[i].imageLink != null) { %>
-            <img src="<%= shelves[i].imageLink %>" alt="">
+            <img id="product-image" src="<%= shelves[i].imageLink %>" alt="">
             <% } else { %>
             <p>no image</p>
             <% } %>
@@ -23,15 +34,26 @@
             <% } else { %>
             <h2>---Shelf Empty---</h2>
             <% } %>
+            <br>
 
             <p><%= shelves[i].tags %></p>
         </div>
 
         <div class="numberbox">
             <% if (weights[i] != null && shelves[i].weight != null) { %>
-            <h1><%= 
+            <p id="weight-left"><%= weights[i] %>g </p>
+            <p id="number-text"><%= 
+                        // // Number of items
                         Math.round(weights[i] / shelves[i].weight)
-                    %></h1>
+
+                        // // Percent
+                        // Math.round((weights[i] / shelves[i].hundredPercent) * 100)
+
+                        //Absolute
+                        // weights[i]
+
+                    %></p>
+            <p class="weight-box-text">Items left</p>
             <% } else if (shelves[i].weight == null) { %>
             <h2>shelf empty</h2>
             <% } else { %>
@@ -66,7 +88,7 @@
             </div>
         </div>
 
-    </div>
+    </a>
     <br>
 
     <% } %>

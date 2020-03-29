@@ -2,24 +2,24 @@
 </head>
 <%- include('../includes/navigation.ejs') %>
 <main>
+    <div class="form-box">
 
+        <h2>Shelf <%= shelfPos %> is already filled!</h2>
 
-    <h2>Shelf <%= shelfPos %> is already filled!</h2>
+        <p>The current item stored on that shelf is:</p>
 
-    <p>The current item stored on that shelf is:</p>
+        <h3><%= item.name %></h3>
 
-    <h3><%= item.name %></h3>
+        <p>Are you sure you would like to replace <%= item.name %> on shelf <%= shelfPos %>?</p>
 
-    <p>Are you sure you would like to replace <%= item.name %> on shelf <%= shelfPos %>?</p>
+        <form action="/item-setup/item-form/<%= shelfPos %>" method="POST">
 
-    <form action="/item-setup/item-form/<%= shelfPos %>" method="POST">
-
-        <button class="btn" type="submit">Yes!</button>
-    </form>
-    <form action="/item-setup" method="GET">
-        <button class="btn" type="submit">No, take me back!</button>
-    </form>
-
+            <button class="btn" type="submit">Yes!</button>
+        </form>
+        <form action="/item-setup" method="GET">
+            <button class="btn" type="submit">No, take me back!</button>
+        </form>
+    </div>
 
 </main>
 
