@@ -33,7 +33,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/home', mainController.getShelfOverviewList);
 
-router.get('/shelf-details-layout', mainController.getShelfDetails);
+router.get('/shelf-details-layout', mainController.getShelfDetailsLayout);
 
 router.get('/template-example', (req, res, next) => {
     res.render('template-example', {
