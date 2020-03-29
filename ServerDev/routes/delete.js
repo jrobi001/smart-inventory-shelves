@@ -61,7 +61,7 @@ router.post('/confirm', (req, res, next) => {
 // updated to also clear relevant weights table of all data
 router.post('/result', function (req, res) {
     const shelfPos = req.body.shelfPos;
-    if (shelfPos > 6 || shelfpos < 1) {
+    if (shelfPos > 6 || shelfPos < 1) {
         res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
     }
     let sqlquery = "UPDATE shelves SET items_id = NULL, updateFrequency = '0', thresholdType = 'NUMBER', thresholdValue = '0', hundredPercent = NULL, autocalc100Percent = '0', warning = '1' WHERE shelfPosition = ?";

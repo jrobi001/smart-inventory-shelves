@@ -13,54 +13,54 @@ router.get('/:shelfPos', mainController.getShelfDetails);
 
 
 router.get('/edit-shelf/:shelfPos', function (req, res) {
-    
-	const shelfPos = req.params.shelfPos;
-	let sqlquery = "SELECT * from shelves WHERE shelfPosition = ?";
-	let record = [shelfPos];
-	db.query(sqlquery, record, (err,result)=>{
-	if (err) {throw (err)};
-	
-	res.render('shelf-details/edit-shelf-details.ejs', { pageTitle: 'Edit Shelf Details',  shelfInfo: result[0], shelfPos: shelfPos });
-              
-	});
-	
+
+    const shelfPos = req.params.shelfPos;
+    let sqlquery = "SELECT * from shelves WHERE shelfPosition = ?";
+    let record = [shelfPos];
+    db.query(sqlquery, record, (err, result) => {
+        if (err) { throw (err) };
+
+        res.render('shelf-details/edit-shelf-details.ejs', { pageTitle: 'Edit Shelf Details', shelfInfo: result[0], shelfPos: shelfPos });
+
+    });
+
 });
 
-router.post('/edit-shelf/changes-saved',function( req, res) {
-        const autocalc = req.body.autoCalc;	
-	const shelfPos = req.body.shelfPos;
-	let updateFreq = req.body.updateFreq;
-	let thrType = req.body.thrType;
-	let thrVal = req.body.thrVal;
-	let autoCalc = req.body.autoCalc;
-	let warning = req.body.warning;
-	let hundredPercent = req.body.hundredPercent;
-		
-	if(autocalc == "0"){
-	let record = [hundredPercent, shelfPos];	
-	let sqlquery = "UPDATE shelves SET hundredPercent = ? WHERE shelfPosition = ?";	
-	db.query(sqlquery, record, (err,result)=>{	
-	
-	if(err) {throw (err)};
-	
-	});
-	};	
-	let record2 = [updateFreq, thrType, thrVal, autoCalc, warning, shelfPos];
-	let sqlquery2 = "UPDATE shelves SET updateFrequency = ?, thresholdType = ?, thresholdValue = ?, autocalc100Percent = ?, warning = ? WHERE shelfPosition = ?";
-	db.query(sqlquery2, record2, (err,result)=>{
-	if(err){throw (err)}
-	else{
-	res.render('shelf-details/changes-saved.ejs', { pageTitle: 'Changes Saved', shelfPos: shelfPos });
-	}	
-	});
-	
+router.post('/edit-shelf/changes-saved', function (req, res) {
+    const autocalc = req.body.autoCalc;
+    const shelfPos = req.body.shelfPos;
+    let updateFreq = req.body.updateFreq;
+    let thrType = req.body.thrType;
+    let thrVal = req.body.thrVal;
+    let autoCalc = req.body.autoCalc;
+    let warning = req.body.warning;
+    let hundredPercent = req.body.hundredPercent;
+
+    if (autocalc == "0") {
+        let record = [hundredPercent, shelfPos];
+        let sqlquery = "UPDATE shelves SET hundredPercent = ? WHERE shelfPosition = ?";
+        db.query(sqlquery, record, (err, result) => {
+
+            if (err) { throw (err) };
+
+        });
+    };
+    let record2 = [updateFreq, thrType, thrVal, autoCalc, warning, shelfPos];
+    let sqlquery2 = "UPDATE shelves SET updateFrequency = ?, thresholdType = ?, thresholdValue = ?, autocalc100Percent = ?, warning = ? WHERE shelfPosition = ?";
+    db.query(sqlquery2, record2, (err, result) => {
+        if (err) { throw (err) }
+        else {
+            res.render('shelf-details/changes-saved.ejs', { pageTitle: 'Changes Saved', shelfPos: shelfPos });
+        }
+    });
+
 });
 
 //edit item route modified to take shelf Position as a parameter eliminating need for name to be entered
 // Logic for edit item-----------------------------------------------------------------------
 router.get('/edit-item/:shelfPos', function (req, res) {
     const shelfPos = req.params.shelfPos;
-    if (shelfPos > 6 || shelfpos < 1) {
+    if (shelfPos > 6 || shelfPos < 1) {
         res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
     }
     let itemId = -1;
@@ -72,7 +72,7 @@ router.get('/edit-item/:shelfPos', function (req, res) {
         if (err) { throw (err) };
         itemId = result[0].items_id;
         if (itemId == null || itemId == -1) {
-            
+
         } else {
             let sqlquery = "SELECT id,name,tags,weight,notes,price,imageLink FROM items WHERE id = ?";
             let record = [itemId];
@@ -112,9 +112,4 @@ router.post('/edit-item/changes-saved', function (req, res) {
 });
 // -----------------------------------------------------------------------
 
-<<<<<<< HEAD
 module.exports = router;
-=======
-
-module.exports = router;
->>>>>>> ebaf82003146c815a6033f71e766fa2b8772bac8
