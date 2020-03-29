@@ -28,9 +28,10 @@ router.get('/404', function (req, res) {
 
 });
 
-router.get('/edit-shelf-details', function (req, res) {
-    res.render('edit-shelf-details.ejs', { pageTitle: 'Edit Shelf Details' });
-});
+
+
+
+
 
 function autoCalcweight() {
 
