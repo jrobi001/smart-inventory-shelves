@@ -4,20 +4,82 @@ const Weight = require('../models/weight')
 const Overview = require('../models/overview')
 
 exports.getShelfOverviewList = (req, res, next) => {
-    const shelfOverview = new Overview([], null, null, null, null, null, null)
-    const weights = [];
+    //if exists, getting the sort type from the parameters
+    let sortType = 'pos';
+    if (req.query.sort != undefined) {
+        sortType = req.query.sort;
+    }
+    // // setting back to default if improper input (should be redundant)
+    // if (sortType != 'pos' ||
+    //     sortType != 'per' ||
+    //     sortType != 'itm' ||
+    //     sortType != 'abs') {
+    //     sortType = 'pos'
+    // }
+
+    const overviewArr = [];
+    let shelfItemsDetails;
+    let weights = [];
     Overview.fetchAllShevesJoinItems()
         .then(([data, meta]) => {
-            shelfOverview.shelfItemsJoin = data;
-            // console.log(shelfOverview.shelfItemsJoin);
+            shelfItemsDetails = data;
+            // console.log(shelfItemsDetails);
             // const shelves = data;
             return Overview.fetchAllWeights(weights)
         }).then(() => {
-            console.log(weights);
+            console.log(sortType);
+
+            //[weight, data, pergentagefull, number of items]
+            //creating a 2d array for each shelf, pos1 shelfWeight, pos2 the shelf + item details
+            for (let i = 0; i < weights.length; i++) {
+                let box = [];
+                box.push(weights[i]);
+                box.push(shelfItemsDetails[i]);
+                overviewArr.push(box);
+            }
+
+            if (sortType == 'pos') {
+                //sorting by shelfPosition
+                overviewArr.sort((a, b) => {
+                    return a[1].shelfPosition - b[1].shelfPosition;
+                })
+            }
+
+            if (sortType == 'per') {
+                // sorting by percentage
+                overviewArr.sort((a, b) => {
+                    let aPer = a[0] / a[1].hundredPercent;
+                    let bPer = b[0] / b[1].hundredPercent;
+                    return aPer - bPer;
+                })
+            }
+            if (sortType == 'itm') {
+                // sorting by Items left
+                overviewArr.sort((a, b) => {
+                    let aPer = a[0] / a[1].weight;
+                    let bPer = b[0] / b[1].weight;
+                    return aPer - bPer;
+                })
+            }
+            if (sortType == 'abs') {
+                // Absoulte Weight
+                overviewArr.sort((a, b) => {
+                    return a[0] - b[0];
+                })
+            }
+            weights = [];
+            shelfItemsDetails = [];
+            for (const el of overviewArr) {
+                weights.push(el[0]);
+                shelfItemsDetails.push(el[1]);
+
+            }
+            // console.log(weights);
             res.render('overview-list', {
                 pageTitle: 'Shelf Overview List',
-                shelves: shelfOverview.shelfItemsJoin,
-                weights: weights
+                shelves: shelfItemsDetails,
+                weights: weights,
+                sort: sortType
             });
         })
         .catch(err => console.log(err));
@@ -40,7 +102,7 @@ exports.getShelfDetails = (req, res, next) => {
     Overview.fetchShelvesJoinByPos(shelfPos)
         .then(([data, meta]) => {
             shelfDetails = data[0];
-            console.log(shelfDetails)
+            // console.log(shelfDetails)
             // making sure an item is set up on the shelf
             if (shelfDetails.items_id == null) {
                 res.send('That shelf is empty, a different page will go here')
@@ -55,33 +117,12 @@ exports.getShelfDetails = (req, res, next) => {
             } else {
                 shelfWeight = shelfWeight.weight
             }
-            console.log(shelfWeight);
+            // console.log(shelfWeight);
             res.render('shelf-details/shelf-details', {
                 pageTitle: 'Shelf Details',
                 details: shelfDetails,
                 weight: shelfWeight
             });
         })
-        .catch(err => console.log(err));
-
-
-}
-
-exports.postWeightAdded = (req, res, next) => {
-    const shelfPos = req.body.shelfPos;
-    const weight = req.body.weight;
-    Shelf.fetchIdFromPos(shelfPos)
-        .then(([data, meta]) => {
-            const shelfId = data[0].id;
-            console.log(shelfId);
-            Weight.addWeightbyId(shelfId, weight)
-        })
-        .then(
-            res.render('test/add-weight-complete', {
-                pageTitle: 'weight added',
-                shelfPos: shelfPos,
-                weight: weight
-            })
-        )
         .catch(err => console.log(err));
 }

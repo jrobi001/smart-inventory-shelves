@@ -1,0 +1,18 @@
+<%- include('../includes/head.ejs') %>
+</head>
+<%- include('../includes/navigation.ejs') %>
+<main>
+    <div class="form-box">
+        <form action="/help/weight-added" method="POST">
+            <h3>Add a weight to a shelf (position)</h3>
+
+            <%- include('../includes/selector.ejs') %>
+            <br>
+            <p>Weight to add (g):</p>
+            <input required type="number" step="1" name="weight" id="weight">
+
+            <button class="btn" type="submit">submit</button>
+        </form>
+    </div>
+</main>
+<%- include('../includes/footer.ejs')%>

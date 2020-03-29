@@ -14,9 +14,18 @@ const mainController = require('../controllers/mainController');
 const router = express.Router();
 
 router.get('/', function (req, res) {
-    res.render('delete/shelf-selector-delete.ejs', {
-        pageTitle: 'delete selector'
-    });
+    const names = [];
+    Item.fetchItemNames(names)
+        .then(() => {
+            // console.log(names);
+            res.render('delete/shelf-selector-delete.ejs', {
+                pageTitle: 'delete selector',
+                names: names
+            })
+        })
+        .catch(err => console.log(err));
+
+
 })
 
 //confirm screen before deletion
@@ -52,6 +61,9 @@ router.post('/confirm', (req, res, next) => {
 // updated to also clear relevant weights table of all data
 router.post('/result', function (req, res) {
     const shelfPos = req.body.shelfPos;
+    if (shelfPos > 6 || shelfpos < 1) {
+        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    }
     let sqlquery = "UPDATE shelves SET items_id = NULL, updateFrequency = '0', thresholdType = 'NUMBER', thresholdValue = '0', hundredPercent = NULL, autocalc100Percent = '0', warning = '1' WHERE shelfPosition = ?";
     let newrecord = [req.body.shelfPos];
     if (newrecord == 1 || newrecord == 2 || newrecord == 3 || newrecord == 4 || newrecord == 5 || newrecord == 6) {

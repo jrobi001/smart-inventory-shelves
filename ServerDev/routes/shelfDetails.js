@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 const itemSetupController = require('../controllers/itemSetupController');
 const mainController = require('../controllers/mainController');
+const shelfDetailsController = require('../controllers/shelfDetailsController');
 
 const router = express.Router();
 
@@ -59,6 +60,9 @@ router.post('/edit-shelf/changes-saved',function( req, res) {
 // Logic for edit item-----------------------------------------------------------------------
 router.get('/edit-item/:shelfPos', function (req, res) {
     const shelfPos = req.params.shelfPos;
+    if (shelfPos > 6 || shelfpos < 1) {
+        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    }
     let itemId = -1;
 
     let sqlquery = "SELECT items_id FROM shelves WHERE shelves.shelfPosition = ?";
@@ -87,11 +91,15 @@ router.get('/edit-item/:shelfPos', function (req, res) {
 })
 
 router.post('/edit-item/changes-saved', function (req, res) {
+    let price = req.body.price;
+    if (price == "") {
+        price = null;
+    }
     const itemId = req.body.itemId;
     const shelfPos = req.body.shelfPos;
     console.log(itemId);
     let sqlquery = "UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE id = ?";
-    let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, req.body.price, req.body.imageLink, itemId];
+    let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, price, req.body.imageLink, itemId];
 
     db.query(sqlquery, record, (err, result) => {
         if (err) {
@@ -104,4 +112,9 @@ router.post('/edit-item/changes-saved', function (req, res) {
 });
 // -----------------------------------------------------------------------
 
+<<<<<<< HEAD
 module.exports = router;
+=======
+
+module.exports = router;
+>>>>>>> ebaf82003146c815a6033f71e766fa2b8772bac8

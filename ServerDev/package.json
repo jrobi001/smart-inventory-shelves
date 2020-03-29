@@ -24,7 +24,10 @@
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
     "jquery": "^3.4.1",
+<<<<<<< HEAD
     "jsdom": "^16.2.1",
+=======
+>>>>>>> ebaf82003146c815a6033f71e766fa2b8772bac8
     "method-override": "^3.0.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0"

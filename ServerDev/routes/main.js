@@ -2,6 +2,7 @@ const http = require("http");
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const Item = require('../models/item')
 
 const itemSetupController = require('../controllers/itemSetupController');
 const mainController = require('../controllers/mainController');
@@ -23,9 +24,8 @@ router.get('/', (req, res, next) => {
         res.render('dev-home');
     });
 });
-router.get('/404', function (req, res) {
-    res.render('404.ejs', { pageTitle: '404 ERROR' });
 
+<<<<<<< HEAD
 });
 
 
@@ -71,39 +71,13 @@ function autoCalcweight() {
                     }
                     db.query(sqlquery1, (err2, result2) => {
                         if (err2) { throw err2 }
+=======
+// router.get('/edit-shelf-details', function (req, res) {
+//     res.render('edit-shelf-details.ejs', { pageTitle: 'Edit Shelf Details' });
+// });
+>>>>>>> ebaf82003146c815a6033f71e766fa2b8772bac8
 
-                        if (result2[0] != undefined) {
-                            let weightval = result2[0].weight;
 
-                            if (weightval > currentcalibratedWeight) {
-                                let sqlquery = "update shelves set hundredPercent = ? where id = ?";
-                                let record1 = [weightval, Id];
-                                db.query(sqlquery, record1, (err3, result3) => {
-                                    if (err3) { throw err3 }
-
-                                });
-                            }
-                        }
-                    });
-                });
-            }
-        }
-    });
-}
-
-autoCalcweight();
-
-setInterval(function () {
-    autoCalcweight()
-}, 30000)
-
-router.get('/add-weight', (req, res, next) => {
-    res.render('test/add-weight', {
-        pageTitle: 'Add Weight'
-    });
-});
-
-router.post('/weight-added', mainController.postWeightAdded);
 
 router.get('/home', mainController.getShelfOverviewList);
 
