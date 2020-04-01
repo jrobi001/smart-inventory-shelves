@@ -13,7 +13,7 @@ var flash = require('connect-flash');
 const autoCalc = require('./util/autoCalcWeight')
 
 const app = express();
-const port = 3000;
+const port = 8000;
 
 //setting up database as a pool - exported as promises globally to avoid callbacks
 //https://www.npmjs.com/package/mysql2

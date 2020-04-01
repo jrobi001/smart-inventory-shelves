@@ -1,116 +1,156 @@
 p {
-    color: black;
+  color: black;
 }
 
 img {
-    height: 100px;
-    width: 100px;
+  height: 80px;
+  width: 80px;
+  display: block;
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 
 main {
-    width: 100%;
+  width: 100%;
 }
 
-
+.form-box {
+  width: 80%;
+  max-width: 800px;
+}
 
 .productGrid {
-    display: grid;
-    height: 120px;
-    width: 92%;
-    grid-template-columns: 100px 6fr 1fr;
-    grid-template-rows: 100px 20px;
-    grid-gap: 0;
-    /* background-color: rgb(0, 255, 255); */
-    text-decoration: none;
-    color: black;
+  display: -ms-grid;
+  display: grid;
+  height: auto;
+  min-height: 100px;
+  width: 100%;
+  -ms-grid-columns: 80px 7fr 2fr;
+      grid-template-columns: 80px 7fr 2fr;
+  -ms-grid-rows: auto 20px;
+      grid-template-rows: auto 20px;
+  grid-gap: 0;
+  /* background-color: rgb(0, 255, 255); */
+  text-decoration: none;
+  color: black;
+  border-radius: 0 0 5px 5px;
+  -webkit-box-shadow: 0px 5px 10px 0px #464646;
+          box-shadow: 0px 5px 10px 0px #464646;
 }
 
 .imagebox {
-    /* border-top-left-radius: 50%; */
-    grid-column: 1;
-    grid-row: 1;
-    background-color: rgb(161, 161, 255);
-}
-
-#product-image {
-    /* border-top-left-radius: 50%; */
+  /* border-top-left-radius: 50%; */
+  -ms-grid-column: 1;
+  grid-column: 1;
+  -ms-grid-row: 1;
+  grid-row: 1;
+  background-color: #a1a1ff;
+  border-top: 4px solid black;
 }
 
 .detailsbox {
-    grid-column: 2;
-    grid-row: 1;
-    background-color: rgb(255, 178, 201);
-    text-align: left;
-    padding-left: 1em;
-    
-
+  padding-right: 2em;
+  padding-top: 0.2em;
+  border-top: 4px solid black;
+  -ms-grid-column: 2;
+  grid-column: 2;
+  -ms-grid-row: 1;
+  grid-row: 1;
+  background-color: white;
+  text-align: left;
+  padding-left: 0.5em;
 }
 
 .detailsbox h2 {
-    font-size: 35pt;
-    
-    margin-top: 0px;
-    margin-bottom: 0px;
+  font-size: 25pt;
+  margin-top: 0px;
+  margin-bottom: 0.2em;
+}
+
+.detailsbox #tags {
+  color: #347CA0;
+  font-weight: 1000;
+}
+
+#product-image {
+  /* border-top-left-radius: 50%; */
 }
 
 .numberbox {
-    /* border-top-right-radius: 50%; */
-    grid-column: 3;
-    grid-row: 1;
-    background-color: rgb(186, 255, 186);
-    
+  padding-left: 0.5em;
+  /* border-top-right-radius: 50%; */
+  border-top: 4px solid black;
+  -ms-grid-column: 3;
+  grid-column: 3;
+  background-color: #d1d1d1;
+  -ms-grid-row: 1;
+  grid-row: 1;
 }
 
-#weight-left {
-    font-size: 12pt;
-    left: 50%;
-    padding-top: 0.2em;
-    font-weight: bold;
-    text-align: left;
-    padding-bottom: 0;
-    margin-bottom: 0;
-
+.numberbox #weight-left {
+  font-size: 12pt;
+  left: 50%;
+  padding-top: 0;
+  font-weight: bold;
+  text-align: left;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
-#number-text {
-    font-size: 30pt;
-    left: 50%;
-    /* padding-top: 0.2em; */
-    padding-bottom: 0;
-    margin-bottom: 0;
-    font-weight: bold;
-    text-align: center;
-
+.numberbox #number-text {
+  font-size: 23pt;
+  left: 50%;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  font-weight: bold;
+  text-align: center;
 }
-.weight-box-text {
-    padding-top: 0;
-    margin: 0;
-    font-size: 18pt;
-    left: 50%;
-    /* padding-top: 0.2em; */
-    font-weight: bold;
-    text-align: center;
+
+.numberbox .weight-box-text {
+  padding-top: 0;
+  margin-top: 0;
+  margin: 0;
+  font-size: 14pt;
+  left: 50%;
+  /* padding-top: 0.2em; */
+  font-weight: bold;
+  text-align: center;
 }
 
 .number-text p {
-    color: black;
-
+  color: black;
 }
 
 .statusbar-full {
-    grid-column: 1 / 4;
-    grid-row: 2;
-    background-color: rgb(226, 152, 255);
-    width: 25%;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1 / 4;
+  -ms-grid-row: 2;
+  grid-row: 2;
+  background-color: #5fc45c;
+  width: 25%;
+  border-radius: 0 0 5px 5px;
+  text-align: right;
+}
+
+.statusbar-full p {
+  text-align: right;
+  padding-right: 0.3em;
 }
 
 .statusbar-current {
-    grid-column: 1 / 4;
-    grid-row: 2;
-    background-color: rgb(56, 46, 59);
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1 / 4;
+  -ms-grid-row: 2;
+  grid-row: 2;
+  background-color: #3d3d3d;
+  border-radius: 0 0 5px 5px;
 }
 
-
-
-
-
+#percentage {
+  text-align: right;
+  margin-right: 2em;
+  padding-right: 2em;
+}
+/*# sourceMappingURL=shelfview.css.map */
