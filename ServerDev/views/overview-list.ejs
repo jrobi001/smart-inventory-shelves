@@ -4,21 +4,34 @@
 <%- include('includes/navigation.ejs') %>
 <main>
     <div class="form-box">
-        <P>Select how you wuld like the shelves organised</P>
-        <form action="/home" method="GET">
-            <select name="sort" id="">
-                <option <% if(sort == 'pos') { %>selected<% } %> value="pos">Shelf Position</option>
-                <option <% if(sort == 'per') { %>selected<% } %> value="per">Percentage Weight</option>
-                <option <% if(sort == 'itm') { %>selected<% } %> value="itm">No. Items Left</option>
-                <option <% if(sort == 'abs') { %>selected<% } %> value="abs">Absoulte Weight</option>
-            </select>
-            <input type="submit" value="OK" />
-        </form>
+
+        <div class="topper">
+            <P>Organise the shelves by:</P>
+            <form action="/home" method="GET">
+                <select name="sort" id="">
+                    <option <% if(sort == 'pos') { %>selected<% } %> value="pos">Shelf Position</option>
+                    <option <% if(sort == 'per') { %>selected<% } %> value="per">Percentage Weight</option>
+                    <option <% if(sort == 'itm') { %>selected<% } %> value="itm">No. Items Left</option>
+                    <option <% if(sort == 'abs') { %>selected<% } %> value="abs">Absoulte Weight</option>
+                </select>
+                <input type="submit" value="OK" />
+            </form>
+        </div>
         <br>
+
+        <div class="shelfNoBox">
+            <p>Shelf: </p>
+            <br>
+        </div>
 
         <% for (var i = 0; i < shelves.length; i ++) { %>
         <!-- <a href="/shelf-details/<%= shelves[i].shelfPosition %>">click -->
         <a href="/shelf-details/<%= shelves[i].shelfPosition %>" class="productGrid">
+
+            <div class="shelfNo">
+                <p id="shelf-number"><%= shelves[i].shelfPosition %></p>
+            </div>
+
 
             <div class="imagebox">
                 <% if (shelves[i].imageLink != null) { %>
@@ -111,6 +124,7 @@
         <br>
 
         <% } %>
+
     </div>
 </main>
 <%- include('includes/footer.ejs')%>
