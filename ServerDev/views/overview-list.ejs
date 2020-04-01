@@ -3,46 +3,45 @@
 </head>
 <%- include('includes/navigation.ejs') %>
 <main>
+    <div class="form-box">
+        <P>Select how you wuld like the shelves organised</P>
+        <form action="/home" method="GET">
+            <select name="sort" id="">
+                <option <% if(sort == 'pos') { %>selected<% } %> value="pos">Shelf Position</option>
+                <option <% if(sort == 'per') { %>selected<% } %> value="per">Percentage Weight</option>
+                <option <% if(sort == 'itm') { %>selected<% } %> value="itm">No. Items Left</option>
+                <option <% if(sort == 'abs') { %>selected<% } %> value="abs">Absoulte Weight</option>
+            </select>
+            <input type="submit" value="OK" />
+        </form>
+        <br>
 
-    <P>Select how you wuld like the shelves organised</P>
-    <form action="/home" method="GET">
-        <select name="sort" id="">
-            <option <% if(sort == 'pos') { %>selected<% } %> value="pos">By Shelf Position</option>
-            <option <% if(sort == 'per') { %>selected<% } %> value="per">By Percentage Weight</option>
-            <option <% if(sort == 'itm') { %>selected<% } %> value="itm">By No. Items Left</option>
-            <option <% if(sort == 'abs') { %>selected<% } %> value="abs">By Absoulte Weight</option>
-        </select>
-        <input type="submit" value="OK" />
-    </form>
-    <br>
+        <% for (var i = 0; i < shelves.length; i ++) { %>
+        <!-- <a href="/shelf-details/<%= shelves[i].shelfPosition %>">click -->
+        <a href="/shelf-details/<%= shelves[i].shelfPosition %>" class="productGrid">
 
-    <% for (var i = 0; i < shelves.length; i ++) { %>
-    <!-- <a href="/shelf-details/<%= shelves[i].shelfPosition %>">click -->
-    <a href="/shelf-details/<%= shelves[i].shelfPosition %>" class="productGrid">
+            <div class="imagebox">
+                <% if (shelves[i].imageLink != null) { %>
+                <img id="product-image" src="<%= shelves[i].imageLink %>" alt="">
+                <% } else { %>
+                <p>no image</p>
+                <% } %>
+            </div>
 
-        <div class="imagebox">
-            <% if (shelves[i].imageLink != null) { %>
-            <img id="product-image" src="<%= shelves[i].imageLink %>" alt="">
-            <% } else { %>
-            <p>no image</p>
-            <% } %>
-        </div>
+            <div class="detailsbox">
+                <% if (shelves[i].name != null) { %>
+                <h2><%= shelves[i].name %></h2>
+                <% } else { %>
+                <h2>---Shelf Empty---</h2>
+                <% } %>
 
-        <div class="detailsbox">
-            <% if (shelves[i].name != null) { %>
-            <h2><%= shelves[i].name %></h2>
-            <% } else { %>
-            <h2>---Shelf Empty---</h2>
-            <% } %>
-            <br>
+                <p id="tags"><%= shelves[i].tags %></p>
+            </div>
 
-            <p><%= shelves[i].tags %></p>
-        </div>
-
-        <div class="numberbox">
-            <% if (weights[i] != null && shelves[i].weight != null) { %>
-            <p id="weight-left"><%= weights[i] %>g </p>
-            <p id="number-text"><%= 
+            <div class="numberbox">
+                <% if (weights[i] != null && shelves[i].weight != null) { %>
+                <p id="weight-left"><%= weights[i] %>g </p>
+                <p id="number-text"><%= 
                         // // Number of items
                         Math.round(weights[i] / shelves[i].weight)
 
@@ -53,44 +52,65 @@
                         // weights[i]
 
                     %></p>
-            <p class="weight-box-text">Items left</p>
-            <% } else if (shelves[i].weight == null) { %>
-            <h2>shelf empty</h2>
-            <% } else { %>
-            <h2>no weight records</h2>
-            <% } %>
-        </div>
-
-
-        <!-- https://stackoverflow.com/questions/16098397/pass-variables-to-javascript-in-expressjs/16098699 -->
-        <div class="statusbar-current" onload="statusBar()">
-            <div class="statusbar-full" id="fill-meter<%= i %>">
-                <p id="percentage<%= i %>"> xxx </p>
-                <script>
-                    function htmlDecode(input) {
-                        var e = document.createElement('div');
-                        e.innerHTML = input;
-                        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-                    }
-                    var weight = JSON.parse(htmlDecode("<%= JSON.stringify(weights[i]) %>"));
-                    var hundredPercent = JSON.parse(htmlDecode("<%= JSON.stringify(shelves[i].hundredPercent) %>"));
-                    var i = JSON.parse(htmlDecode("<%= i %>"));
-
-                    console.log(weight);
-                    console.log('well this does not work...')
-                    var elem = document.getElementById("fill-meter" + "" + i);
-                    var width = Math.round((weight / hundredPercent) * 100);
-                    console.log(width)
-                    elem.style.width = width + '%';
-                    var p = document.getElementById("percentage" + "" + i);
-                    p.innerHTML = "" + width + "%";
-                </script>
+                <p class="weight-box-text">Items</p>
+                <% } else if (shelves[i].weight == null) { %>
+                <p class="weight-box-text">shelf empty</p>
+                <% } else { %>
+                <p class="weight-box-text">no weight records</p>
+                <% } %>
             </div>
-        </div>
 
-    </a>
-    <br>
 
-    <% } %>
+            <!-- https://stackoverflow.com/questions/16098397/pass-variables-to-javascript-in-expressjs/16098699 -->
+            <div class="statusbar-current" onload="statusBar()">
+                <div class="statusbar-full" id="fill-meter<%= i %>">
+                    <p id="percentage<%= i %>"> xxx </p>
+                    <script>
+                        function htmlDecode(input) {
+                            var e = document.createElement('div');
+                            e.innerHTML = input;
+                            return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                        }
+                        var weight = JSON.parse(htmlDecode("<%= JSON.stringify(weights[i]) %>"));
+                        var hundredPercent = JSON.parse(htmlDecode("<%= JSON.stringify(shelves[i].hundredPercent) %>"));
+                        var i = JSON.parse(htmlDecode("<%= i %>"));
+
+                        console.log(weight);
+                        // console.log('well this does not work...')
+                        var elem = document.getElementById("fill-meter" + "" + i);
+                        var width = Math.round((weight / hundredPercent) * 100);
+                        console.log(width)
+
+                        if (width < 100) {
+                            elem.style.borderRadius = "0 2px 2px 5px";
+
+                        }
+                        if (width < 60) {
+                            elem.style.backgroundColor = "rgb(196, 172, 92)";
+                        }
+                        if (width < 20) {
+                            elem.style.backgroundColor = "rgb(196, 92, 92)";
+                        }
+                        elem.style.width = width + '%';
+                        var p = document.getElementById("percentage" + "" + i);
+
+                        if (isNaN(width)) {
+                            elem.style.backgroundColor = "white";
+                            elem.style.width = "0" + '%';
+                            p.innerHTML = "empty";
+                            p.style.color = "white";
+
+                        } else {
+                            p.innerHTML = "" + width + "%";
+                        }
+                    </script>
+                </div>
+            </div>
+
+        </a>
+        <br>
+
+        <% } %>
+    </div>
 </main>
 <%- include('includes/footer.ejs')%>
