@@ -1,0 +1,214 @@
+/* 
+font built using 
+https://www.fontsquirrel.com/tools/webfont-generator 
+from
+https://github.com/microsoft/cascadia-code/releases
+open-source: uses SIL Open Font License v1.10
+free to use modify distribute etc
+*/
+@font-face {
+    font-family: 'cascadia_code';
+    src: url('../font/cascadiapl-webfont.woff2') format('woff2'),
+         url('../font/cascadiapl-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+}
+
+.main-content{
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    background-color: rgb(221, 221, 221);
+    color: black;
+    height:auto;
+  
+  }
+
+p {
+    color: blue;
+}
+h2 {
+    margin: 0em;
+    margin-bottom: 0.2em;
+    
+}
+
+h1 {
+    margin: 0em;
+    margin-left: 0.3em;
+    margin-top: 0.2em;
+}
+
+img {
+    height: 100px;
+    width: 100px;
+}
+
+main {
+    width: 90%;
+    max-width: 1600px;
+}
+
+.shelf-details {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 100px 1fr auto 420px 100px  ;
+    grid-template-rows: 100px auto 65px 50px 50px;
+    grid-gap: 0;
+    // background-color: rgb(0, 255, 255);
+}
+
+.imagebox {
+    grid-column: 1;
+    grid-row: 1;
+    background-color: #D1D1D1;
+}
+
+.detailsbox {
+    padding-left: 0.5em;
+    grid-column: 2;
+    grid-row: 1;
+    background-color: rgb(255, 255, 255);
+    // font-family: 'cascadia_code';
+    h2 {
+        font-size: 25pt;
+        
+        margin-top: 0px;
+        margin-bottom: 0.2em;
+    }
+    #tags {
+        color: #347CA0;
+        font-weight: bold;
+
+    }
+    p {
+        color: #347CA0;
+        font-weight: bold;
+
+    }
+        
+}
+
+.position-box {
+    padding-top: 0.5em;
+    grid-column: 5;
+    grid-row: 1;
+    background-color: #D1D1D1;
+    min-width: 100px;
+    text-align: center;
+    h3 {
+        font-size: 30pt;
+        margin-top: 0.2em;
+        // margin-left: 0;
+        margin-bottom: 0.2em;
+    }
+    // font-family: 'cascadia_code';
+}
+
+.item-weight {
+    padding-top: 0.5em;
+
+    grid-column: 3;
+    grid-row: 1;
+    background-color: #D1D1D1;
+    min-width: 100px;
+    text-align: center;
+    h3 {
+        font-size: 30pt;
+        margin-top: 0.2em;
+        // margin-left: 0;
+        margin-bottom: 0.2em;
+    }
+    // font-family: 'cascadia_code';
+}
+
+.settings-header {
+    // padding-left: 0.5em;
+    text-align: center;
+
+    grid-column: 4;
+    grid-row: 1;
+    background-color: rgb(255, 255, 255);
+    // font-family: 'cascadia_code';
+    h2 {
+        font-size: 30pt;
+        padding-top: 0.5em;
+        
+        margin-bottom: 0.2em;
+    }
+}
+
+.shelf-weight {
+    box-shadow: inset 0 5px 5px rgb(165, 165, 165);
+
+    grid-column: 4 / 6;
+    grid-row: 2 / 4;
+    padding: 1em;
+    padding-left: 1.5em;
+    padding-bottom: 80px;
+    background-color: #D1D1D1;
+}
+
+.item-notes {
+    // border-top: 3px solid black;
+    box-shadow: inset 0 5px 5px rgb(165, 165, 165);
+
+    grid-column: 1 / 4;
+    grid-row: 2 / 4;
+    padding: 1em;
+    padding-bottom: 80px;
+
+    background-color: aliceblue;
+}
+
+.edit-item {
+    z-index: +1;
+    width: 80%;
+    height: 45px;
+    // margin-top: 5%;
+    // margin-left: 10%;
+    grid-column: 1 / 4;
+    grid-row: 3;
+    background-color: rgb(69, 195, 226);
+    box-shadow:  0px 3px 5px rgb(165, 165, 165);
+
+}
+
+.shelf-settings {
+    z-index: +1;
+    width: 468px;
+    height: 45px;
+    // margin-top: 5%;
+    margin-left: 26px;
+    grid-column: 4 / 6;
+    grid-row: 3;
+    background-color: rgb(69, 195, 226);
+    box-shadow:  0px 3px 5px rgb(165, 165, 165);
+
+}
+
+.new-item {
+    grid-column: 1/6;
+    grid-row: 4;
+    background-color: #4B7EA0 ;
+}
+
+.delete-item {
+    grid-column: 1/6;
+    grid-row: 5;
+    background-color: rgb(61, 61, 61);
+}
+
+
