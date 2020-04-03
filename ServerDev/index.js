@@ -6,10 +6,6 @@ const mysql = require('mysql2');
 var session = require('express-session')
 var flash = require('connect-flash');
 
-
-
-
-
 const autoCalc = require('./util/autoCalcWeight')
 
 const app = express();
