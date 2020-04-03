@@ -46,7 +46,7 @@ exports.postConfirmShelf = (req, res, next) => {
 
 exports.postItemForm = (req, res, next) => {
     const shelfPos = req.params.shelfPos;
-    if (shelfPos > 6 || shelfpos < 1) {
+    if (shelfPos > 6 || shelfPos < 1) {
         res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
     }
     res.render('item-setup/item-form', {

@@ -1,30 +1,32 @@
 {
-  "name": "serverdev",
-  "version": "1.0.0",
-  "description": "Development Server for Scale shelves project",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.2"
-  },
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "connect-flash": "^0.1.1",
-    "ejs": "^3.0.1",
-    "express": "^4.17.1",
-    "express-flash": "git://github.com/RGBboy/express-flash.git",
-    "express-myconnection": "^1.0.4",
-    "express-sanitizer": "^1.0.5",
-    "express-session": "^1.17.0",
-    "express-validator": "^6.4.0",
-    "jquery": "^3.4.1",
-    "method-override": "^3.0.0",
-    "mysql": "^2.18.1",
-    "mysql2": "^2.1.0"
-  }
+    "name": "serverdev",
+    "version": "1.0.0",
+    "description": "Development Server for Scale shelves project",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "nodemon": "^2.0.2"
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "connect-flash": "^0.1.1",
+        "curl": "^0.1.4",
+        "ejs": "^3.0.1",
+        "express": "^4.17.1",
+        "express-flash": "git://github.com/RGBboy/express-flash.git",
+        "express-myconnection": "^1.0.4",
+        "express-sanitizer": "^1.0.5",
+        "express-session": "^1.17.0",
+        "express-validator": "^6.4.0",
+        "jquery": "^3.4.1",
+        "jsdom": "^16.2.1",
+        "method-override": "^3.0.0",
+        "mysql": "^2.18.1",
+        "mysql2": "^2.1.0"
+    }
 }

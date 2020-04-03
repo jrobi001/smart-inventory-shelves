@@ -30,7 +30,7 @@ router.get('/add-weight', (req, res, next) => {
 
 router.post('/weight-added', (req, res, next) => {
     const shelfPos = req.body.shelfPos;
-    if (shelfPos > 6 || shelfpos < 1) {
+    if (shelfPos > 6 || shelfPos < 1) {
         res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
     }
     const weight = req.body.weight;

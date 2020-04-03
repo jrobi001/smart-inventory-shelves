@@ -1,0 +1,243 @@
+$color1: rgb(0, 0, 0);
+$color2: rgb(209, 209, 209);
+$color3: rgb(255, 255, 255);
+
+p {
+    color: black;
+}
+
+img {
+    height: 80px;
+    width: 80px;
+    display: block;
+    object-fit: fill;
+}
+
+main {
+    width: 100%;
+}
+
+.form-box {
+    padding-top: 1em;
+    width: 90%;
+    max-width: 1000px;
+    // padding-left: 0;
+    
+    
+}
+
+.shelfNoBox {
+    display: flex;
+    p {
+        font-size: 16pt;
+        width: auto;
+        font-weight: bold;
+        padding-left: 0;
+    }
+}
+
+
+.topper {
+    // align-content: right;
+
+
+    display: flex;
+    p {
+        padding-left: 20%;
+        font-size: 18pt;
+        // font-weight: bold;
+        width: auto;
+
+    }
+    form {
+        padding-top: 0;
+        padding-left: 1em;
+        height: 25px;
+        select {
+        height: 25px;
+        width: 11em;
+
+        padding-top: 0.1em;
+        font-size: 12pt;
+
+        }
+        input {
+        padding-top: 0;
+        margin-top: 0;
+        padding-top: 0.2em;
+
+        height: 25px;
+        width: 4em;
+
+
+        }
+    }
+}
+// .main-content {
+//     background-color: white;
+// }
+// body {
+//     background-color: white;
+// }
+
+
+
+.productGrid {
+    display: grid;
+    height: auto;
+    min-height: 100px;
+    width: 100%;
+    grid-template-columns: auto 80px 6fr 1fr;
+    grid-template-rows: auto 20px;
+    grid-gap: 0;
+    /* background-color: rgb(0, 255, 255); */
+    text-decoration: none;
+    color: $color1;
+    border-radius: 0 0 5px 5px;
+}
+
+#invisibox {
+    grid-column: 2 / 5;
+    grid-row: 1 / 3;
+    box-shadow: 0px 3px 7px 0px rgb(70, 70, 70);
+    border-radius: 0 0 5px 5px;
+
+
+}
+
+.shelfNo {
+    p {
+        font-size: 16pt;
+        width: auto;
+        font-weight: bold;
+        // padding-left: 0.5em;
+        text-align: left;
+    }
+    // padding-left: 0.5em;
+    padding-right: 0.5em;
+    grid-column: 1;
+    grid-row: 1 / 3;
+    padding-top: 50%;    
+    #shelf-number {
+        text-align: center;
+        font-size: 30pt;
+        padding-top: 50%;    
+    }
+}
+
+
+.imagebox {
+    /* border-top-left-radius: 50%; */
+    grid-column: 2;
+    grid-row: 1;
+    background-color: #D1D1D1;
+    border-top: 4px solid $color1;
+}
+
+.detailsbox {
+    padding-right: 2em;
+    padding-top: 0.2em;
+
+    border-top: 4px solid $color1;
+    grid-column: 3;
+    grid-row: 1;
+    background-color: $color3;
+    text-align: left;
+    padding-left: 0.5em;
+    h2 {
+        font-size: 25pt;
+        
+        margin-top: 0px;
+        margin-bottom: 0.2em;
+    }
+    #tags {
+        color: #347CA0;
+        font-weight: 1000;
+    }
+}
+
+#product-image {
+    /* border-top-left-radius: 50%; */
+}
+
+.numberbox {
+    padding-left: 0.5em;
+    /* border-top-right-radius: 50%; */
+    border-top: 4px solid $color1;
+
+    grid-column: 4;
+    background-color: $color2;
+    grid-row: 1;
+    
+    #weight-left {
+        font-size: 12pt;
+        left: 50%;
+        padding-top: 0;
+
+        font-weight: bold;
+        text-align: left;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    
+    }
+    
+    #number-text {
+        font-size: 23pt;
+        left: 50%;
+        // padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        font-weight: bold;
+        text-align: center;
+    
+    }
+    .weight-box-text {
+        padding-top: 0;
+        margin-top: 0;
+
+        margin: 0;
+        font-size: 14pt;
+        left: 50%;
+        /* padding-top: 0.2em; */
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+.number-text p {
+    color: black;
+
+}
+
+.statusbar-full {
+    grid-column: 2 / 5;
+    grid-row: 2;
+    background-color: rgb(95, 196, 92);
+    width: 25%;
+    border-radius: 0 0 5px 5px;
+    text-align: right;
+    p {
+        text-align: right;
+    // margin-right: 2em;
+    padding-right: 0.3em;
+    }
+}
+
+.statusbar-current {
+    grid-column: 2 / 5;
+    grid-row: 2;
+    background-color: rgb(61, 61, 61);
+    border-radius: 0 0 5px 5px;
+}
+
+#percentage {
+    text-align: right;
+    margin-right: 2em;
+    padding-right: 2em;
+
+}
+
+
+
+
+

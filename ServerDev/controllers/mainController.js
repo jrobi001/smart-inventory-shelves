@@ -9,14 +9,6 @@ exports.getShelfOverviewList = (req, res, next) => {
     if (req.query.sort != undefined) {
         sortType = req.query.sort;
     }
-    // // setting back to default if improper input (should be redundant)
-    // if (sortType != 'pos' ||
-    //     sortType != 'per' ||
-    //     sortType != 'itm' ||
-    //     sortType != 'abs') {
-    //     sortType = 'pos'
-    // }
-
     const overviewArr = [];
     let shelfItemsDetails;
     let weights = [];
@@ -50,6 +42,11 @@ exports.getShelfOverviewList = (req, res, next) => {
                 overviewArr.sort((a, b) => {
                     let aPer = a[0] / a[1].hundredPercent;
                     let bPer = b[0] / b[1].hundredPercent;
+                    //https://stackoverflow.com/questions/17557807/javascript-how-do-you-sort-an-array-that-includes-nans
+                    // ensuring empty shelf is placed at bottom/top
+                    if (isNaN(aPer)) {
+                        return 1 - isNaN(bPer);
+                    }
                     return aPer - bPer;
                 })
             }
@@ -58,6 +55,11 @@ exports.getShelfOverviewList = (req, res, next) => {
                 overviewArr.sort((a, b) => {
                     let aPer = a[0] / a[1].weight;
                     let bPer = b[0] / b[1].weight;
+                    //https://stackoverflow.com/questions/17557807/javascript-how-do-you-sort-an-array-that-includes-nans
+                    // ensuring empty shelf is placed at bottom/top
+                    if (isNaN(aPer)) {
+                        return 1 - isNaN(bPer);
+                    }
                     return aPer - bPer;
                 })
             }
