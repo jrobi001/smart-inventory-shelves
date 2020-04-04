@@ -1,25 +1,21 @@
 <!-- navigation.ejs -->
+
 <body>
     <header id="main-header">
         <div class="title-container">
-            <h1><%=pageTitle%></h1>
+            <a href="/home">
+                <h1>Scale Shelves </h1>
+            </a>
+            <h2> - <%=pageTitle%></h2>
         </div>
         <nav class="navigation-container">
-            <div class="nav-item">
-                <a href="/home">Home</a>
-            </div>
-            <div class="nav-item">
-                <a href="/item-setup">Set up Item</a>
-            </div>
-            <div class="nav-item">
-                <a href="/delete">clear shelf</a>
-            </div>
-            <div class="nav-item">
-                <a href="/swap-shelves">swap shelves</a>
-            </div>
-            <div class="nav-item">
-                <a href="/help">help</a>
-            </div>
+
+            <a class="nav-item" href="/home">Home</a>
+            <a class="nav-item" href="/item-setup">Set up Item</a>
+            <a class="nav-item" href="/delete">Clear shelf</a>
+            <a class="nav-item" href="/swap-shelves">Swap shelves</a>
+            <a class="nav-item" href="/help">Help</a>
+
         </nav>
     </header>
     <!--main content div container is here for inserting forms-->

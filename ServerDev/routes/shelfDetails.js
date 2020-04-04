@@ -1,11 +1,17 @@
-const http = require("http");
+// const http = require("http");
 const express = require('express');
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
+// const mysql = require('mysql');
+// const bodyParser = require('body-parser');
 
-const itemSetupController = require('../controllers/itemSetupController');
+// const itemSetupController = require('../controllers/itemSetupController');
 const mainController = require('../controllers/mainController');
-const shelfDetailsController = require('../controllers/shelfDetailsController');
+// const shelfDetailsController = require('../controllers/shelfDetailsController');
+
+const Item = require('../models/item')
+const Shelf = require('../models/shelf')
+// const Weight = require('../models/weight')
+// const Overview = require('../models/overview')
+
 
 const router = express.Router();
 
@@ -111,5 +117,64 @@ router.post('/edit-item/changes-saved', function (req, res) {
     });
 });
 // -----------------------------------------------------------------------
+
+router.get('/confirm-new/:shelfPos', function (req, res) {
+    const shelfPos = req.params.shelfPos;
+    if (shelfPos > 6 || shelfPos < 1) {
+        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    }
+    Shelf.fetchItemIdFromPos(shelfPos)
+        .then(([data, meta]) => {
+            const itemId = data[0].items_id
+            if (itemId == null) {
+                return res.render('item-setup/item-form', {
+                    pageTitle: 'Replace Item',
+                    shelfPos: shelfPos,
+                })
+            } else {
+                return Item.findById(itemId)
+                    .then(([data, meta]) => {
+                        const itemData = data[0];
+                        // console.log(itemData.name);
+                        res.render('shelf-details/new-item-confirm', {
+                            pageTitle: 'Confirm shelf',
+                            shelfPos: shelfPos,
+                            item: itemData
+                        })
+                    })
+            }
+        })
+        .catch(err => console.log(err));
+})
+
+router.get('/confirm-delete/:shelfPos', function (req, res) {
+    const shelfPos = req.params.shelfPos;
+    if (shelfPos > 6 || shelfPos < 1) {
+        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    }
+    // console.log(shelfPosition)
+    Shelf.fetchItemIdFromPos(shelfPos)
+        .then(([data, meta]) => {
+            // console.log('still working');
+            const itemId = data[0].items_id
+            if (itemId == null) {
+                //should really display a message here that the shelf is already empty
+                console.log('that shelf is already empty')
+                return res.redirect("/delete")
+            } else {
+                return Item.findById(itemId)
+            }
+        }).then(([data, meta]) => {
+            const itemData = data[0];
+            console.log(itemData.name);
+            res.render('shelf-details/delete-confirm', {
+                pageTitle: 'Confirm shelf',
+                shelfPos: shelfPos,
+                item: itemData
+            })
+        })
+        .catch(err => console.log(err));
+})
+
 
 module.exports = router;

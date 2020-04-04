@@ -1,15 +1,15 @@
 <%- include('../includes/head.ejs') %>
-<!-- <link rel="stylesheet" href="/css/forms.css"> -->
+<link rel="stylesheet" href="/css/forms.css">
 </head>
 <%- include('../includes/navigation.ejs') %>
 <main>
-        <div class="form-box">
-                <h3>Which shelf would you like to clear?</h3>
-                <form action="/delete/confirm" method="POST">
-                        <%- include('../includes/selector.ejs') %>
+    <div class="form-box">
+        <h3>Which shelf would you like to clear?</h3>
+        <form action="/delete/confirm" method="POST">
+            <%- include('../includes/selector.ejs') %>
 
-                        <button class="btn" type="submit">submit</button>
-                </form>
-        </div>
+            <button class="btn" type="submit">submit</button>
+        </form>
+    </div>
 </main>
 <%- include('../includes/footer.ejs')%>

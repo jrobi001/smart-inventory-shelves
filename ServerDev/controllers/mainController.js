@@ -106,9 +106,9 @@ exports.getShelfDetails = (req, res, next) => {
             shelfDetails = data[0];
             // console.log(shelfDetails)
             // making sure an item is set up on the shelf
-            if (shelfDetails.items_id == null) {
-                res.send('That shelf is empty, a different page will go here')
-            }
+            // if (shelfDetails.items_id == null) {
+            //     res.send('That shelf is empty, a different page will go here')
+            // }
             return Overview.fetchWeightById(shelfDetails.id)
         })
         .then(([data, meta]) => {
@@ -119,7 +119,7 @@ exports.getShelfDetails = (req, res, next) => {
             } else {
                 shelfWeight = shelfWeight.weight
             }
-            // console.log(shelfWeight);
+            console.log(shelfDetails);
             res.render('shelf-details/shelf-details', {
                 pageTitle: 'Shelf Details',
                 details: shelfDetails,

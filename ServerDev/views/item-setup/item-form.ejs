@@ -7,27 +7,27 @@
         <h3>Please enter details for the item to be stored on shelf <%= shelfPos %> </h3>
         <form action="/item-setup/shelf-settings" method="POST">
             <div class="form-element">
-                <p>Name:</p>
+                <label>Name:</label>
                 <input type="text" required name="name" id="itemName">
             </div>
             <div class="form-element">
-                <p>Tags:</p>
+                <label>Tags:</label>
                 <input type="text" name="tags" id="tags">
             </div>
             <div class="form-element">
-                <p>Description:</p>
+                <label>Description:</label>
                 <textarea name="notes" id="notes" rows="10"></textarea>
             </div>
             <div class="form-element">
-                <p>Price:</p>
+                <label>Price:</label>
                 <input type="number" step="0.01" name="price" id="price">
             </div>
             <div class="form-element">
-                <p>Weight:</p>
+                <label>Weight:</label>
                 <input type="number" required step="0.01" name="weight" id="weight">
             </div>
             <div class="form-element">
-                <p>ImageLink:</p>
+                <label>ImageLink:</label>
                 <input type="text" name="imageLink" id="imageLink">
             </div>
             <input type="hidden" name="shelfPos" value="<%= shelfPos %>">
