@@ -4,11 +4,34 @@
 <%- include('../includes/navigation.ejs') %>
 <main>
 
+    <% if(details.name == null){ %>
+    <div class="form-box">
+        <div id="empty-shelf-box">
+            <h2>Shelf <%= details.shelfPosition %> is currently empty.</h2>
+            <!-- <br><br> -->
+            <h2>Would you like to set up a new item?</h2>
+
+            <form action="/item-setup/item-form/<%= details.shelfPosition %>" method="POST">
+                <input type="hidden" name="shelfPos" value="<%= details.shelfPosition %> ">
+                <button class="btn" type="submit">
+                    <h1>Set Up a New Item</h1>
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- <div class="shelf-details"> -->
+    </div>
+
+    <% } else { %>
 
     <div class="shelf-details">
 
         <div class="imagebox">
-            <img src="<%= details.imageLink %>" alt="">
+            <% if (details.imageLink == null || details.imageLink == "") { %>
+            <p>no image</p>
+            <% } else { %>
+            <img id="product-image" src="<%= details.imageLink %>" alt="">
+            <% } %>
         </div>
 
         <div class="detailsbox">
@@ -92,17 +115,22 @@
         <a href="/shelf-details/edit-shelf/<%= details.shelfPosition %>" class="shelf-settings">
             <h1>change shelf settings</h1>
         </a>
-        <a href="" class="new-item">
+        <a href="/shelf-details/confirm-new/<%= details.shelfPosition %>" class="new-item">
             <h1>Set up a new item on this shelf</h1>
         </a>
-        <form class="delete-item" action="/delete/confirm" method="POST">
+
+        <a href="/shelf-details/confirm-delete/<%= details.shelfPosition %>" class="delete-item">
+            <h1>Delete Item and reset settings</h1>
+        </a>
+        <!-- <form class="delete-item" action="/delete/confirm" method="POST">
             <input type="hidden" name="shelfPos" value="<%= details.shelfPosition %> ">
             <button class="btn" type="submit">
                 <h1>Delete Item and reset settings</h1>
             </button>
-        </form>
+        </form> -->
 
     </div>
 
+    <% } %>
 </main>
 <%- include('../includes/footer.ejs')%>

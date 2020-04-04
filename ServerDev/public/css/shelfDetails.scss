@@ -29,7 +29,7 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content:center;
-    background-color: rgb(221, 221, 221);
+    // background-color: rgb(221, 221, 221);
     color: black;
     height:auto;
   
@@ -44,11 +44,7 @@ h2 {
     
 }
 
-h1 {
-    margin: 0em;
-    margin-left: 0.3em;
-    margin-top: 0.2em;
-}
+
 
 img {
     height: 100px;
@@ -60,6 +56,22 @@ main {
     max-width: 1600px;
 }
 
+#empty-shelf-box {
+    padding-top: 2em;
+
+    h2 {
+        padding-bottom: 1em;
+    }
+    button {
+        background-color: #347CA0;
+        h1 {
+            padding: 0.5em;
+        }
+        box-shadow: 0px 3px 7px 0px rgb(70, 70, 70);
+
+    }
+}
+
 .shelf-details {
     display: grid;
     height: 100%;
@@ -68,6 +80,24 @@ main {
     grid-template-rows: 100px auto 65px 50px 50px;
     grid-gap: 0;
     // background-color: rgb(0, 255, 255);
+    a:link {
+        color: white;
+    }
+    
+    a:visited {
+        color: white;
+    }
+    
+    a:hover {
+        opacity: .9;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.329);
+    }
+    
+    a:active {
+        transform: translateY(1px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.089);
+    }
 }
 
 .imagebox {
@@ -173,6 +203,8 @@ main {
     background-color: aliceblue;
 }
 
+
+
 .edit-item {
     z-index: +1;
     width: 80%;
@@ -183,6 +215,11 @@ main {
     grid-row: 3;
     background-color: rgb(69, 195, 226);
     box-shadow:  0px 3px 5px rgb(165, 165, 165);
+    h1 {
+        margin: 0em;
+        margin-left: 0.3em;
+        margin-top: 0.2em;
+    }
 
 }
 
@@ -196,6 +233,11 @@ main {
     grid-row: 3;
     background-color: rgb(69, 195, 226);
     box-shadow:  0px 3px 5px rgb(165, 165, 165);
+    h1 {
+        margin: 0em;
+        margin-left: 0.3em;
+        margin-top: 0.2em;
+    }
 
 }
 
@@ -203,12 +245,49 @@ main {
     grid-column: 1/6;
     grid-row: 4;
     background-color: #4B7EA0 ;
+    h1 {
+        margin: 0em;
+        margin-left: 0.3em;
+        margin-top: 0.2em;
+    }
 }
 
 .delete-item {
     grid-column: 1/6;
     grid-row: 5;
     background-color: rgb(61, 61, 61);
+    h1 {
+        margin: 0em;
+        margin-left: 0.3em;
+        margin-top: 0.2em;
+    }
+}
+
+button {
+    background: none;
+    border: none;
+    border-top: 1px solid rgb(165, 165, 165);
+    height: 100%;
+    width: 100%;
+    text-align: left;
+    h1 {
+        margin: 0em;
+        color: white;
+    }
+    
+}
+
+button:hover {
+    cursor: pointer;
+    opacity: .9;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.329);
+}
+
+/* selected link */
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.089);
 }
 
 
