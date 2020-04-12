@@ -4,7 +4,7 @@
 <%- include('../includes/navigation.ejs') %>
 <main>
     <div class="form-box">
-        <form action="/shelf-details/edit-item/changes-saved" method="post">
+        <form action="/shelf-details/edit-item/changes-saved" method="post" enctype="multipart/form-data">
 
             <div class="form-element">
                 <p>Name:</p>
@@ -26,10 +26,9 @@
                 <p>Weight:</p>
                 <input type="number" required step="0.01" name="weight" id="weight" value="<%=itemInfo.weight%>">
             </div>
-            <div class="form-element">
-                <p>ImageLink:</p>
-                <input type="text" name="imageLink" id="imageLink" value="<%=itemInfo.imageLink%>">
-
+            <div class="image-upload">
+                <p>Image File</p>
+                <input name="shelfImage" type="file" accept="image/*">
             </div>
 
             <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">

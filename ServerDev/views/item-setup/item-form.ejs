@@ -5,7 +5,7 @@
 <main>
     <div class="form-box">
         <h3>Please enter details for the item to be stored on shelf <%= shelfPos %> </h3>
-        <form action="/item-setup/shelf-settings" method="POST">
+        <form action="/item-setup/shelf-settings" method="POST" enctype="multipart/form-data">
             <div class="form-element">
                 <label>Name:</label>
                 <input type="text" required name="name" id="itemName">
@@ -26,10 +26,11 @@
                 <label>Weight:</label>
                 <input type="number" required step="0.01" name="weight" id="weight">
             </div>
-            <div class="form-element">
-                <label>ImageLink:</label>
-                <input type="text" name="imageLink" id="imageLink">
+            <div class="image-upload">
+                <label>Image File</label>
+                <input name="shelfImage" type="file" accept="image/*">
             </div>
+
             <input type="hidden" name="shelfPos" value="<%= shelfPos %>">
 
 

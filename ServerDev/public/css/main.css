@@ -1,7 +1,20 @@
+html {
+  min-height: 100%;
+}
+
 body {
   padding: 0;
   margin: 0;
   font-family: sans-serif;
+}
+
+.content {
+  min-height: calc(100vh - 120px);
+  background-color: #A8A8A8;
+}
+
+footer {
+  height: 120px;
 }
 
 main {
@@ -167,6 +180,32 @@ p {
   font-weight: bold;
 }
 
+.failMessage {
+  width: 90%;
+  margin-left: 5%;
+  background-color: #ff8d8d;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 1rem;
+}
+
+.failMessage p {
+  font-size: 18pt;
+}
+
+.successMessage {
+  width: 90%;
+  margin-left: 5%;
+  background-color: #b1ff8d;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 1rem;
+}
+
+.successMessage p {
+  font-size: 18pt;
+}
+
 /*these are the settings for the main div container*/
 /*look at everything that is under the main-content div container*/
 .main-content {
@@ -215,6 +254,12 @@ input[type="text"] {
 
 input[type="submit"] {
   margin-top: 10px;
+}
+
+input[type="file"] {
+  font-size: 16pt;
+  padding-bottom: 0.5em;
+  padding-left: 0;
 }
 
 .button {
