@@ -1,0 +1,29 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+<%- include('../includes/navigation.ejs') %>
+<main>
+    <div class="form-box">
+        <br>
+        <p>Are you sure you would like to delete all data for:</p>
+
+        <h3><%= item.name %></h3>
+
+        <p>on shelf:</p>
+
+        <h3><%= shelfPos %></h3>
+
+        <p>This will also delete all associated weight history</p>
+        <br>
+        <form action="/delete/result" method="POST">
+            <input type="hidden" name="shelfPos" value="<%= shelfPos %> ">
+            <button class="btn" type="submit">Yes!</button>
+        </form>
+        <form action="/shelf-details/<%= shelfPos %>" method="GET">
+            <button class="btn" type="submit">No, take me back!</button>
+        </form>
+
+    </div>
+</main>
+
+<%- include('../includes/footer.ejs')%>
