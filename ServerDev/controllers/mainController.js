@@ -1,6 +1,3 @@
-const Item = require('../models/item')
-const Shelf = require('../models/shelf')
-const Weight = require('../models/weight')
 const Overview = require('../models/overview')
 
 exports.getShelfOverviewList = (req, res, next) => {
@@ -81,7 +78,9 @@ exports.getShelfOverviewList = (req, res, next) => {
                 pageTitle: 'Shelf Overview List',
                 shelves: shelfItemsDetails,
                 weights: weights,
-                sort: sortType
+                sort: sortType,
+                successMessage: res.locals.successMessages,
+                failMessage: res.locals.failMessages
             });
         })
         .catch(err => console.log(err));
@@ -89,7 +88,9 @@ exports.getShelfOverviewList = (req, res, next) => {
 
 exports.getShelfDetailsLayout = (req, res, next) => {
     res.render('test/shelf-details-layout', {
-        pageTitle: 'Shelf Details'
+        pageTitle: 'Shelf Details',
+        successMessage: res.locals.successMessages,
+        failMessage: res.locals.failMessages
     });
 }
 
@@ -97,7 +98,11 @@ exports.getShelfDetails = (req, res, next) => {
     const shelfPos = req.params.shelfPos;
     //making sure nobody tries to access shelves that don't exist
     if (shelfPos < 1 || shelfPos > 6) {
-        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+        res.status(404).render('404', {
+            pageTitle: 'Page Not Found',
+            successMessage: res.locals.successMessages,
+            failMessage: res.locals.failMessages
+        });
     }
     //initialising shelfDetails
     let shelfDetails = 0;
@@ -123,7 +128,9 @@ exports.getShelfDetails = (req, res, next) => {
             res.render('shelf-details/shelf-details', {
                 pageTitle: 'Shelf Details',
                 details: shelfDetails,
-                weight: shelfWeight
+                weight: shelfWeight,
+                successMessage: res.locals.successMessages,
+                failMessage: res.locals.failMessages
             });
         })
         .catch(err => console.log(err));

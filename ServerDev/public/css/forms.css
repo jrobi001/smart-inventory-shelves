@@ -37,18 +37,20 @@
 }
 
 .form-box h3 {
-  font-size: x-large;
+  font-size: 20pt;
   margin: 0.5em;
+  margin-left: 0;
 }
 
-.form-box label {
-  font-size: large;
+.form-box p, label {
+    font-size: 16pt;
 }
+
 
 .form-box button {
   margin-top: 0.5em;
   padding: 0.5em;
   background-color: white;
-  font-size: large;
+  font-size: 16pt;
 }
 /*# sourceMappingURL=forms.css.map */

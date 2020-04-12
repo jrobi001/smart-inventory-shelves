@@ -1,15 +1,5 @@
 const Item = require('../models/item')
-const Shelf = require('../models/shelf')
-const Weight = require('../models/weight')
-const Overview = require('../models/overview')
-
-const http = require("http");
 const express = require('express');
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
-
-const itemSetupController = require('../controllers/itemSetupController');
-const mainController = require('../controllers/mainController');
 
 const router = express.Router();
 
@@ -20,7 +10,9 @@ router.get('/', (req, res) => {
             // console.log(names);
             res.render('swap/swap-item.ejs', {
                 pageTitle: 'Swap Items',
-                names: names
+                names: names,
+                successMessage: res.locals.successMessages,
+                failMessage: res.locals.failMessages
             });
         })
         .catch(err => console.log(err));
@@ -33,7 +25,11 @@ router.post('/swapped', (req, res) => {
     let shelfPos1 = req.body.shelfPos;
     let shelfPos2 = req.body.swapPos;
     if (shelfPos1 < 1 || shelfPos1 > 6 || shelfPos2 < 1 || shelfPos2 > 6) {
-        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+        res.status(404).render('404', {
+            pageTitle: 'Page Not Found',
+            successMessage: res.locals.successMessages,
+            failMessage: res.locals.failMessages
+        });
     }
 
     if (shelfPos1 != shelfPos2) {
@@ -46,7 +42,11 @@ router.post('/swapped', (req, res) => {
                 throw (err)
             }
             if (result.affectedRows == 0) {
-                res.render('swap/item-swap-fail.ejs', { pageTitle: 'Item Swap Failed' });
+                res.render('swap/item-swap-fail.ejs', {
+                    pageTitle: 'Item Swap Failed',
+                    successMessage: res.locals.successMessages,
+                    failMessage: res.locals.failMessages
+                });
             }
             else {
                 db.query(sqlStatement, record2, (err, result) => {
@@ -54,14 +54,22 @@ router.post('/swapped', (req, res) => {
                         throw (err)
                     }
                     if (result.affectedRows == 0) {
-                        res.render('swap/item-swap-fail.ejs', { pageTitle: 'Item Swap Failed' });
+                        res.render('swap/item-swap-fail.ejs', {
+                            pageTitle: 'Item Swap Failed',
+                            successMessage: res.locals.successMessages,
+                            failMessage: res.locals.failMessages
+                        });
                     } else {
                         db.query(sqlStatement, record3, (err, result) => {
                             if (err) {
                                 throw (err)
                             }
                             else {
-                                res.render('swap/item-swapped.ejs', { pageTitle: 'Item Swapped Successfully' });
+                                res.render('swap/item-swapped.ejs', {
+                                    pageTitle: 'Item Swapped Successfully',
+                                    successMessage: res.locals.successMessages,
+                                    failMessage: res.locals.failMessages
+                                });
                             }
                         });
                     }
@@ -69,7 +77,8 @@ router.post('/swapped', (req, res) => {
             }
         });
     } else {
-        res.redirect('/swap-shelves');
+        req.flash('failMessages', "Can not swap with the same shelf");
+        res.redirect('back');
     }
 });
 
