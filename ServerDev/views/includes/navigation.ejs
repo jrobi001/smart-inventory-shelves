@@ -1,28 +1,37 @@
 <!-- navigation.ejs -->
+
 <body>
-    <header id="main-header">
-        <div class="title-container">
-            <h1><%=pageTitle%></h1>
-        </div>
-        <nav class="navigation-container">
-            <div class="nav-item">
-                <a href="/home">Home</a>
+    <div class="content">
+        <header id="main-header">
+            <div class="title-container">
+                <a href="/home">
+                    <h1>Scale Shelves </h1>
+                </a>
+                <h2> - <%=pageTitle%></h2>
             </div>
-            <div class="nav-item">
-                <a href="/item-setup">Set up Item</a>
-            </div>
-            <div class="nav-item">
-                <a href="/delete">clear shelf</a>
-            </div>
-            <div class="nav-item">
-                <a href="/swap-shelves">swap shelves</a>
-            </div>
-            <div class="nav-item">
-                <a href="/help">help</a>
-            </div>
-        </nav>
-    </header>
-    <!--main content div container is here for inserting forms-->
-    <!--index page has an image in it-->
-    <!--items/forms will be automaticly centered in this div tag-->
-    <div class="main-content">
+            <nav class="navigation-container">
+
+                <a class="nav-item" href="/home">Home</a>
+                <a class="nav-item" href="/item-setup">Set up Item</a>
+                <a class="nav-item" href="/delete">Clear shelf</a>
+                <a class="nav-item" href="/swap-shelves">Swap shelves</a>
+                <a class="nav-item" href="/help">Help</a>
+
+            </nav>
+        </header>
+
+
+        <!--main content div container is here for inserting forms-->
+        <!--index page has an image in it-->
+        <!--items/forms will be automaticly centered in this div tag-->
+        <div class="main-content">
+
+            <!-- copied over from code I used in a data and web submission -->
+            <% if (successMessage) { for (const message of successMessage) {%>
+            <p class="successMessage"><%= message %></p>
+            <% } } %>
+            <% %>
+                
+                <% if (failMessage) { for (const message of failMessage) {%>
+            <p class="failMessage"><%= message %></p>
+            <% } }%>

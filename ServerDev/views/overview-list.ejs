@@ -17,7 +17,6 @@
                 <input type="submit" value="OK" />
             </form>
         </div>
-        <br>
 
         <div class="shelfNoBox">
             <p>Shelf: </p>
@@ -37,10 +36,10 @@
             </div>
 
             <div class="imagebox">
-                <% if (shelves[i].imageLink != null) { %>
-                <img id="product-image" src="<%= shelves[i].imageLink %>" alt="">
-                <% } else { %>
+                <% if (shelves[i].imageLink == null || shelves[i].imageLink == "") { %>
                 <p>no image</p>
+                <% } else { %>
+                <img id="product-image" src="<%= shelves[i].imageLink %>" alt="item image">
                 <% } %>
             </div>
 
@@ -98,7 +97,7 @@
                         console.log(width)
 
                         if (width < 100) {
-                            elem.style.borderRadius = "0 2px 2px 5px";
+                            elem.style.borderRadius = "0 2px 2px 0";
 
                         }
                         if (width < 60) {

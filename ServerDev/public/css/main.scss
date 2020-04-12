@@ -1,0 +1,244 @@
+html {
+    min-height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    
+}
+.content {
+    min-height: calc(100vh - 120px);
+    background-color: #A8A8A8;
+}
+footer {
+    height: 120px;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    padding: 1rem;
+    align-content: center;
+  }
+
+  p{
+      margin:0;
+    }
+
+
+.intro-container{
+    margin: auto;
+    display: flex;
+    width: 100%;
+    background-color:#A8A8A8;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    color: white;
+  }
+  
+.title-container{
+    // font-family: 'consolas';
+    align-content: center;
+
+    padding-left: 10%;
+    margin: auto;
+    display: flex;
+    background-color: #4d4d4d;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: left;
+    /* padding-left: 6em; */
+    color: white;
+    a:link {
+        color: white;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: white;
+        text-decoration: none;
+
+    }
+    a:hover {
+        // opacity: .9;
+        // transform: translateY(-1px);
+        text-shadow: 0 0px 10px rgba(255, 255, 255, 0.178);
+    }
+    h1 {
+        font-size: 35pt;
+    }
+    h2 {
+        margin-top: 1.2em;
+        font-size: 25pt;
+        padding-left: 0.5em;
+    }
+}
+
+.navigation-container{
+    width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #4ddbff;
+    height: 50px;
+    align-items: center;
+    a:link {
+        color: white;
+    }
+
+    a:visited {
+        color: white;
+    }
+
+    a:hover {
+        opacity: .9;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.329);
+    }
+
+    a:active {
+        transform: translateY(1px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.089);
+    }
+}
+
+
+//   div a{
+//     color: white;
+//   }
+
+.nav-item {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    background-color: rgb(75, 126, 160);
+    border-radius: 3px;
+    height: 36px;
+    width: 18%;
+    margin-left: 2%;
+    text-decoration: none;
+    color: white;
+    font-size: 18pt;
+    font-weight: bold;
+
+}
+
+.failMessage {
+    width: 90%;
+    margin-left: 5%;
+    background-color: rgb(255, 141, 141);
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1rem;
+    p {
+        font-size: 18pt;
+    }
+
+}
+
+.successMessage {
+    width: 90%;
+    margin-left: 5%;
+    background-color: rgb(177, 255, 141);
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1rem;
+    p {
+        font-size: 18pt;
+    }
+
+}
+
+/*these are the settings for the main div container*/
+/*look at everything that is under the main-content div container*/
+
+.main-content{
+    width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 2%;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    background-color: rgb(167, 167, 167);
+    color: black;
+    height:auto;
+}
+
+//-----------------
+
+.form-box {
+    width: auto;
+    padding: 2em;
+    padding-top: 0em;
+    align-self: center;
+    align-content: left;
+    background-color: rgb(224, 224, 224);
+    /* box-shadow: 10px 10px 10px grey; */
+    box-shadow: 5px 5px  rgb(65, 65, 65) ;
+}
+
+input[type = "text"] {
+    margin:10px 0px;
+}
+
+input[type = "submit"]{
+    margin-top:10px;
+}
+
+input[type = "file"] {
+    // margin:10px 0px;
+    font-size: 16pt;
+    padding-bottom: 0.5em;
+    padding-left: 0;
+}
+
+
+.button {
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    padding: 2px 4px 2px 4px;
+}
+// ----------------
+
+.footer-container{
+    padding: 1em 0 1em 0;
+    width:100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction:row;
+    justify-content: space-around;
+    height:auto;
+    background-color: #4d4d4d;
+    align-items:center ;
+    color: white;
+}
+
+.goldsmiths-address {
+    p {
+        color: white;
+        font-size: 12pt;
+    }
+}
+
+.footer-images{
+    width: auto;
+    height: 50px;
+}
+

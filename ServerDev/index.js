@@ -3,12 +3,11 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
-var session = require('express-session')
-var flash = require('connect-flash');
+const session = require('express-session')
+const expressSanitizer = require('express-sanitizer');
 
-
-
-
+const cookieParser = require("cookie-parser");
+const connectFlash = require("connect-flash");
 
 const autoCalc = require('./util/autoCalcWeight')
 
@@ -52,12 +51,40 @@ db.connect((err) => {
 //global variable db to be called where needed
 global.db = db;
 
+//Added for session management for flash messages-------------------------
+app.use(cookieParser("secretshelves"));
+//cookie for session management?
+app.use(session({
+    secret: 'secretshelves',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
+app.use(connectFlash());
+// ----------------------------------------
+
 // setting the default views path to /views
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 //allows html files to be rendered by ejs
 app.engine('html', require('ejs').renderFile);
+app.use(expressSanitizer());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// routes --------------------------------------------
+
+// making flash messages available to all routes -------------
+// credit to answer by 'Thad Blakenship' on stackoverflow
+// https://stackoverflow.com/questions/23160743/how-to-send-flash-messages-in-express-4-0
+app.use(function (req, res, next) {
+    res.locals.successMessages = req.flash('successMessages');
+    res.locals.failMessages = req.flash('failMessages');
+    next();
+});
 
 const itemSetupRoutes = require('./routes/itemSetup')
 const mainRoutes = require('./routes/main')
@@ -65,19 +92,6 @@ const shelfDetailsRoutes = require('./routes/shelfDetails')
 const deleteRoutes = require('./routes/delete')
 const swapRoutes = require('./routes/swap')
 const helpRoutes = require('./routes/help')
-
-//cookie for session management?
-app.use(session({
-    cookie: { maxAge: 60000 },
-    secret: 'woot',
-    resave: false,
-    saveUninitialized: false
-}));
-
-app.use(flash());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-
 //routing files
 app.use(mainRoutes);
 app.use('/item-setup', itemSetupRoutes);
@@ -96,7 +110,11 @@ setInterval(function () {
 
 // last route checked if none others satisfied - 404
 app.use((req, res, next) => {
-    res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+    res.status(404).render('404', {
+        pageTitle: 'Page Not Found',
+        successMessage: res.locals.successMessages,
+        failMessage: res.locals.failMessages
+    });
 });
 
 // http://localhost:3000/

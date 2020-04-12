@@ -61,6 +61,6 @@ module.exports = class Item {
     }
 
     static findByName(name) {
-        return dbPromise.execute('SELECT id FROM items WHERE name = ?', [name]);
+        return dbPromise.execute('SELECT id FROM items WHERE name = ? ORDER BY id DESC LIMIT 0, 1', [name]);
     }
 }
