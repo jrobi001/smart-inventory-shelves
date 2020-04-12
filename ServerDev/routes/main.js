@@ -13,6 +13,9 @@ const router = express.Router();
 
 router.get('/', mainController.getShelfOverviewList);
 
+router.get('/home', mainController.getShelfOverviewList);
+
+
 router.get('/shelf-details-layout', mainController.getShelfDetails);
 
 router.get('/template-example', (req, res, next) => {
