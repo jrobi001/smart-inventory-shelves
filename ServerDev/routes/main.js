@@ -6,10 +6,10 @@ const mainController = require('../controllers/mainController');
 const router = express.Router();
 
 //routes can be placed here as in data web if wanted
-router.get('/', (req, res, next) => {
-    res.redirect('/home');
-    // res.render('dev-home');
-});
+// router.get('/', (req, res, next) => {
+//     res.redirect('/home');
+//     // res.render('dev-home');
+// });
 
 router.get('/', mainController.getShelfOverviewList);
 
