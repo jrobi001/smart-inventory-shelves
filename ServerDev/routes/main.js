@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
     // res.render('dev-home');
 });
 
-router.get('/home', mainController.getShelfOverviewList);
+router.get('/', mainController.getShelfOverviewList);
 
 router.get('/shelf-details-layout', mainController.getShelfDetails);
 
