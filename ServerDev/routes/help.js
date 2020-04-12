@@ -3,14 +3,13 @@ const Item = require('../models/item')
 const Shelf = require('../models/shelf')
 const Weight = require('../models/weight')
 
-//files containing routing logic in /controllers
-const mainController = require('../controllers/mainController');
-
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
     res.render('help/help', {
-        pageTitle: 'Help page'
+        pageTitle: 'Help page',
+        successMessage: res.locals.successMessages,
+        failMessage: res.locals.failMessages
     })
 
 })
@@ -22,7 +21,9 @@ router.get('/add-weight', (req, res, next) => {
             // console.log(names);
             res.render('help/add-weight', {
                 pageTitle: 'Add Weight',
-                names: names
+                names: names,
+                successMessage: res.locals.successMessages,
+                failMessage: res.locals.failMessages
             });
         })
         .catch(err => console.log(err));
@@ -31,7 +32,8 @@ router.get('/add-weight', (req, res, next) => {
 router.post('/weight-added', (req, res, next) => {
     const shelfPos = req.body.shelfPos;
     if (shelfPos > 6 || shelfPos < 1) {
-        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+        req.flash('failMessages', "No shelf by that id");
+        res.status(404).render('404', { pageTitle: 'Page Not Found' });
     }
     const weight = req.body.weight;
     Shelf.fetchIdFromPos(shelfPos)
@@ -40,13 +42,10 @@ router.post('/weight-added', (req, res, next) => {
             // console.log(shelfId);
             Weight.addWeightbyId(shelfId, weight)
         })
-        .then(
-            res.render('help/add-weight-complete', {
-                pageTitle: 'weight added',
-                shelfPos: shelfPos,
-                weight: weight
-            })
-        )
+        .then(() => {
+            req.flash('successMessages', 'Weight of ' + weight + 'g added to shelf ' + shelfPos);
+            res.redirect('back');
+        })
         .catch(err => console.log(err));
 });
 

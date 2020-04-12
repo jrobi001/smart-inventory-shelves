@@ -4,157 +4,133 @@
 <%- include('../includes/navigation.ejs') %>
 
 
+
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-myFunction2();
-});
-function myFunction2(){
-if(document.getElementById("autoCalc").selectedIndex == "0"){
- document.getElementById("manual100Percent").style.display = "none";
- }
+    document.addEventListener("DOMContentLoaded", function () {
+        myFunction2();
+    });
+    function myFunction2() {
+        if (document.getElementById("autoCalc").selectedIndex == "0") {
+            document.getElementById("manual100Percent").style.display = "none";
+        }
 
-if(document.getElementById("autoCalc").selectedIndex == "1"){
- document.getElementById("manual100Percent").style.display = "block";
- }
+        if (document.getElementById("autoCalc").selectedIndex == "1") {
+            document.getElementById("manual100Percent").style.display = "block";
+        }
 
-	setTimeout(myFunction2,0);
-}
+        setTimeout(myFunction2, 0);
+    }
 
 
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-myFunction();
-});
+    document.addEventListener("DOMContentLoaded", function () {
+        myFunction();
+    });
 
 
-function myFunction(){
-var thrsval = "<%=shelfInfo.thresholdType%>";
-var autocalc = "<%=shelfInfo.autocalc100Percent%>";
-var warning = "<%=shelfInfo.warning%>";
- 
-
-if(thrsval == "PERCENT"){
-document.getElementById("thrType").selectedIndex = "2";
-}
-
-if(thrsval == "ABSOLUTE"){
-document.getElementById("thrType").selectedIndex = "1";
-}
-
-if(thrsval == "NUMBER"){
-document.getElementById("thrType").selectedIndex = "0";
-}
-
-if(autocalc == 1){
-document.getElementById("autoCalc").selectedIndex = "0";
-}
-
-if(autocalc == 0){
-document.getElementById("autoCalc").selectedIndex = "1";
-}
-
-if(warning == 0){
-document.getElementById("warning").selectedIndex = "1";
-}
-
-if(warning == 1){
-document.getElementById("warning").selectedIndex = "0";
-}
+    function myFunction() {
+        var thrsval = "<%=shelfInfo.thresholdType%>";
+        var autocalc = "<%=shelfInfo.autocalc100Percent%>";
+        var warning = "<%=shelfInfo.warning%>";
 
 
-}
+        if (thrsval == "PERCENT") {
+            document.getElementById("thrType").selectedIndex = "2";
+        }
+
+        if (thrsval == "ABSOLUTE") {
+            document.getElementById("thrType").selectedIndex = "1";
+        }
+
+        if (thrsval == "NUMBER") {
+            document.getElementById("thrType").selectedIndex = "0";
+        }
+
+        if (autocalc == 1) {
+            document.getElementById("autoCalc").selectedIndex = "0";
+        }
+
+        if (autocalc == 0) {
+            document.getElementById("autoCalc").selectedIndex = "1";
+        }
+
+        if (warning == 0) {
+            document.getElementById("warning").selectedIndex = "1";
+        }
+
+        if (warning == 1) {
+            document.getElementById("warning").selectedIndex = "0";
+        }
+
+
+    }
 </script>
+<div class="form-box">
+    <main>
 
-<main>
-    
-    <form action="/shelf-details/edit-shelf/changes-saved" method="POST">
-	
-	<div class="form-element">
-	<p>Update Frequency</p>	
-	<input type="number" step="1" name="updateFreq" id="updateFreq" value="<%=shelfInfo.updateFrequency%>">
-	</div>
-		
+        <form action="/shelf-details/edit-shelf/changes-saved" method="POST">
 
-	<br>
-        <div class="form-element">
-            <p>Threshold Type</p>
-            <select name="thrType" id="thrType">
-                <option value="NUMBER">NUMBER</option>
-                <option value="ABSOLUTE">ABSOLUTE</option>
-                <option value="PERCENT">PERCENT</option>
-            </select>
-        </div>
-	
-	<br>
-        <div class="form-element">
-            <p>Threshold Value</p>
-            <input type="number" step="1" name="thrVal" id="thrVal" value="<%=shelfInfo.thresholdValue%>">
-        </div>
-
-        <br>
-        <div class="form-element">
-            <p>Auto Calculate 100 percent weight?</p>
-            <select name="autoCalc" id="autoCalc" onchange="myFunction2()">
-                <option value="1">YES</option>
-                <option value="0">NO</option>
-            </select>
-        </div>
-
-        <br>
-        <div class="form-element"  id = "manual100Percent">
-            <p>Manually Set 100 Percent weight:</p>
-            <input type="number" step="0.01" name="hundredPercent" id="hundredPercent" value="<%=shelfInfo.hundredPercent%>">
-        </div>
+            <div class="form-element">
+                <p>Update Frequency</p>
+                <input type="number" step="1" name="updateFreq" id="updateFreq" value="<%=shelfInfo.updateFrequency%>">
+            </div>
 
 
-        <br>
-        <div class="form-element">
-            <p>Send a warning when Item falls below threshold?</p>
-            <select name="warning" id="warning" selected ="<%=shelfInfo.warning%>">
-                <option value="1">YES</option>
-                <option value="0">NO</option>
-            </select>
-        </div>
+            <br>
+            <div class="form-element">
+                <p>Threshold Type</p>
+                <select name="thrType" id="thrType">
+                    <option value="NUMBER">NUMBER</option>
+                    <option value="ABSOLUTE">ABSOLUTE</option>
+                    <option value="PERCENT">PERCENT</option>
+                </select>
+            </div>
 
-        <br>
-        <input type="hidden" id="shelfPos" name ="shelfPos" value="<%=shelfInfo.shelfPosition%>">
+            <br>
+            <div class="form-element">
+                <p>Threshold Value</p>
+                <input type="number" step="1" name="thrVal" id="thrVal" value="<%=shelfInfo.thresholdValue%>">
+            </div>
+
+            <br>
+            <div class="form-element">
+                <p>Auto Calculate 100 percent weight?</p>
+                <select name="autoCalc" id="autoCalc" onchange="myFunction2()">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+
+            <br>
+            <div class="form-element" id="manual100Percent">
+                <p>Manually Set 100 Percent weight:</p>
+                <input type="number" step="0.01" name="hundredPercent" id="hundredPercent"
+                    value="<%=shelfInfo.hundredPercent%>">
+            </div>
 
 
-        <button class="btn" type="submit">Save settings</button>
-    </form>
-    <form action="/shelf-details/<%=shelfInfo.shelfPosition%>" method="GET">
-	<br>        
-	<button class="btn" type="submit">No, take me back!</button>
+            <br>
+            <div class="form-element">
+                <p>Send a warning when Item falls below threshold?</p>
+                <select name="warning" id="warning" selected="<%=shelfInfo.warning%>">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
 
-    </form>
+            <br>
+            <input type="hidden" id="shelfPos" name="shelfPos" value="<%=shelfInfo.shelfPosition%>">
+
+
+            <button class="btn" type="submit">Save settings</button>
+        </form>
+        <form action="/shelf-details/<%=shelfInfo.shelfPosition%>" method="GET">
+            <br>
+            <button class="btn" type="submit">No, take me back!</button>
+
+        </form>
+</div>
 </main>
 
 <%- include('../includes/footer.ejs')%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,53 @@
+.form-element {
+    width: 35em;
+    /* margin: 1rem 0; */
+}
+
+
+
+.form-element input {
+    height: 2em;
+}
+
+.form-element input,
+.form-element textarea {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 4px 4px 0 0;
+    font: inherit;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-size: large;
+
+}
+
+.form-element input:focus,
+.form-element textarea:focus {
+    outline-color: darkblue;
+}
+
+.form-element textarea {
+    width: 100%;
+}
+
+.form-element select {
+    width: 40%;
+    height: 1.5em;
+}
+
+.form-box {
+    padding-top: 1em;
+    h3 {
+        font-size: x-large;
+        margin: 0.5em;
+    }
+    label {
+        font-size: large;
+    }
+    button {
+        margin-top: 0.5em;
+        padding: 0.5em;
+        background-color: white;
+        font-size: large;
+    }
+}

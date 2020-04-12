@@ -1,15 +1,9 @@
 const Item = require('../models/item')
 const Shelf = require('../models/shelf')
 const Weight = require('../models/weight')
-const Overview = require('../models/overview')
 
-const http = require("http");
 const express = require('express');
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
 
-const itemSetupController = require('../controllers/itemSetupController');
-const mainController = require('../controllers/mainController');
 
 const router = express.Router();
 
@@ -20,12 +14,12 @@ router.get('/', function (req, res) {
             // console.log(names);
             res.render('delete/shelf-selector-delete.ejs', {
                 pageTitle: 'delete selector',
-                names: names
+                names: names,
+                successMessage: res.locals.successMessages,
+                failMessage: res.locals.failMessages
             })
         })
         .catch(err => console.log(err));
-
-
 })
 
 //confirm screen before deletion
@@ -39,20 +33,22 @@ router.post('/confirm', (req, res, next) => {
             if (itemId == null) {
                 //should really display a message here that the shelf is already empty
                 console.log('that shelf is already empty')
-                return res.render('delete/shelf-selector-delete', {
-                    pageTitle: 'delete selector'
-                })
+                req.flash('failMessages', "That shelf is already empty");
+                res.redirect('back');
             } else {
                 return Item.findById(itemId)
+                    .then(([data, meta]) => {
+                        const itemData = data[0];
+                        console.log(itemData.name);
+                        res.render('delete/confirm-delete', {
+                            pageTitle: 'Confirm shelf',
+                            shelfPos: shelfPosition,
+                            item: itemData,
+                            successMessage: res.locals.successMessages,
+                            failMessage: res.locals.failMessages
+                        })
+                    })
             }
-        }).then(([data, meta]) => {
-            const itemData = data[0];
-            console.log(itemData.name);
-            res.render('delete/confirm-delete', {
-                pageTitle: 'Confirm shelf',
-                shelfPos: shelfPosition,
-                item: itemData
-            })
         })
         .catch(err => console.log(err));
 })
@@ -62,7 +58,8 @@ router.post('/confirm', (req, res, next) => {
 router.post('/result', function (req, res) {
     const shelfPos = req.body.shelfPos;
     if (shelfPos > 6 || shelfPos < 1) {
-        res.status(404).render('404.html', { pageTitle: 'Page Not Found' });
+        req.flash('failMessages', "No Shelf with that position");
+        res.status(404).render('404', { pageTitle: 'Page Not Found' });
     }
     let sqlquery = "UPDATE shelves SET items_id = NULL, updateFrequency = '0', thresholdType = 'NUMBER', thresholdValue = '0', hundredPercent = NULL, autocalc100Percent = '0', warning = '1' WHERE shelfPosition = ?";
     let newrecord = [req.body.shelfPos];
@@ -80,7 +77,12 @@ router.post('/result', function (req, res) {
                         return Weight.deleteShelWeightsfById(id)
                     })
                     .then(() => {
-                        return res.render('delete/item-deleted', { pageTitle: 'Success', shelfPos: shelfPos });
+                        return res.render('delete/item-deleted', {
+                            pageTitle: 'Success',
+                            shelfPos: shelfPos,
+                            successMessage: res.locals.successMessages,
+                            failMessage: res.locals.failMessages
+                        });
                     })
                     .catch(err => console.log(err));
             };
