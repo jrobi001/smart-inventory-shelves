@@ -51,3 +51,35 @@
         font-size: large;
     }
 }
+
+#use-shelf {
+    color: white;
+    background-color: white;
+    background-image: linear-gradient(to bottom right, rgba(255, 0, 4, 0.788), rgb(59, 9, 181));
+    border: 3px solid grey;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px grey;
+    padding: 0.5em;
+    font-size: 20pt;
+
+    
+}
+
+#use-shelf:link {
+    color: white;
+}
+
+#use-shelf:visited {
+    color: white;
+}
+
+#use-shelf:hover {
+    opacity: .9;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.329);
+}
+
+#use-shelf:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.089);
+}

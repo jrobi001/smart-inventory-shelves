@@ -8,24 +8,42 @@
         <form action="/item-setup/shelf-settings" method="POST" enctype="multipart/form-data">
             <div class="form-element">
                 <label>Name:</label>
-                <input type="text" required name="name" id="itemName">
+                <input type="text" required name="name" id="itemName"
+                    placeholder="Enter a descriptive name for the item">
             </div>
             <div class="form-element">
                 <label>Tags:</label>
-                <input type="text" name="tags" id="tags">
+                <input type="text" name="tags" id="tags"
+                    placeholder="Add any tags, seperated by a space e.g. #food #cereal">
             </div>
             <div class="form-element">
                 <label>Description:</label>
-                <textarea name="notes" id="notes" rows="10"></textarea>
+                <textarea name="notes" id="notes" rows="10"
+                    placeholder="This is a good place to store information related to re-stocking this item or safety information"></textarea>
             </div>
             <div class="form-element">
                 <label>Price:</label>
-                <input type="number" step="0.01" name="price" id="price">
+                <input type="number" step="0.01" name="price" id="price"
+                    placeholder="Optionally store the price of the item in £">
             </div>
             <div class="form-element">
                 <label>Weight:</label>
-                <input type="number" required step="0.01" name="weight" id="weight">
+                <input type="number" required step="0.01" name="weight" id="weight"
+                    placeholder="Enter the individual weight of the item in grams">
             </div>
+
+            <button onclick="removeWeightRequirement();" class="btn" id="use-shelf" type="submit"
+                formaction="/item-setup/shelf-weight-determination">Use
+                Shelf to
+                Determine
+                Item Weight</button>
+
+            <script>
+                function removeWeightRequirement() {
+                    document.getElementById("weight").required = false;
+                };
+            </script>
+            <br><br>
             <div class="image-upload">
                 <label>Image File</label>
                 <input name="shelfImage" type="file" accept="image/*">

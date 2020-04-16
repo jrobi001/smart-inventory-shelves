@@ -118,11 +118,13 @@ exports.getShelfDetails = (req, res, next) => {
         })
         .then(([data, meta]) => {
             //checking if there are any weight records
-            let shelfWeight = data[0];
-            if (shelfWeight == null) {
+            console.log(data[0]);
+
+            let shelfWeight = null;
+            if (data[0] == undefined) {
                 shelfWeight = null;
             } else {
-                shelfWeight = shelfWeight.weight
+                shelfWeight = data[0].weight
             }
             console.log(shelfDetails);
             res.render('shelf-details/shelf-details', {

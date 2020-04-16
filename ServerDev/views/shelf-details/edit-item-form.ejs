@@ -27,7 +27,16 @@
                 <input type="number" required step="0.01" name="weight" id="weight" value="<%=itemInfo.weight%>">
             </div>
             <div class="image-upload">
-                <p>Image File</p>
+
+                <% if (itemInfo.imageLink != null) { %>
+                <p>This Item already has an image uploaded.</p>
+                <img id="edit-item-image" src="<%= itemInfo.imageLink %> " alt="<%= itemInfo.name %>  image">
+                <p>Replace image file, by uploading, or keep old, by leaving</p>
+                <input type="hidden" name="oldImg" id="oldImg" value="<%= itemInfo.imageLink %>">
+
+                <% } else { %>
+                <p>Add an image by uploading (5MB max size)</p>
+                <% } %>
                 <input name="shelfImage" type="file" accept="image/*">
             </div>
 
@@ -36,8 +45,9 @@
 
 
             <button class="btn" type="submit">Edit Item</button>
-            <a href="/shelf-details/<%= shelfPos %> " class="button">Abort Changes</a>
-
+            <form action="/shelf-details/<%= shelfPos %>" method="GET">
+                <button class="btn" type="submit">No, take me back!</button>
+            </form>
         </form>
 
 
