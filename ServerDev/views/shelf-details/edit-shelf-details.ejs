@@ -72,8 +72,11 @@
         <form action="/shelf-details/edit-shelf/changes-saved" method="POST">
 
             <div class="form-element">
-                <p>Update Frequency</p>
-                <input type="number" step="1" name="updateFreq" id="updateFreq" value="<%=shelfInfo.updateFrequency%>">
+                <p>Send a warning when Item falls below threshold?</p>
+                <select name="warning" id="warning" selected="<%=shelfInfo.warning%>">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
             </div>
 
 
@@ -111,14 +114,11 @@
 
 
             <br>
-            <div class="form-element">
-                <p>Send a warning when Item falls below threshold?</p>
-                <select name="warning" id="warning" selected="<%=shelfInfo.warning%>">
-                    <option value="1">YES</option>
-                    <option value="0">NO</option>
-                </select>
-            </div>
 
+            <div class="form-element">
+                <p>Update Frequency</p>
+                <input type="number" step="1" name="updateFreq" id="updateFreq" value="<%=shelfInfo.updateFrequency%>">
+            </div>
             <br>
             <input type="hidden" id="shelfPos" name="shelfPos" value="<%=shelfInfo.shelfPosition%>">
 

@@ -1,0 +1,41 @@
+<%- include('../../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+<%- include('../../includes/navigation.ejs') %>
+
+<script type="text/javascript">
+    // how to create a delay on from submission credit to "Icarus" on stackOverflow
+    // https://stackoverflow.com/questions/4148210/how-do-i-submit-a-form-in-javascript-with-a-delay
+    function loading() {
+        if (document.getElementById("shelf-empty-form")) {
+            setTimeout("submitForm()", 5000);
+            document.getElementById("loading-gif").style.display = 'block';
+        }
+    }
+    function submitForm() {
+        document.getElementById("shelf-empty-form").submit();
+    }
+</script>
+<main>
+    <div class="form-box">
+        <h3>We got a <%= itemName %> as <%= weightDif %>g</h3>
+        <p>Does that seem right?</p>
+        <p>Press Continue if it is, or press re-weigh to try again</p>
+        <form id="shelf-empty-form" action="/item-setup/confirm-weight" method="POST">
+            <input type="hidden" name="shelfId" value="<%= shelfId %>">
+            <input type="hidden" name="shelfPos" value="<%= shelfPos %>">
+            <input type="hidden" name="newItem" value="<%= newItem %>">
+            <input type="hidden" name="zeroRecord" value="<%= zeroRecord %>">
+
+            <input type="button" onclick="loading();" class="btn" value="re-weigh"></input>
+        </form>
+        <form action="/item-setup/shelf-filled-form" method="POST">
+            <input type="hidden" name="shelfPos" value="<%= shelfPos %>">
+            <input type="hidden" name="newItem" value="<%= newItem %>">
+            <input type="hidden" name="weightDif" value="<%= weightDif %>">
+            <button class="btn" type="submit">Continue</button>
+        </form>
+        <img src="/images/loading.gif" alt="loading gif" id="loading-gif" style="display: none;">
+    </div>
+</main>
+<%- include('../../includes/footer.ejs')%>

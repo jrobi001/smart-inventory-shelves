@@ -15,4 +15,15 @@ router.post('/shelf-settings', itemSetupController.postShelfSettings);
 
 router.post('/setup-complete', itemSetupController.postSetupComplete)
 
+
+// new routes for set up with arduino -----
+router.post('/shelf-weight-determination', itemSetupController.postShelfWeightDetermination);
+
+router.post('/checking-empty', itemSetupController.postCheckingEmpty);
+
+router.post('/confirm-weight', itemSetupController.postConfirmWeight);
+
+router.post('/shelf-filled-form', itemSetupController.postShelfFilledForm);
+// -----------------------------------------
+
 module.exports = router
