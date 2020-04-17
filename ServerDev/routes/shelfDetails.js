@@ -53,6 +53,7 @@ const router = express.Router();
 router.get('/:shelfPos', mainController.getShelfDetails);
 
 
+// edit shelf settings -----------------------------------
 router.get('/edit-shelf/:shelfPos', function (req, res) {
 
     const shelfPos = req.params.shelfPos;
@@ -74,9 +75,6 @@ router.get('/edit-shelf/:shelfPos', function (req, res) {
 });
 
 router.post('/edit-shelf/changes-saved', function (req, res) {
-
-
-
     const autocalc = req.body.autoCalc;
     const shelfPos = req.body.shelfPos;
     let updateFreq = req.body.updateFreq;
@@ -111,9 +109,13 @@ router.post('/edit-shelf/changes-saved', function (req, res) {
 
 });
 
+// -------------------------------------
+
 //edit item route modified to take shelf Position as a parameter eliminating need for name to be entered
 // Logic for edit item-----------------------------------------------------------------------
 router.get('/edit-item/:shelfPos', function (req, res) {
+
+
     const shelfPos = req.params.shelfPos;
     if (shelfPos > 6 || shelfPos < 1) {
         res.status(404).render('404', {
@@ -165,8 +167,10 @@ router.get('/edit-item/:shelfPos', function (req, res) {
     });
 })
 
+// getting updated item data from the edit item form and upfating the database record for that item
 router.post('/edit-item/changes-saved', function (req, res) {
     let imagePath = null;
+
     upload.single('shelfImage')(req, res, (err) => {
         if (err) {
             console.log(err);
@@ -174,10 +178,16 @@ router.post('/edit-item/changes-saved', function (req, res) {
             req.flash('failMessages', "Image upload failed " + err);
             res.redirect('back')
         } else {
-            console.log(req.file);
+            // getting the old image path if exists
+            if (req.body.oldImg) {
+                console.log('old image detected');
+                imagePath = req.body.oldImg
+            }
+            // checking if a new file was uploaded and replacing path with new files if so
             if (req.file != undefined) {
                 imagePath = '/images/upload/' + req.file.filename;
             }
+            // check to make sure empty space not entered into database
             let price = req.body.price;
             if (price == "") {
                 price = null;
@@ -207,6 +217,7 @@ router.post('/edit-item/changes-saved', function (req, res) {
 });
 // -----------------------------------------------------------------------
 
+// route for set up new item on shelf already occupied from shelf details screen
 router.get('/confirm-new/:shelfPos', function (req, res) {
     const shelfPos = req.params.shelfPos;
     if (shelfPos > 6 || shelfPos < 1) {
@@ -244,6 +255,7 @@ router.get('/confirm-new/:shelfPos', function (req, res) {
         .catch(err => console.log(err));
 })
 
+// route for delete item on shelf from shelf details screen
 router.get('/confirm-delete/:shelfPos', function (req, res) {
     const shelfPos = req.params.shelfPos;
     if (shelfPos > 6 || shelfPos < 1) {

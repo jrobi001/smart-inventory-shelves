@@ -31,32 +31,32 @@ module.exports = class Overview {
     // must be accessed as a promise using .then(([data, meta]) => { / access as data[0].weight / })
     static fetchWeightId1() {
         return dbPromise.execute(
-            'SELECT weight FROM id1weights ORDER BY id DESC LIMIT 0, 1'
+            'SELECT * FROM id1weights ORDER BY id DESC LIMIT 0, 1'
         );
     }
     static fetchWeightId2() {
         return dbPromise.execute(
-            'SELECT weight FROM id2weights ORDER BY id DESC LIMIT 0, 1'
+            'SELECT * FROM id2weights ORDER BY id DESC LIMIT 0, 1'
         );
     }
     static fetchWeightId3() {
         return dbPromise.execute(
-            'SELECT weight FROM id3weights ORDER BY id DESC LIMIT 0, 1'
+            'SELECT * FROM id3weights ORDER BY id DESC LIMIT 0, 1'
         );
     }
     static fetchWeightId4() {
         return dbPromise.execute(
-            'SELECT weight FROM id4weights ORDER BY id DESC LIMIT 0, 1'
+            'SELECT * FROM id4weights ORDER BY id DESC LIMIT 0, 1'
         );
     }
     static fetchWeightId5() {
         return dbPromise.execute(
-            'SELECT weight FROM id5weights ORDER BY id DESC LIMIT 0, 1'
+            'SELECT * FROM id5weights ORDER BY id DESC LIMIT 0, 1'
         );
     }
     static fetchWeightId6() {
         return dbPromise.execute(
-            'SELECT weight FROM id6weights ORDER BY id DESC LIMIT 0, 1'
+            'SELECT * FROM id6weights ORDER BY id DESC LIMIT 0, 1'
         );
     }
 
