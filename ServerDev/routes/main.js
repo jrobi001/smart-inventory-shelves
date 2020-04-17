@@ -1,30 +1,26 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const mainController = require('../controllers/mainController');
 
 const router = express.Router();
 
 //routes can be placed here as in data web if wanted
-// router.get('/', (req, res, next) => {
-//     res.redirect('/home');
-//     // res.render('dev-home');
-// });
 
 router.get('/', mainController.getShelfOverviewList);
 
 router.get('/home', mainController.getShelfOverviewList);
 
+// test routes -----------------------------------------------------------
 
-router.get('/shelf-details-layout', mainController.getShelfDetails);
+// router.get('/template-example', (req, res, next) => {
+//     res.render('template-example', {
+//         pageTitle: 'template example',
+//         successMessage: res.locals.successMessages,
+//         failMessage: res.locals.failMessages
+//     });
+// });
 
-router.get('/template-example', (req, res, next) => {
-    res.render('template-example', {
-        pageTitle: 'template example',
-        successMessage: res.locals.successMessages,
-        failMessage: res.locals.failMessages
-    });
-});
+// router.get('/shelf-details-layout', mainController.getShelfDetailsLayout);
 
 // router.get('/test-upload', (req, res, next) => {
 //     res.render('test/upload', {
@@ -54,5 +50,8 @@ router.get('/template-example', (req, res, next) => {
 //         }
 //     })
 // })
+
+// -------------------------------------------------------------------------
+
 
 module.exports = router

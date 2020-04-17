@@ -1,6 +1,7 @@
 const Item = require('../models/item')
 const Shelf = require('../models/shelf')
 const Weight = require('../models/weight')
+const Overview = require('../models/overview')
 
 const path = require('path');
 // ------ image upload stuff -------
@@ -112,26 +113,37 @@ exports.postItemForm = (req, res, next) => {
 exports.postShelfSettings = (req, res, next) => {
     let imagePath = null;
     upload.single('shelfImage')(req, res, (err) => {
+        const itemName = req.body.name;
+        const tags = req.body.tags;
+        const weight = req.body.weight;
+        const notes = req.body.notes;
+        let price = req.body.price;
+        if (price == "") {
+            price = null;
+        }
+        const shelfPos = req.body.shelfPos;
+
+        const newItem = new Item(null, itemName, tags, weight, notes, price, null);
+
         if (err) {
             console.log(err.message);
             req.flash('failMessages', "Image upload failed " + err);
-            res.redirect('back')
+            res.locals.failMessages = req.flash('failMessages');
+            res.render('item-setup/arduino-setup/shelf-filled-form', {
+                pageTitle: 'Add item',
+                shelfPos: shelfPos,
+                newItem: newItem,
+                weightDif: newItem.weight,
+                successMessage: res.locals.successMessages,
+                failMessage: res.locals.failMessages
+            });
+
         } else {
             console.log(req.file);
             if (req.file != undefined) {
-                imagePath = '/images/upload/' + req.file.filename;
+                newItem.imageLink = '/images/upload/' + req.file.filename;
             }
-            const itemName = req.body.name;
-            const tags = req.body.tags;
-            const weight = req.body.weight;
-            const notes = req.body.notes;
-            let price = req.body.price;
-            if (price == "") {
-                price = null;
-            }
-            const shelfPos = req.body.shelfPos;
 
-            const newItem = new Item(null, itemName, tags, weight, notes, price, imagePath);
             newItem.addItem()
                 .then(() => {
                     // getting the id of the newly swt up item
@@ -192,3 +204,184 @@ exports.postSetupComplete = (req, res, next) => {
         })
         .catch(err => console.log(err));
 }
+
+
+// routes for setting up item with shelf ------------------------------------------------
+
+// start with storing the previously entered form data for later and getting the most recent weight record, to compare against
+exports.postShelfWeightDetermination = (req, res, next) => {
+    // starts off same as postShelfSettings, getting any filled in item data from the form
+    let imagePath = null;
+    upload.single('shelfImage')(req, res, (err) => {
+        const itemName = req.body.name;
+        const tags = req.body.tags;
+        const weight = req.body.weight;
+        const notes = req.body.notes;
+        let price = req.body.price;
+        if (price == "") {
+            price = null;
+        }
+        const shelfPos = req.body.shelfPos;
+        // console.log(shelfPos);
+        let shelfId = null;
+
+        const newItem = new Item(null, itemName, tags, weight, notes, price, imagePath);
+        // console.log(newItem);
+        if (err) {
+            console.log(err.message);
+            req.flash('failMessages', "Image upload failed " + err);
+            res.locals.failMessages = req.flash('failMessages');
+            res.render('item-setup/arduino-setup/shelf-filled-form', {
+                pageTitle: 'Add item',
+                shelfPos: shelfPos,
+                newItem: newItem,
+                weightDif: newItem.weight,
+                successMessage: res.locals.successMessages,
+                failMessage: res.locals.failMessages
+            });
+        } else {
+            // console.log(req.file);
+            if (req.file != undefined) {
+                newItem.imageLink = '/images/upload/' + req.file.filename;
+            }
+
+
+            Shelf.fetchIdFromPos(shelfPos)
+                .then(([data, meta]) => {
+                    console.log(data[0]);
+                    shelfId = data[0].id;
+                    return Overview.fetchWeightById(shelfId)
+                })
+                .then(([data, meta]) => {
+                    let controlWeightRecord = data[0];
+                    console.log(controlWeightRecord);
+                    res.render('item-setup/arduino-setup/empty-shelf', {
+                        pageTitle: 'Empty Shelf',
+                        shelfId: shelfId,
+                        shelfPos: shelfPos,
+                        //strigify objects so they can be passed through the body of the form
+                        newItem: JSON.stringify(newItem),
+                        controlWeightRecord: JSON.stringify(controlWeightRecord),
+                        successMessage: res.locals.successMessages,
+                        failMessage: res.locals.failMessages
+                    });
+
+                })
+                .catch(err => console.log(err));
+        }
+    })
+};
+
+exports.postCheckingEmpty = (req, res, next) => {
+    const shelfId = parseInt(req.body.shelfId);
+    const shelfPos = parseInt(req.body.shelfPos);
+    const newItem = JSON.parse(req.body.newItem);
+    // console.log(newItem);
+
+    const controlWeightRecord = req.body.controlWeightRecord;
+
+    Overview.fetchWeightById(shelfId)
+        .then(([data, meta]) => {
+
+
+            let zeroRecord = data[0];
+            console.log(controlWeightRecord);
+            console.log(JSON.stringify(zeroRecord));
+
+            // checking if the any new weight data exists in the table
+            if (controlWeightRecord == JSON.stringify(zeroRecord)) {
+                req.flash('failMessages', "No new weight data detected");
+                res.locals.failMessages = req.flash('failMessages');
+                res.render('item-setup/arduino-setup/empty-shelf', {
+                    pageTitle: 'Empty Shelf',
+                    shelfId: shelfId,
+                    shelfPos: shelfPos,
+                    //strigify objects so they can be passed through the body of the form
+                    newItem: JSON.stringify(newItem),
+                    controlWeightRecord: controlWeightRecord,
+                    successMessage: res.locals.successMessages,
+                    failMessage: res.locals.failMessages
+                });
+            } else {
+                req.flash('successMessages', "New weight data detected");
+                res.locals.successMessages = req.flash('successMessages');
+                res.render('item-setup/arduino-setup/new-weight', {
+                    pageTitle: 'Place 1 item',
+                    shelfId: shelfId,
+                    shelfPos: shelfPos,
+                    itemName: newItem.name,
+                    //strigify objects so they can be passed through the body of the form
+                    newItem: JSON.stringify(newItem),
+                    zeroRecord: JSON.stringify(zeroRecord),
+                    successMessage: res.locals.successMessages,
+                    failMessage: res.locals.failMessages
+                });
+            }
+        })
+        .catch(err => console.log(err));
+}
+
+exports.postConfirmWeight = (req, res, next) => {
+    const shelfId = parseInt(req.body.shelfId);
+    const shelfPos = parseInt(req.body.shelfPos);
+    const newItem = JSON.parse(req.body.newItem);
+    // console.log(newItem);
+    let zeroRecord = req.body.zeroRecord;
+    Overview.fetchWeightById(shelfId)
+        .then(([data, meta]) => {
+            let oneRecord = data[0];
+            console.log(zeroRecord);
+            console.log(JSON.stringify(oneRecord));
+
+            // checking if the any new weight data exists in the table
+            if (zeroRecord == JSON.stringify(oneRecord)) {
+                req.flash('failMessages', "No new weight data detected");
+                res.locals.failMessages = req.flash('failMessages');
+                res.render('item-setup/arduino-setup/new-weight', {
+                    pageTitle: 'Place 1 item',
+                    shelfId: shelfId,
+                    shelfPos: shelfPos,
+                    itemName: newItem.name,
+                    //strigify objects so they can be passed through the body of the form
+                    newItem: JSON.stringify(newItem),
+                    zeroRecord: zeroRecord,
+                    successMessage: res.locals.successMessages,
+                    failMessage: res.locals.failMessages
+                });
+
+            } else {
+                zeroRecord = JSON.parse(zeroRecord)
+                let weightDif = parseInt(oneRecord.weight) - parseInt(zeroRecord.weight)
+                console.log(weightDif);
+                res.render('item-setup/arduino-setup/confirm-weight', {
+                    pageTitle: 'Correct weight?',
+                    shelfId: shelfId,
+                    shelfPos: shelfPos,
+                    itemName: newItem.name,
+                    //strigify objects so they can be passed through the body of the form
+                    newItem: JSON.stringify(newItem),
+                    zeroRecord: JSON.stringify(zeroRecord),
+                    weightDif: weightDif,
+                    successMessage: res.locals.successMessages,
+                    failMessage: res.locals.failMessages
+                });
+
+            }
+        })
+        .catch(err => console.log(err));
+}
+
+exports.postShelfFilledForm = (req, res, next) => {
+    const shelfPos = parseInt(req.body.shelfPos);
+    const newItem = JSON.parse(req.body.newItem);
+    let weightDif = parseInt(req.body.weightDif);
+    res.render('item-setup/arduino-setup/shelf-filled-form', {
+        pageTitle: 'Add item',
+        shelfPos: shelfPos,
+        newItem: newItem,
+        weightDif: weightDif,
+        successMessage: res.locals.successMessages,
+        failMessage: res.locals.failMessages
+    });
+}
+// ----------------------------------------------------------------------------------

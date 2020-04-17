@@ -109,7 +109,7 @@
                         elem.style.width = width + '%';
                         var p = document.getElementById("percentage" + "" + i);
 
-                        if (isNaN(width)) {
+                        if (isNaN(width) || !isFinite(width)) {
                             elem.style.backgroundColor = "white";
                             elem.style.width = "0" + '%';
                             p.innerHTML = "empty";
