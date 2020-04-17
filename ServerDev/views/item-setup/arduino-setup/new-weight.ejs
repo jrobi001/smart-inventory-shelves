@@ -28,6 +28,14 @@
 
             <input type="button" onclick="loading();" class="btn" value="OK"></input>
         </form>
+
+        <form action="/item-setup/shelf-filled-form" method="POST">
+            <input type="hidden" name="shelfPos" value="<%= shelfPos %>">
+            <input type="hidden" name="newItem" value="<%= newItem %>">
+            <input type="hidden" name="weightDif" value="null">
+            <button class="btn" type="submit">Cancel</button>
+        </form>
+
         <img src="/images/loading.gif" alt="loading gif" id="loading-gif" style="display: none;">
     </div>
 </main>

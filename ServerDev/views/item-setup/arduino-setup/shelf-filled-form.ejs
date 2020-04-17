@@ -26,6 +26,20 @@
                 <p>Weight:</p>
                 <input type="number" required step="0.01" name="weight" id="weight" value="<%= weightDif %>">
             </div>
+
+            <button onclick="removeWeightRequirement();" class="btn" id="use-shelf" type="submit"
+                formaction="/item-setup/shelf-weight-determination">Use
+                Shelf to
+                Determine
+                Item Weight</button>
+
+            <script>
+                function removeWeightRequirement() {
+                    document.getElementById("weight").required = false;
+                };
+            </script>
+            <br><br>
+
             <div class="image-upload">
 
                 <% if (newItem.imageLink != null) { %>
