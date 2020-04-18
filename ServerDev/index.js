@@ -105,7 +105,7 @@ app.use('/help', helpRoutes);
 autoCalc.autoCalcWeight()
 setInterval(function () {
     autoCalc.autoCalcWeight()
-    //interval of 5 mins (5*60*1000 ms)
+    //interval of 2 mins (2*60*1000 ms)
 }, 120000)
 
 // last route checked if none others satisfied - 404
