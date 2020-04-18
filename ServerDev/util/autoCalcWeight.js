@@ -56,7 +56,7 @@ exports.autoCalcWeight = () => {
 
                             let weightval = largest;
 
-                            if (weightval > currentcalibratedWeight) {
+                            if (weightval != currentcalibratedWeight) {
                                 let sqlquery = "update shelves set hundredPercent = ? where id = ?";
                                 let record1 = [weightval, Id];
                                 db.query(sqlquery, record1, (err3, result3) => {
