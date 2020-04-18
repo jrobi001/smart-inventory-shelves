@@ -1,35 +1,30 @@
-<%- include('../includes/head.ejs') %>
+<%- include('../../includes/head.ejs') %>
 <link rel="stylesheet" href="/css/forms.css">
 </head>
-<%- include('../includes/navigation.ejs') %>
+<%- include('../../includes/navigation.ejs') %>
 <main>
     <div class="form-box">
-        <h3>Please enter details for the item to be stored on shelf <%= shelfPos %> </h3>
         <form action="/item-setup/shelf-settings" method="POST" enctype="multipart/form-data">
+
             <div class="form-element">
-                <label>Name:</label>
-                <input type="text" required name="name" id="itemName"
-                    placeholder="Enter a descriptive name for the item">
+                <p>Name:</p>
+                <input type="text" required name="name" id="itemName" value="<%=newItem.name%>">
             </div>
             <div class="form-element">
-                <label>Tags:</label>
-                <input type="text" name="tags" id="tags"
-                    placeholder="Add any tags, seperated by a space e.g. #food #cereal">
+                <p>Tags:</p>
+                <input type="text" name="tags" id="tags" value="<%=newItem.tags%>">
             </div>
             <div class="form-element">
-                <label>Description:</label>
-                <textarea name="notes" id="notes" rows="10"
-                    placeholder="This is a good place to store information related to re-stocking this item or safety information"></textarea>
+                <p>Description:</p>
+                <textarea name="notes" id="notes" rows="10"><%=newItem.notes%></textarea>
             </div>
             <div class="form-element">
-                <label>Price:</label>
-                <input type="number" step="0.01" name="price" id="price"
-                    placeholder="Optionally store the price of the item in £">
+                <p>Price:</p>
+                <input type="number" step="0.01" name="price" id="price" value="<%=newItem.price%>">
             </div>
             <div class="form-element">
-                <label>Weight:</label>
-                <input type="number" required step="0.01" name="weight" id="weight"
-                    placeholder="Enter the individual weight of the item in grams">
+                <p>Weight:</p>
+                <input type="number" required step="0.01" name="weight" id="weight" value="<%= weightDif %>">
             </div>
 
             <button onclick="removeWeightRequirement();" class="btn" id="use-shelf" type="submit"
@@ -44,12 +39,22 @@
                 };
             </script>
             <br><br>
+
             <div class="image-upload">
+
+                <% if (newItem.imageLink != null) { %>
+                <p>This Item already has an image uploaded.</p>
+                <img id="edit-item-image" src="<%= newItem.imageLink %> " alt="<%= newItem.name %>  image">
+                <p>Replace image file, by uploading, or keep old, by leaving</p>
+                <input type="hidden" name="oldImg" id="oldImg" value="<%= newItem.imageLink %>">
+
+                <% } else { %>
                 <p>Add an image by uploading (5MB max size)</p>
+                <% } %>
                 <input name="shelfImage" type="file" accept="image/*">
             </div>
 
-            <input type="hidden" name="shelfPos" value="<%= shelfPos %>">
+            <input type="hidden" name="shelfPos" id="shelfPos" value="<%= shelfPos %>">
 
 
             <button class="btn" type="submit">Add Item</button>
@@ -57,6 +62,10 @@
         <form action="/item-setup" method="GET">
             <button class="btn" type="submit">No, take me back!</button>
         </form>
+
+
+
     </div>
+
 </main>
-<%- include('../includes/footer.ejs')%>
+<%- include('../../includes/footer.ejs')%>

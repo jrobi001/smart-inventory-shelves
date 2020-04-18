@@ -2,6 +2,8 @@ const express = require('express');
 const Item = require('../models/item')
 const Shelf = require('../models/shelf')
 const Weight = require('../models/weight')
+const autoCalc = require('../util/autoCalcWeight')
+
 
 const router = express.Router();
 
@@ -43,6 +45,7 @@ router.post('/weight-added', (req, res, next) => {
             Weight.addWeightbyId(shelfId, weight)
         })
         .then(() => {
+            autoCalc.autoCalcWeight();
             req.flash('successMessages', 'Weight of ' + weight + 'g added to shelf ' + shelfPos);
             res.redirect('back');
         })
