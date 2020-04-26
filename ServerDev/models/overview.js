@@ -1,5 +1,6 @@
 module.exports = class Overview {
 
+    // overview constructor, used for shelf overview page?
     constructor(shelfItemsJoinArr, weightId1, weightId2, weightId3, weightId4,
         weightId5, weightId6) {
         this.shelfItemsJoin = shelfItemsJoinArr;
@@ -11,6 +12,8 @@ module.exports = class Overview {
         this.weightId6 = weightId6;
     }
 
+    // fetching item data and shelf settings of a shelf from shelf position (stored in different tables)
+    // used on shelf overview pages - gets all data needed in one call
     static fetchShelvesJoinByPos(pos) {
         return dbPromise.execute(
             'SELECT * FROM items RIGHT JOIN shelves ON items.id = shelves.items_id WHERE shelves.shelfPosition = ?',
@@ -18,17 +21,16 @@ module.exports = class Overview {
         )
     }
 
-
-    // join right statement will always output an array 6 items even if shelf is emptu
-    // accessed as a promise using .then(([data, meta]) => { / access array here as data[0] / })
+    // fetches item data for all shelf positions ordered by shelf id
+    // used on shelf overview / home page to display info for all shelves
+    // join right statement will always output an array 6 items even if shelf is empty
     static fetchAllShevesJoinItems() {
         return dbPromise.execute(
             'SELECT * FROM items RIGHT JOIN shelves ON items.id = shelves.items_id ORDER BY shelves.id ASC'
         );
     }
 
-    // outputs the most recent weight from id1weights table
-    // must be accessed as a promise using .then(([data, meta]) => { / access as data[0].weight / })
+    // set of calls that output the most recent weight record from different weight tables based on shelf ids -----
     static fetchWeightId1() {
         return dbPromise.execute(
             'SELECT * FROM id1weights ORDER BY id DESC LIMIT 0, 1'
@@ -59,7 +61,9 @@ module.exports = class Overview {
             'SELECT * FROM id6weights ORDER BY id DESC LIMIT 0, 1'
         );
     }
+    // ---------------------------------------------------------------------------------------------------------------
 
+    // uses a switch statement to return the most recent weight record from a weights table when provided a shelf id
     static fetchWeightById(id) {
         switch (id) {
             case 1:
@@ -87,9 +91,9 @@ module.exports = class Overview {
     }
 
     // this function returns an array of the most recent item weights
-    // in an array orderer of id 1-6
+    // in an array in order of shelf id 1-6
     // takes an empty array as input
-    // must be accessed as a promise using .then(() => { / access array here / })
+    // could be simplified using the style used in the Item.fetchItemNames() method
     static fetchAllWeights(weightArr) {
         return this.fetchWeightId1()
             .then(([data, meta]) => {
