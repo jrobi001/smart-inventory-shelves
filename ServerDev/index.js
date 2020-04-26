@@ -1,14 +1,14 @@
+// importing node modules
 const path = require('path');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const session = require('express-session')
 const expressSanitizer = require('express-sanitizer');
-
 const cookieParser = require("cookie-parser");
 const connectFlash = require("connect-flash");
 
+// importing autocalcweight function
 const autoCalc = require('./util/autoCalcWeight')
 
 const app = express();
@@ -28,11 +28,6 @@ const pool = mysql.createPool({
 const dbPromise = pool.promise();
 //global variable dbPromise to be called where needed.
 global.dbPromise = dbPromise;
-
-//pool.query('SELECT * FROM shelves', function (error, results){
-//    if(error)throw error;
-//    console.log(results);
-//})
 
 //setting up database the way it was in web dev, for those that prefer callbacks
 const db = mysql.createConnection({
@@ -86,13 +81,15 @@ app.use(function (req, res, next) {
     next();
 });
 
+// importing individual routing files
 const itemSetupRoutes = require('./routes/itemSetup')
 const mainRoutes = require('./routes/main')
 const shelfDetailsRoutes = require('./routes/shelfDetails')
 const deleteRoutes = require('./routes/delete')
 const swapRoutes = require('./routes/swap')
 const helpRoutes = require('./routes/help')
-//routing files
+
+//setting up the routing files with their common starting paths
 app.use(mainRoutes);
 app.use('/item-setup', itemSetupRoutes);
 app.use('/shelf-details', shelfDetailsRoutes);
@@ -108,7 +105,7 @@ setInterval(function () {
     //interval of 2 mins (2*60*1000 ms)
 }, 120000)
 
-// last route checked if none others satisfied - 404
+// last route checked if none others satisfied - 404 - not found
 app.use((req, res, next) => {
     res.status(404).render('404', {
         pageTitle: 'Page Not Found',
