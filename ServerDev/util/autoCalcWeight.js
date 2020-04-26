@@ -38,10 +38,8 @@ exports.autoCalcWeight = () => {
                     db.query(sqlquery1, (err2, result2) => {
                         if (err2) { throw err2 }
 
-                        // adapting code to find the most recent highest weight, rather than just most recent
+                        // adapting code to find the most recent highest weight
                         if (result2[0] != undefined) {
-                            // console.log(Id);
-                            // console.log(result2);
                             let largest = 0;
                             // iterating over weights
                             for (const result of result2) {

@@ -1,10 +1,13 @@
 const express = require('express');
 const mainController = require('../controllers/mainController');
 
+// Imports of 'models' each model stores SQL commands and functions related to different object types
+// Methods stored in these models used to query, update, delete and create data in SQL database
 const Item = require('../models/item')
 const Shelf = require('../models/shelf')
 
 const path = require('path');
+
 // ------ image upload stuff -------
 // methods adapted from Brad Traversy at Traversy Media
 // https://github.com/bradtraversy/nodeuploads
@@ -50,6 +53,7 @@ const upload = multer({
 
 const router = express.Router();
 
+// rendering shelf details, logic in controllers/mainController.js
 router.get('/:shelfPos', mainController.getShelfDetails);
 
 
@@ -57,11 +61,12 @@ router.get('/:shelfPos', mainController.getShelfDetails);
 router.get('/edit-shelf/:shelfPos', function (req, res) {
 
     const shelfPos = req.params.shelfPos;
+    // getting current shelf settings by shelf position
     let sqlquery = "SELECT * from shelves WHERE shelfPosition = ?";
     let record = [shelfPos];
     db.query(sqlquery, record, (err, result) => {
         if (err) { throw (err) };
-
+        // passing current shelf settings and rendering page
         res.render('shelf-details/edit-shelf-details.ejs', {
             pageTitle: 'Edit Shelf Details',
             shelfInfo: result[0],
@@ -167,14 +172,16 @@ router.get('/edit-item/:shelfPos', function (req, res) {
     });
 })
 
-// getting updated item data from the edit item form and upfating the database record for that item
+// getting updated item data from the edit item form and updating the database record for that item
+// then rendering confirmation page
 router.post('/edit-item/changes-saved', function (req, res) {
     let imagePath = null;
 
+    // image upload stuff
     upload.single('shelfImage')(req, res, (err) => {
         if (err) {
             console.log(err);
-            // render the form here again with old inputs
+            // should re- render the form here again with old inputs so that changes aren't lost here instead of redirecting
             req.flash('failMessages', "Image upload failed " + err);
             res.redirect('back')
         } else {
@@ -195,6 +202,7 @@ router.post('/edit-item/changes-saved', function (req, res) {
             const itemId = req.body.itemId;
             const shelfPos = req.body.shelfPos;
             console.log(itemId);
+            // updating the item record that matches the item id
             let sqlquery = "UPDATE items SET name = ?, tags = ?, weight = ?, notes = ?, price = ?, imageLink = ? WHERE id = ?";
             let record = [req.body.name, req.body.tags, req.body.weight, req.body.notes, price, imagePath, itemId];
 
@@ -203,6 +211,7 @@ router.post('/edit-item/changes-saved', function (req, res) {
                     throw (err)
                 }
                 else {
+                    //rendering confimationpage
                     res.render('shelf-details/changes-saved.ejs', {
                         pageTitle: 'Changes Saved',
                         shelfPos: shelfPos,
@@ -216,10 +225,11 @@ router.post('/edit-item/changes-saved', function (req, res) {
 
 });
 // -----------------------------------------------------------------------
+// route for setting up a new item on shelf already occupied from shelf details screen
 
-// route for set up new item on shelf already occupied from shelf details screen
 router.get('/confirm-new/:shelfPos', function (req, res) {
     const shelfPos = req.params.shelfPos;
+    // making sure an illegal shelf position not passed
     if (shelfPos > 6 || shelfPos < 1) {
         res.status(404).render('404', {
             pageTitle: 'Page Not Found',
@@ -227,10 +237,12 @@ router.get('/confirm-new/:shelfPos', function (req, res) {
             failMessage: res.locals.failMessages
         });
     }
+    // fetching item id on the shelf that matches the shelfPosition
     Shelf.fetchItemIdFromPos(shelfPos)
         .then(([data, meta]) => {
             const itemId = data[0].items_id
             if (itemId == null) {
+                // if no item on shelf, render the normal item setup item form
                 return res.render('item-setup/item-form', {
                     pageTitle: 'Replace Item',
                     shelfPos: shelfPos,
@@ -238,6 +250,7 @@ router.get('/confirm-new/:shelfPos', function (req, res) {
                     failMessage: res.locals.failMessages
                 })
             } else {
+                // if item is on shelf, render confirmation screen which then passes on to normal item setup form
                 return Item.findById(itemId)
                     .then(([data, meta]) => {
                         const itemData = data[0];
@@ -258,6 +271,7 @@ router.get('/confirm-new/:shelfPos', function (req, res) {
 // route for delete item on shelf from shelf details screen
 router.get('/confirm-delete/:shelfPos', function (req, res) {
     const shelfPos = req.params.shelfPos;
+    // making sure an illegal shelf position not passed
     if (shelfPos > 6 || shelfPos < 1) {
         res.status(404).render('404', {
             pageTitle: 'Page Not Found',
@@ -265,21 +279,25 @@ router.get('/confirm-delete/:shelfPos', function (req, res) {
             failMessage: res.locals.failMessages
         });
     }
-    // console.log(shelfPosition)
+    // fetching item id on the shelf that matches the shelfPosition
     Shelf.fetchItemIdFromPos(shelfPos)
         .then(([data, meta]) => {
             // console.log('still working');
             const itemId = data[0].items_id
             if (itemId == null) {
-                //should really display a message here that the shelf is already empty
+                // if no item there redirect to delete page
+                req.flash('failMessages', "Tried to delete an already empty shelf");
                 console.log('that shelf is already empty')
                 return res.redirect("../../delete")
             } else {
+                // if item found, get item details by id
                 return Item.findById(itemId)
             }
-        }).then(([data, meta]) => {
+        })
+        .then(([data, meta]) => {
             const itemData = data[0];
             console.log(itemData.name);
+            // render confirmation screen for deletion that forwards to normal delete route
             res.render('shelf-details/delete-confirm', {
                 pageTitle: 'Confirm shelf',
                 shelfPos: shelfPos,
