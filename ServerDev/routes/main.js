@@ -6,8 +6,8 @@ const router = express.Router();
 
 //routes can be placed here as in data web if wanted
 
+// rendering the home page, both '/' and 'home' rendering the same page
 router.get('/', mainController.getShelfOverviewList);
-
 router.get('/home', mainController.getShelfOverviewList);
 
 // test routes -----------------------------------------------------------
