@@ -1,13 +1,18 @@
-const Item = require('../models/item')
+// Imports of 'models' each model stores SQL commands and functions related to different object types
+// Methods stored in these models used to query, update, delete and create data in SQL database
+const Item = require('../models/item');
+
 const express = require('express');
 
 const router = express.Router();
 
+// shelf selector screen for which two shelves to swap
 router.get('/', (req, res) => {
     const names = [];
+    // fetching the item names stored on each shelf
     Item.fetchItemNames(names)
         .then(() => {
-            // console.log(names);
+            // rendering the swap form page
             res.render('swap/swap-item.ejs', {
                 pageTitle: 'Swap Items',
                 names: names,
@@ -24,6 +29,7 @@ router.post('/swapped', (req, res) => {
 
     let shelfPos1 = req.body.shelfPos;
     let shelfPos2 = req.body.swapPos;
+    // double checking shelf positions are not illegal
     if (shelfPos1 < 1 || shelfPos1 > 6 || shelfPos2 < 1 || shelfPos2 > 6) {
         res.status(404).render('404', {
             pageTitle: 'Page Not Found',
@@ -32,8 +38,10 @@ router.post('/swapped', (req, res) => {
         });
     }
 
+    // makign sure the two selected shelves differ
     if (shelfPos1 != shelfPos2) {
         let sqlStatement = "UPDATE shelves SET shelfPosition = ? WHERE shelfPosition = ?";
+        // using '99' as a placeholder position while swapping the shelves
         let record1 = [99, shelfPos1];
         let record2 = [shelfPos1, shelfPos2];
         let record3 = [shelfPos2, 99];
