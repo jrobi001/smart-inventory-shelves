@@ -22,7 +22,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav3',
-    password: 'cake123'
+    password: 'Igniciouse1@'
 
 });
 const dbPromise = pool.promise();
@@ -34,7 +34,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'shelfdatav3',
-    password: 'cake123'
+    password: 'Igniciouse1@'
 });
 
 db.connect((err) => {
