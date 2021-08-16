@@ -1,12 +1,8 @@
 # Smart Inventory Shelves
 
+A second year group project, using Node.js and express.
+
 The main site is in the '*ServerDev*' folder. An outline of the development folder structure is below.
-
-The '*Report*' folder contains original images used in the report, as well as the testing spreadsheet detailing the tests performed on the site and methodology.
-
-The 'documents' folder contains previous milestones, activity trackers, prototypes, mock ups and other files.
-
-The '*FirstUI*' folder contains the very first UI for the site. The '*bootstrapPannedUI*' contains the site built for the panned UI overhaul.
 
 The '*DatabaseDumps*' folder' contains database schemas and dump files.
 
